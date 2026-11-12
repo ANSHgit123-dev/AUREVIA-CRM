@@ -9,11 +9,9 @@ import {
   Lock,
   Mail,
   ShieldCheck,
-  Building2,
   AlertCircle,
   CheckCircle2,
   ArrowRight,
-  Sparkles,
   KeyRound,
   X,
 } from 'lucide-react';
@@ -91,53 +89,56 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans">
-      {/* Decorative gradient backdrops */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[450px] bg-gradient-to-b from-amber-500/10 via-indigo-500/5 to-transparent blur-3xl pointer-events-none" />
-
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 text-center">
-        {/* Brand Emblem */}
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-amber-500/40 text-amber-400 mx-auto flex items-center justify-center font-serif text-2xl font-bold shadow-2xl shadow-amber-500/10">
-          A
+    <div className="min-h-screen bg-[#F5F6F7] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        {/* Brand Wordmark */}
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center gap-2 mb-2">
+            <div className="h-7 w-7 rounded bg-[#1E2227] flex items-center justify-center text-white text-xs font-bold tracking-tight">
+              A
+            </div>
+            <span className="text-sm font-bold tracking-widest text-slate-900 uppercase">
+              AUREVIA
+            </span>
+          </div>
+          <h1 className="text-lg font-semibold text-slate-900 tracking-tight">
+            Developer Operations CRM
+          </h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Real estate inventory, sales pipeline & booking operations
+          </p>
         </div>
-        <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-white font-serif">
-          AUREVIA CRM
-        </h2>
-        <p className="mt-1 text-xs text-amber-400/90 tracking-widest uppercase font-semibold">
-          Enterprise Real Estate Sales & Relationship System
-        </p>
-      </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 py-8 px-6 shadow-2xl rounded-2xl sm:px-10">
-          <form className="space-y-5" onSubmit={handleSubmit}>
+        {/* Main Card */}
+        <div className="bg-white border border-[#E5E8EB] rounded-lg p-6 sm:p-7 shadow-sm">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {errorMsg && (
-              <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-300 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+              <div className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-xs flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
                 <span>{errorMsg}</span>
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-medium text-slate-700 mb-1">
                 Corporate Email
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Mail className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
                   placeholder="name@aurevia.demo"
-                  className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent font-medium"
+                  className="w-full pl-9 pr-3 h-9 bg-white border border-[#E5E8EB] rounded text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-slate-800 transition"
                 />
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-medium text-slate-700">
                   Password
                 </label>
                 <button
@@ -147,99 +148,104 @@ export const LoginPage: React.FC = () => {
                     setForgotNotice(null);
                     setIsForgotModalOpen(true);
                   }}
-                  className="text-xs text-amber-400 hover:text-amber-300 font-medium transition"
+                  className="text-xs text-slate-500 hover:text-slate-900 transition"
                 >
                   Forgot password?
                 </button>
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   required
                   placeholder="••••••••••••"
-                  className="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent font-medium"
+                  className="w-full pl-9 pr-3 h-9 bg-white border border-[#E5E8EB] rounded text-slate-900 text-xs placeholder-slate-400 focus:outline-none focus:border-slate-800 transition"
                 />
               </div>
             </div>
 
-            <div>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition disabled:opacity-50"
-              >
-                <span>{isLoading ? 'Verifying Credentials...' : 'Sign In to Workspace'}</span>
-                <ArrowRight size={16} />
-              </button>
-            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-9 flex items-center justify-center gap-1.5 rounded text-xs font-medium text-white bg-[#1E293B] hover:bg-slate-800 focus:outline-none transition disabled:opacity-50"
+            >
+              <span>{isLoading ? 'Verifying Credentials...' : 'Sign In'}</span>
+              <ArrowRight size={13} />
+            </button>
           </form>
 
-          {/* Security Notice: Public registration disabled */}
-          <div className="mt-6 pt-5 border-t border-slate-800 text-center">
-            <p className="text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-              <span>Public signup is disabled. Accounts provisioned by Company Admin.</span>
-            </p>
-          </div>
-
-          {/* Demo 1-Click Role Switcher */}
+          {/* Demo Persona 1-Click Fast Auth */}
           {(!isSupabaseConfigured || isMockFallbackEnabled) && (
-            <div className="mt-6 pt-5 border-t border-slate-800">
-              <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wider block mb-2 text-center">
-                Sample CRM Demo Authentication (Instant Login)
-              </span>
-              <div className="grid grid-cols-2 gap-2 text-[11px]">
+            <div className="mt-5 pt-4 border-t border-[#E5E8EB]">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Fast Demo Personas
+                </span>
+                <span className="text-[10px] text-slate-400 font-mono">1-Click Login</span>
+              </div>
+              <div className="grid grid-cols-2 gap-1.5 text-xs">
                 {DEMO_USERS.map(demo => (
                   <button
                     key={demo.id}
                     type="button"
                     onClick={() => handleQuickDemoLogin(demo.role)}
-                    className="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/40 text-left transition flex flex-col justify-center"
+                    className="p-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] hover:bg-white hover:border-slate-300 text-left transition flex flex-col justify-center"
                   >
-                    <span className="font-semibold text-slate-200">{ROLE_CONFIGS[demo.role]?.badge || demo.role}</span>
-                    <span className="text-[10px] text-slate-500 truncate">{demo.fullName}</span>
+                    <span className="font-medium text-slate-900 text-xs">
+                      {ROLE_CONFIGS[demo.role]?.title || demo.role}
+                    </span>
+                    <span className="text-[10px] text-slate-500 truncate mt-0.5">
+                      {demo.fullName}
+                    </span>
                   </button>
                 ))}
               </div>
             </div>
           )}
+
+          {/* Security Notice */}
+          <div className="mt-4 pt-3 border-t border-[#E5E8EB] text-center">
+            <p className="text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
+              <span>Restricted enterprise portal. Employee provisioning required.</span>
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Forgot Password Modal */}
       {isForgotModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden p-6 text-white">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/40 backdrop-blur-none flex items-center justify-center p-4">
+          <div className="relative w-full max-w-sm bg-white border border-[#E5E8EB] rounded-lg shadow-lg p-5 text-slate-900">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5E8EB]">
               <div className="flex items-center gap-2">
-                <KeyRound className="w-5 h-5 text-amber-400" />
-                <h3 className="text-base font-bold">Password Reset</h3>
+                <KeyRound className="w-4 h-4 text-slate-700" />
+                <h3 className="text-sm font-semibold text-slate-900">Password Reset</h3>
               </div>
               <button
                 onClick={() => setIsForgotModalOpen(false)}
-                className="text-slate-400 hover:text-white"
+                className="text-slate-400 hover:text-slate-600"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleForgotSubmit} className="mt-4 space-y-4">
-              <p className="text-xs text-slate-300">
-                Enter your verified corporate email address. A password reset link will be dispatched via Supabase Auth.
+            <form onSubmit={handleForgotSubmit} className="mt-3.5 space-y-3.5">
+              <p className="text-xs text-slate-500">
+                Enter your verified corporate email address. Password reset instructions will be dispatched.
               </p>
 
               {forgotNotice && (
-                <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+                <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded text-xs text-emerald-800 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
                   <span>{forgotNotice}</span>
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-medium text-slate-700 mb-1">
                   Corporate Email
                 </label>
                 <input
@@ -248,21 +254,21 @@ export const LoginPage: React.FC = () => {
                   onChange={e => setForgotEmail(e.target.value)}
                   required
                   placeholder="name@aurevia.demo"
-                  className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-3 h-8 bg-white border border-[#E5E8EB] rounded text-xs text-slate-900 focus:outline-none focus:border-slate-800"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E5E8EB]">
                 <button
                   type="button"
                   onClick={() => setIsForgotModalOpen(false)}
-                  className="px-3 py-2 text-xs text-slate-400 hover:text-white"
+                  className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900"
                 >
-                  Close
+                  Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs rounded-xl transition"
+                  className="px-3 py-1.5 bg-[#1E293B] hover:bg-slate-800 text-white font-medium text-xs rounded transition"
                 >
                   Send Reset Link
                 </button>
@@ -274,4 +280,3 @@ export const LoginPage: React.FC = () => {
     </div>
   );
 };
-

@@ -17,35 +17,35 @@ export const BookingPrintDocument: React.FC<BookingPrintDocumentProps> = ({ book
   const carpetAreaSqm = (booking.carpetAreaSqft * 0.092903).toFixed(2);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/80 backdrop-blur-sm flex justify-center p-4 sm:p-6 print:p-0 print:bg-white print:fixed print:inset-0">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/40 flex justify-center p-4 sm:p-6 print:p-0 print:bg-white print:fixed print:inset-0">
       {/* Container */}
-      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden my-auto print:m-0 print:w-full print:max-w-none print:shadow-none print:rounded-none">
+      <div className="relative w-full max-w-4xl bg-white rounded-md border border-[#E5E8EB] shadow-xl overflow-hidden my-auto print:m-0 print:w-full print:max-w-none print:shadow-none print:rounded-none">
         {/* Screen Action Bar (Hidden in Print) */}
-        <div className="flex items-center justify-between px-6 py-4 bg-slate-900 text-white border-b border-slate-800 print:hidden">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm border border-amber-500/30">
+        <div className="flex items-center justify-between px-6 py-3.5 bg-[#1E293B] text-white border-b border-[#0F172A] print:hidden">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded bg-white/10 text-white flex items-center justify-center font-bold text-xs border border-white/20">
               AV
             </div>
             <div>
-              <h2 className="text-base font-semibold text-slate-100">
+              <h2 className="text-sm font-semibold text-white">
                 Official Allotment Certificate & Receipt
               </h2>
-              <p className="text-xs text-slate-400">
-                Reference: <span className="text-amber-400 font-mono font-medium">{booking.bookingReference}</span>
+              <p className="text-[11px] text-slate-300">
+                Reference: <span className="text-white font-mono font-medium">{booking.bookingReference}</span>
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-900 bg-amber-400 hover:bg-amber-300 rounded-lg shadow-sm transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded shadow-sm transition"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-3.5 h-3.5" />
               <span>Print Document</span>
             </button>
             <button
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded transition"
               title="Close Preview"
             >
               <X className="w-5 h-5" />

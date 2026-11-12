@@ -15,7 +15,6 @@ import {
   AlertCircle,
   FileCheck,
   Search,
-  Sparkles,
 } from 'lucide-react';
 
 interface BookingCreateModalProps {
@@ -224,51 +223,51 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-6">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/40 flex items-center justify-center p-4">
+      <div className="relative w-full max-w-3xl bg-white rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden my-6">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
-              <FileCheck className="w-5 h-5" />
+        <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded bg-white/10 text-white flex items-center justify-center">
+              <FileCheck className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-slate-100">
+              <h2 className="text-sm font-semibold text-white">
                 Execute Property Allotment & Booking
               </h2>
-              <p className="text-xs text-slate-300">
+              <p className="text-[11px] text-slate-300">
                 Generate formal commercial agreement and assign residential unit
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-700/50 rounded-lg transition-colors"
+            className="p-1 text-slate-400 hover:text-white rounded transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[82vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4 max-h-[82vh] overflow-y-auto text-xs">
           {formError && (
-            <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+            <div className="p-2.5 bg-red-50 border border-red-200 rounded text-xs text-red-700 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
               <span>{formError}</span>
             </div>
           )}
 
           {/* Section 1: Customer Lead Selection */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
-              <User className="w-4 h-4 text-amber-600" />
+          <div className="bg-[#F8F9FA] p-3.5 rounded border border-[#E5E8EB]">
+            <h3 className="text-xs font-semibold text-[#1C2024] mb-2.5 flex items-center gap-1.5">
+              <User className="w-3.5 h-3.5 text-[#1E293B]" />
               1. Customer Allottee
             </h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Search & Select Lead <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Search & Select Lead <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <select
@@ -281,7 +280,7 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
                       }
                     }}
                     required
-                    className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none"
                   >
                     <option value="">-- Choose Customer Lead --</option>
                     {leads.map(lead => (
@@ -294,38 +293,38 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
               </div>
 
               {selectedLead && (
-                <div className="bg-white p-3 rounded-lg border border-slate-200 text-xs flex flex-col justify-center">
+                <div className="bg-white p-2.5 rounded border border-[#E5E8EB] text-xs flex flex-col justify-center">
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-900">{selectedLead.firstName} {selectedLead.lastName}</span>
-                    <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-[10px] font-medium border border-emerald-200">
+                    <span className="font-semibold text-[#1C2024]">{selectedLead.firstName} {selectedLead.lastName}</span>
+                    <span className="text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded text-[10px] font-medium border border-emerald-200">
                       {selectedLead.currentStage.replace(/_/g, ' ')}
                     </span>
                   </div>
-                  <p className="text-slate-500 mt-0.5">Phone: {selectedLead.phone}</p>
-                  <p className="text-slate-500">Budget: {formatIndianCurrency(selectedLead.budgetMaxInr)}</p>
+                  <p className="text-[#60646C] mt-0.5">Phone: {selectedLead.phone}</p>
+                  <p className="text-[#60646C]">Budget: {formatIndianCurrency(selectedLead.budgetMaxInr)}</p>
                 </div>
               )}
             </div>
           </div>
 
           {/* Section 2: Property & Inventory Unit Selection */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
-              <Building className="w-4 h-4 text-amber-600" />
+          <div className="bg-[#F8F9FA] p-3.5 rounded border border-[#E5E8EB]">
+            <h3 className="text-xs font-semibold text-[#1C2024] mb-2.5 flex items-center gap-1.5">
+              <Building className="w-3.5 h-3.5 text-[#1E293B]" />
               2. Project, Tower & Unit Inventory
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {/* Project Select */}
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Project <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Project <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={selectedProjectId}
                   onChange={e => handleProjectChange(e.target.value)}
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none"
                 >
                   <option value="">-- Select Project --</option>
                   {projects.map(proj => (
@@ -338,15 +337,15 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
 
               {/* Tower Select */}
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Tower / Wing <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Tower / Wing <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={selectedTowerId}
                   onChange={e => handleTowerChange(e.target.value)}
                   disabled={!selectedProjectId}
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none disabled:bg-slate-100 disabled:text-slate-400"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none disabled:bg-[#F1F3F5] disabled:text-[#80848D]"
                 >
                   <option value="">-- Select Tower --</option>
                   {availableTowers.map(twr => (
@@ -359,15 +358,15 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
 
               {/* Unit Select (ONLY AVAILABLE UNITS) */}
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Available Unit <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Available Unit <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={selectedUnitId}
                   onChange={e => setSelectedUnitId(e.target.value)}
                   disabled={!selectedTowerId || availableUnits.length === 0}
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none disabled:bg-slate-100 disabled:text-slate-400 font-medium"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none disabled:bg-[#F1F3F5] disabled:text-[#80848D] font-medium"
                 >
                   <option value="">
                     {availableUnits.length === 0
@@ -386,37 +385,37 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
             </div>
 
             {selectedUnit && (
-              <div className="mt-3 p-3 bg-amber-50/70 border border-amber-200 rounded-lg text-xs grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="mt-2.5 p-2.5 bg-white border border-[#E5E8EB] rounded text-xs grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <div>
-                  <span className="text-slate-500">Typology:</span>
-                  <p className="font-bold text-slate-900">{selectedUnit.typology.replace('_', ' ')}</p>
+                  <span className="text-[#80848D]">Typology:</span>
+                  <p className="font-semibold text-[#1C2024]">{selectedUnit.typology.replace('_', ' ')}</p>
                 </div>
                 <div>
-                  <span className="text-slate-500">Floor & Facing:</span>
-                  <p className="font-bold text-slate-900">Floor {selectedUnit.floorNumber} • {selectedUnit.facing}</p>
+                  <span className="text-[#80848D]">Floor & Facing:</span>
+                  <p className="font-semibold text-[#1C2024]">Floor {selectedUnit.floorNumber} • {selectedUnit.facing}</p>
                 </div>
                 <div>
-                  <span className="text-slate-500">Carpet Area:</span>
-                  <p className="font-bold text-slate-900">{selectedUnit.carpetAreaSqft} sq. ft.</p>
+                  <span className="text-[#80848D]">Carpet Area:</span>
+                  <p className="font-semibold text-[#1C2024]">{selectedUnit.carpetAreaSqft} sq. ft.</p>
                 </div>
                 <div>
-                  <span className="text-slate-500">Catalog Price:</span>
-                  <p className="font-bold text-amber-900">{formatIndianCurrency(selectedUnit.totalPriceInr)}</p>
+                  <span className="text-[#80848D]">Catalog Price:</span>
+                  <p className="font-semibold font-mono text-[#1C2024]">{formatIndianCurrency(selectedUnit.totalPriceInr)}</p>
                 </div>
               </div>
             )}
           </div>
 
           {/* Section 3: Commercial Consideration & Pricing Breakdown */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
-              <KeyRound className="w-4 h-4 text-amber-600" />
-              3. Commercial Consideration Breakdown (INR)
+          <div className="bg-[#F8F9FA] p-3.5 rounded border border-[#E5E8EB]">
+            <h3 className="text-xs font-semibold text-[#1C2024] mb-2.5 flex items-center gap-1.5">
+              <KeyRound className="w-3.5 h-3.5 text-[#1E293B]" />
+              3. Commercial Consideration (INR)
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-2.5">
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
                   Base Price (₹)
                 </label>
                 <input
@@ -426,14 +425,14 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
                   min={0}
                   step="any"
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none font-mono"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none font-mono"
                 />
-                <p className="text-[11px] text-slate-500 mt-0.5">{formatIndianCurrency(basePrice)}</p>
+                <p className="text-[11px] text-[#60646C] mt-0.5">{formatIndianCurrency(basePrice)}</p>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Preferential Location Charges (PLC) (₹)
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Preferential Location (PLC) (₹)
                 </label>
                 <input
                   type="number"
@@ -441,13 +440,13 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
                   onChange={e => setPlc(Number(e.target.value))}
                   min={0}
                   step="any"
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none font-mono"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none font-mono"
                 />
-                <p className="text-[11px] text-slate-500 mt-0.5">{formatIndianCurrency(plc)}</p>
+                <p className="text-[11px] text-[#60646C] mt-0.5">{formatIndianCurrency(plc)}</p>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
                   Parking Charges (₹)
                 </label>
                 <input
@@ -456,20 +455,20 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
                   onChange={e => setParkingCharges(Number(e.target.value))}
                   min={0}
                   step="any"
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none font-mono"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none font-mono"
                 />
-                <p className="text-[11px] text-slate-500 mt-0.5">{formatIndianCurrency(parkingCharges)}</p>
+                <p className="text-[11px] text-[#60646C] mt-0.5">{formatIndianCurrency(parkingCharges)}</p>
               </div>
             </div>
 
             {/* Total Agreement Value Card */}
-            <div className="bg-slate-900 text-white p-3.5 rounded-xl flex items-center justify-between">
+            <div className="bg-[#1E293B] text-white p-3 rounded flex items-center justify-between">
               <div>
-                <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Total Agreement Value (AV)</p>
-                <p className="text-xs text-amber-400 font-normal">Base + PLC + Parking (exclusive of Stamp Duty & GST)</p>
+                <p className="text-[10px] uppercase tracking-wider text-slate-300 font-semibold">Total Agreement Value (AV)</p>
+                <p className="text-[11px] text-slate-300 font-normal">Base + PLC + Parking (exclusive of Stamp Duty & GST)</p>
               </div>
               <div className="text-right">
-                <span className="text-xl font-bold font-mono text-amber-300">
+                <span className="text-base font-semibold font-mono text-white">
                   {formatIndianCurrency(totalAgreementValue)}
                 </span>
               </div>
@@ -477,16 +476,16 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
           </div>
 
           {/* Section 4: Token & Payment Details */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
-              <CreditCard className="w-4 h-4 text-amber-600" />
+          <div className="bg-[#F8F9FA] p-3.5 rounded border border-[#E5E8EB]">
+            <h3 className="text-xs font-semibold text-[#1C2024] mb-2.5 flex items-center gap-1.5">
+              <CreditCard className="w-3.5 h-3.5 text-[#1E293B]" />
               4. Payment & Token Consideration
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-3">
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Token Amount Received (₹) <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Token Amount Received (₹) <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="number"
@@ -495,20 +494,20 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
                   min={0}
                   step="any"
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none font-mono font-semibold"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none font-mono font-medium"
                 />
                 <p className="text-[11px] text-emerald-700 font-medium mt-0.5">{formatIndianCurrency(tokenAmount)}</p>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Payment Mode <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Payment Mode <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={paymentMode}
                   onChange={e => setPaymentMode(e.target.value as any)}
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none"
                 >
                   <option value="neft_rtgs">NEFT / RTGS</option>
                   <option value="cheque">Cheque</option>
@@ -518,8 +517,8 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Payment Ref / Cheque No. <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Payment Ref / Cheque No. <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -527,12 +526,12 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
                   onChange={e => setPaymentReference(e.target.value)}
                   placeholder="e.g. UTR8472910482 / CHQ 004128"
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none font-mono"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none font-mono"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
                   Bank Name
                 </label>
                 <input
@@ -540,49 +539,49 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
                   value={bankName}
                   onChange={e => setBankName(e.target.value)}
                   placeholder="e.g. HDFC Bank, ICICI Bank"
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Booking Date <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Booking Date <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="date"
                   value={bookingDate}
                   onChange={e => setBookingDate(e.target.value)}
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
                   Booking Status
                 </label>
                 <select
                   value={bookingStatus}
                   onChange={e => setBookingStatus(e.target.value as any)}
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none font-medium"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none font-medium"
                 >
-                  <option value="token_received">Token Received (Unit Reserved)</option>
+                  <option value="token_received">Token Received (Unit Booked)</option>
                   <option value="confirmed">Confirmed Allotment (Unit Sold)</option>
                   <option value="pending">Pending Verification</option>
                 </select>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Assigned Closing Executive <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Assigned Closer <span className="text-red-500">*</span>
                 </label>
                 <select
                   value={assignedExecutive}
                   onChange={e => setAssignedExecutive(e.target.value)}
                   required
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none"
                 >
                   {salesExecutives.map(exec => (
                     <option key={exec} value={exec}>
@@ -593,34 +592,34 @@ export const BookingCreateModal: React.FC<BookingCreateModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Special Allotment Remarks / Notes
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Special Allotment Remarks
                 </label>
                 <input
                   type="text"
                   value={specialConditions}
                   onChange={e => setSpecialConditions(e.target.value)}
                   placeholder="e.g. 10% subvention payment scheme; includes modular kitchen"
-                  className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-2.5 py-1.5 text-xs bg-white border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none"
                 />
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#E5E8EB]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs font-medium text-[#60646C] hover:bg-[#F8F9FA] rounded transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg shadow-sm transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium text-white bg-[#1E293B] hover:bg-[#0F172A] rounded transition-colors"
             >
-              <CheckCircle2 className="w-4 h-4" />
+              <CheckCircle2 className="w-3.5 h-3.5" />
               <span>Confirm & Issue Booking</span>
             </button>
           </div>

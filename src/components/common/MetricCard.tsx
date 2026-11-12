@@ -10,8 +10,9 @@ interface MetricCardProps {
     value: string;
     isPositive: boolean;
   };
-  icon: LucideIcon;
+  icon?: LucideIcon;
   variant?: 'default' | 'gold' | 'emerald' | 'rose';
+  className?: string;
 }
 
 export const MetricCard: React.FC<MetricCardProps> = ({
@@ -21,43 +22,47 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   trend,
   icon: Icon,
   variant = 'default',
+  className,
 }) => {
   return (
-    <div className="bg-white rounded-xl border border-surface-border p-5 shadow-card hover:border-slate-300 transition-all">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">{title}</p>
-          <h3 className="text-2xl font-bold text-slate-900 mt-1 font-mono tracking-tight">{value}</h3>
-        </div>
-        <div
-          className={cn(
-            'p-2.5 rounded-lg shrink-0',
-            variant === 'gold' && 'bg-amber-50 text-amber-700 border border-amber-200/60',
-            variant === 'emerald' && 'bg-emerald-50 text-emerald-700 border border-emerald-200/60',
-            variant === 'rose' && 'bg-rose-50 text-rose-700 border border-rose-200/60',
-            variant === 'default' && 'bg-slate-50 text-navy-900 border border-slate-200'
-          )}
-        >
-          <Icon size={20} />
-        </div>
+    <div
+      className={cn(
+        'bg-white border border-[#E5E8EB] rounded-md p-3.5 shadow-none transition-colors',
+        className
+      )}
+    >
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider truncate">
+          {title}
+        </span>
+        {Icon && <Icon size={14} className="text-slate-400 shrink-0 ml-2" />}
+      </div>
+
+      <div className="mt-1">
+        <span className="text-xl font-semibold text-slate-900 tracking-tight font-mono block">
+          {value}
+        </span>
       </div>
 
       {(subtitle || trend) && (
-        <div className="mt-3 flex items-center gap-2 text-xs">
+        <div className="mt-1 flex items-center gap-1.5 text-[11px] text-slate-500 min-w-0">
           {trend && (
             <span
               className={cn(
-                'font-semibold font-mono',
-                trend.isPositive ? 'text-emerald-600' : 'text-rose-600'
+                'font-medium font-mono shrink-0',
+                trend.isPositive ? 'text-emerald-700' : 'text-rose-700'
               )}
             >
               {trend.isPositive ? '+' : ''}{trend.value}
             </span>
           )}
-          {subtitle && <span className="text-slate-500">{subtitle}</span>}
+          {subtitle && (
+            <span className="truncate text-slate-500">
+              {subtitle}
+            </span>
+          )}
         </div>
       )}
     </div>
   );
 };
-

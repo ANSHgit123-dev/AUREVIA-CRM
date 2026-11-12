@@ -4,12 +4,8 @@ import {
   Clock,
   Compass,
   CheckCircle2,
-  Calendar,
-  MessageSquare,
-  Sparkles,
-  Search,
   ArrowRight,
-  Flame,
+  ChevronRight,
 } from 'lucide-react';
 import { useLeads } from '../../../context/LeadContext';
 import { MetricCard } from '../../../components/common/MetricCard';
@@ -19,143 +15,154 @@ import { Link } from 'react-router-dom';
 export const PresalesDashboard: React.FC = () => {
   const { leads, leadStats } = useLeads();
 
-  // Ingestion Queue: Leads that are 'new' or 'contacted'
   const uncontactedLeads = leads.filter(l => l.currentStage === 'new');
   const hotInquiries = leads.filter(l => l.priority === 'hot' && l.currentStage !== 'booked');
 
   return (
-    <div className="space-y-6">
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 p-6 rounded-2xl text-white shadow-card border border-emerald-900/40">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
-              <Sparkles size={14} />
-              <span>Inbound Ingestion & Lead Triage</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl font-bold mt-1">Lead Qualification Console</h1>
-            <p className="text-xs text-slate-300 mt-1 max-w-xl">
-              Rapid phone response, prospective buyer requirement gathering, budget qualification, and site visit booking.
-            </p>
+    <div className="space-y-5">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#E5E8EB]">
+        <div>
+          <div className="flex items-center gap-2 text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+            <span>Inbound Pipeline</span>
+            <span>&bull;</span>
+            <span>Lead Triage & Qualification</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Link
-              to="/leads"
-              className="inline-flex items-center gap-2 px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl shadow transition"
-            >
-              <span>Ingestion Hub</span>
-              <ArrowRight size={14} />
-            </Link>
-          </div>
+          <h1 className="text-lg font-semibold text-slate-900 tracking-tight mt-0.5">
+            Presales & Lead Qualification Console
+          </h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/leads"
+            className="h-8 px-3 inline-flex items-center gap-1.5 text-xs font-medium text-white bg-[#1E293B] rounded hover:bg-slate-800 transition"
+          >
+            <span>Lead Ingestion Hub</span>
+            <ArrowRight size={13} />
+          </Link>
         </div>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Metrics */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <MetricCard
           title="Uncontacted Inquiries"
           value={leadStats.uncontactedLeads.toString()}
-          subtitle="Pending initial screening call"
+          subtitle="Pending initial screening"
           icon={PhoneCall}
-          variant={leadStats.uncontactedLeads > 0 ? 'rose' : 'emerald'}
         />
         <MetricCard
-          title="New Today"
+          title="New Leads Today"
           value={leadStats.newLeadsToday.toString()}
-          subtitle="Digital & channel leads"
+          subtitle="Inbound portal & campaign leads"
           icon={Compass}
-          variant="gold"
         />
         <MetricCard
           title="Qualified Prospects"
           value={leadStats.qualifiedLeads.toString()}
           subtitle="Budget & timeline verified"
           icon={CheckCircle2}
-          variant="emerald"
         />
         <MetricCard
           title="Average Response SLA"
           value="4.2 mins"
-          subtitle="Target threshold: < 15 mins"
+          subtitle="Target SLA: < 15 mins"
           icon={Clock}
         />
       </div>
 
-      {/* Ingestion & Qualification Queue */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Urgent Contact Queue */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-surface-border p-5 shadow-card space-y-4">
-          <div className="flex items-center justify-between">
+      {/* Operational Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Urgent Contact Queue Table */}
+        <div className="lg:col-span-2 bg-white border border-[#E5E8EB] rounded-md p-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E8EB] mb-3">
             <div>
-              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              <h2 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
                 Uncontacted Inbound Inquiries
               </h2>
-              <p className="text-xs text-slate-500">Call immediately to maintain high conversion SLA</p>
+              <p className="text-[11px] text-slate-500 mt-0.5">Immediate outreach required to maintain conversion rate</p>
             </div>
-            <span className="text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
-              {uncontactedLeads.length} Urgent
+            <span className="text-[11px] font-mono font-medium text-slate-700 bg-slate-100 border border-[#E5E8EB] px-2 py-0.5 rounded">
+              {uncontactedLeads.length} In Queue
             </span>
           </div>
 
-          <div className="divide-y divide-slate-100">
-            {uncontactedLeads.slice(0, 5).map(lead => (
-              <div key={lead.id} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-slate-900">{lead.firstName} {lead.lastName}</span>
-                    <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded uppercase font-medium">
-                      {lead.source.replace('_', ' ')}
-                    </span>
-                    {lead.priority === 'hot' && (
-                      <span className="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-bold flex items-center gap-0.5">
-                        <Flame size={10} /> Hot
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[11px] text-slate-500 mt-0.5">
-                    Phone: <span className="font-mono text-slate-800 font-semibold">{lead.phone}</span> • Budget: {formatIndianCurrency(lead.budgetMaxInr)} • {lead.projectName}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={`tel:${lead.phone}`}
-                    className="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded font-semibold flex items-center gap-1 border border-emerald-200 transition"
-                  >
-                    <PhoneCall size={12} />
-                    <span>Call</span>
-                  </a>
-                  <Link
-                    to="/site-visits"
-                    className="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded font-semibold flex items-center gap-1 border border-amber-200 transition"
-                  >
-                    <Calendar size={12} />
-                    <span>Book Visit</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-[#E5E8EB] text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="pb-2 font-medium">Prospect</th>
+                  <th className="pb-2 font-medium">Development</th>
+                  <th className="pb-2 font-medium">Source</th>
+                  <th className="pb-2 font-medium">Ingested</th>
+                  <th className="pb-2 font-medium text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E5E8EB]">
+                {uncontactedLeads.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-4 text-center text-slate-500">
+                      All inbound leads have been contacted.
+                    </td>
+                  </tr>
+                ) : (
+                  uncontactedLeads.slice(0, 6).map((lead) => (
+                    <tr key={lead.id} className="hover:bg-[#F8F9FA] transition-colors">
+                      <td className="py-2.5 font-medium text-slate-900">
+                        <div>{lead.firstName} {lead.lastName}</div>
+                        <div className="text-[10px] text-slate-400 font-mono">{lead.phone}</div>
+                      </td>
+                      <td className="py-2.5 text-slate-600">
+                        <div>{lead.projectName}</div>
+                        <div className="text-[10px] text-slate-400">{lead.preferredTypology.replace('_', ' ')}</div>
+                      </td>
+                      <td className="py-2.5 capitalize text-slate-600 text-[11px]">
+                        {lead.source.replace(/_/g, ' ')}
+                      </td>
+                      <td className="py-2.5 font-mono text-[11px] text-slate-500">
+                        {formatRelativeTime(lead.createdAt)}
+                      </td>
+                      <td className="py-2.5 text-right">
+                        <Link
+                          to="/leads"
+                          className="px-2 py-1 text-[11px] font-medium bg-[#1E293B] text-white rounded hover:bg-slate-800 transition"
+                        >
+                          Qualify
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
 
-        {/* Hot Leads Ready for Inspection */}
-        <div className="bg-white rounded-xl border border-surface-border p-5 shadow-card space-y-4">
-          <div>
-            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-              <Flame className="w-4 h-4 text-rose-500" />
-              <span>High Propensity Leads</span>
-            </h2>
-            <p className="text-xs text-slate-500">Qualified buyers with immediate buying intent</p>
+        {/* High-Intent Prospects */}
+        <div className="bg-white border border-[#E5E8EB] rounded-md p-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E8EB] mb-3">
+            <div>
+              <h2 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
+                High-Intent Prospects
+              </h2>
+              <p className="text-[11px] text-slate-500 mt-0.5">Hot qualified decision-ready buyers</p>
+            </div>
+            <Link to="/leads" className="text-xs font-medium text-slate-700 hover:text-slate-900">
+              All Leads
+            </Link>
           </div>
 
-          <div className="space-y-3">
-            {hotInquiries.slice(0, 4).map(lead => (
-              <div key={lead.id} className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs space-y-1">
+          <div className="divide-y divide-[#E5E8EB]">
+            {hotInquiries.slice(0, 5).map((lead) => (
+              <div key={lead.id} className="py-2.5 first:pt-0 last:pb-0">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-slate-900">{lead.firstName} {lead.lastName}</span>
-                  <span className="text-[10px] font-mono text-slate-500">{formatRelativeTime(lead.createdAt)}</span>
+                  <span className="text-xs font-medium text-slate-900">{lead.firstName} {lead.lastName}</span>
+                  <span className="text-[11px] font-mono font-medium text-slate-900">{formatIndianCurrency(lead.budgetMaxInr)}</span>
                 </div>
-                <p className="text-[11px] text-slate-600">Interested in {lead.projectName} • {lead.preferredTypology}</p>
-                <p className="text-[10px] font-mono text-emerald-700 font-bold">Max Budget: {formatIndianCurrency(lead.budgetMaxInr)}</p>
+                <div className="flex items-center justify-between mt-1 text-[11px] text-slate-500">
+                  <span className="truncate max-w-[150px]">{lead.projectName}</span>
+                  <span className="capitalize">{lead.assignedExecutiveName}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -164,4 +171,3 @@ export const PresalesDashboard: React.FC = () => {
     </div>
   );
 };
-

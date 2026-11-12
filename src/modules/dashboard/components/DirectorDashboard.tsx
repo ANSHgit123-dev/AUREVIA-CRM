@@ -4,11 +4,8 @@ import {
   Building,
   Receipt,
   Users,
-  Compass,
-  Award,
   ArrowUpRight,
-  Sparkles,
-  BarChart3,
+  ChevronRight,
 } from 'lucide-react';
 import { useProjectInventory } from '../../../context/ProjectInventoryContext';
 import { useLeads } from '../../../context/LeadContext';
@@ -26,111 +23,118 @@ export const DirectorDashboard: React.FC = () => {
     ? Math.round(((overallStats.bookedUnits + overallStats.soldUnits) / overallStats.totalUnits) * 100)
     : 0;
 
+  const totalRealizedRevenue = overallStats.soldValueInr + bookingStats.totalBookingValueInr;
+
   return (
-    <div className="space-y-6">
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-navy-800 p-6 rounded-2xl text-white shadow-card">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-gold-500 text-xs font-semibold uppercase tracking-wider">
-              <Sparkles size={14} />
-              <span>National Portfolio & Capital Realization</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl font-bold mt-1">Executive Leadership Dashboard</h1>
-            <p className="text-xs text-slate-300 mt-1 max-w-xl">
-              Consolidated real-time capital allocation across {projects.length} developments, absorption curves, and macro revenue realization.
-            </p>
+    <div className="space-y-5">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#E5E8EB]">
+        <div>
+          <div className="flex items-center gap-2 text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+            <span>Executive Command</span>
+            <span>&bull;</span>
+            <span>Pan-India Portfolio</span>
           </div>
-          <div className="text-right">
-            <span className="text-[11px] text-slate-400 uppercase font-mono block">Gross Booked Revenue</span>
-            <span className="text-2xl sm:text-3xl font-bold text-gold-500 font-mono">
-              {formatIndianCurrency(overallStats.soldValueInr + bookingStats.totalBookingValueInr)}
-            </span>
-          </div>
+          <h1 className="text-lg font-semibold text-slate-900 tracking-tight mt-0.5">
+            Executive Leadership Dashboard
+          </h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/reports"
+            className="h-8 px-3 inline-flex items-center gap-1.5 text-xs font-medium text-slate-700 bg-white border border-[#E5E8EB] rounded hover:bg-slate-50 transition"
+          >
+            <span>Portfolio Reports</span>
+            <ArrowUpRight size={13} className="text-slate-400" />
+          </Link>
+          <Link
+            to="/inventory"
+            className="h-8 px-3 inline-flex items-center gap-1.5 text-xs font-medium text-white bg-[#1E293B] rounded hover:bg-slate-800 transition"
+          >
+            <span>Unit Matrix</span>
+          </Link>
         </div>
       </div>
 
-      {/* High-Level Financial & Portfolio KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Primary Financial Metric Strip */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <MetricCard
+          title="Gross Booked Revenue"
+          value={formatIndianCurrency(totalRealizedRevenue)}
+          subtitle="Contracted booking consideration"
+          icon={TrendingUp}
+        />
         <MetricCard
           title="Portfolio Absorption"
           value={`${totalAbsorption}%`}
-          subtitle={`${overallStats.bookedUnits + overallStats.soldUnits} of ${overallStats.totalUnits} units booked`}
-          icon={TrendingUp}
-          variant="gold"
-        />
-        <MetricCard
-          title="Token Advances Collected"
-          value={formatIndianCurrency(bookingStats.totalTokenInr)}
-          subtitle="Direct liquid booking advances"
-          icon={Receipt}
-          variant="emerald"
-        />
-        <MetricCard
-          title="Active Lead Pipeline"
-          value={leadStats.totalLeads.toString()}
-          subtitle={`${leadStats.hotLeads} hot decision-ready leads`}
-          icon={Users}
-        />
-        <MetricCard
-          title="Site Inspections (MTD)"
-          value={siteVisitStats.total.toString()}
-          subtitle={`${siteVisitStats.completedCount} inspections completed`}
+          subtitle={`${overallStats.bookedUnits + overallStats.soldUnits} of ${overallStats.totalUnits} total units`}
           icon={Building}
-          variant="gold"
+        />
+        <MetricCard
+          title="Token Advances"
+          value={formatIndianCurrency(bookingStats.totalTokenInr)}
+          subtitle={`${bookingStats.tokenReceivedCount + bookingStats.confirmedCount} active allotments`}
+          icon={Receipt}
+        />
+        <MetricCard
+          title="Active Prospects"
+          value={leadStats.totalLeads.toString()}
+          subtitle={`${leadStats.hotLeads} hot decision-ready`}
+          icon={Users}
         />
       </div>
 
-      {/* Project Realization Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-xl border border-surface-border p-5 shadow-card space-y-4">
-          <div className="flex items-center justify-between">
+      {/* Main Operational Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Development Absorption Ledger */}
+        <div className="lg:col-span-2 bg-white border border-[#E5E8EB] rounded-md p-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E8EB] mb-3">
             <div>
-              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              <h2 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
                 Development Absorption & Velocity
               </h2>
-              <p className="text-xs text-slate-500">Commercial velocity per active residential project</p>
+              <p className="text-[11px] text-slate-500 mt-0.5">Commercial allocation and realization per development</p>
             </div>
-            <Link to="/reports" className="text-xs font-semibold text-navy-900 hover:text-navy-700 flex items-center gap-1">
-              <span>Full Analytics</span>
-              <ArrowUpRight size={14} />
+            <Link to="/projects" className="text-xs font-medium text-slate-700 hover:text-slate-900 inline-flex items-center gap-1">
+              <span>View All Projects</span>
+              <ChevronRight size={13} />
             </Link>
           </div>
 
-          <div className="space-y-3">
-            {projects.map(proj => {
-              const projUnits = units.filter(u => u.projectId === proj.id);
+          <div className="divide-y divide-[#E5E8EB]">
+            {projects.map((proj) => {
+              const projUnits = units.filter((u) => u.projectId === proj.id);
               const total = projUnits.length || proj.totalUnits;
-              const sold = projUnits.filter(u => u.status === 'sold' || u.status === 'booked').length;
+              const sold = projUnits.filter((u) => u.status === 'sold' || u.status === 'booked').length;
               const rate = total > 0 ? Math.round((sold / total) * 100) : 0;
               const revenue = bookings
-                .filter(b => b.projectId === proj.id && b.status !== 'cancelled' && b.status !== 'refunded')
+                .filter((b) => b.projectId === proj.id && b.status !== 'cancelled' && b.status !== 'refunded')
                 .reduce((s, b) => s + b.agreedTotalPriceInr, 0);
 
               return (
-                <div key={proj.id} className="p-4 bg-slate-50/70 border border-slate-200 rounded-xl space-y-2">
-                  <div className="flex items-center justify-between">
+                <div key={proj.id} className="py-3 first:pt-0 last:pb-0">
+                  <div className="flex items-center justify-between mb-1.5">
                     <div>
-                      <h3 className="font-bold text-slate-900 text-sm">{proj.name}</h3>
-                      <p className="text-xs text-slate-500">{proj.locationArea}, {proj.city}</p>
+                      <h3 className="text-xs font-semibold text-slate-900">{proj.name}</h3>
+                      <p className="text-[11px] text-slate-500">{proj.locationArea}, {proj.city} &bull; {total} Units</p>
                     </div>
                     <div className="text-right">
-                      <span className="font-mono font-bold text-slate-900 text-sm">
+                      <span className="font-mono text-xs font-semibold text-slate-900">
                         {formatIndianCurrency(revenue)}
                       </span>
-                      <span className="text-[11px] text-slate-400 block font-mono">Revenue Realized</span>
+                      <span className="text-[10px] text-slate-400 block font-mono">Revenue Booked</span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <div className="flex-1 bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                    <div className="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden">
                       <div
-                        className="bg-gold-500 h-full rounded-full transition-all"
+                        className="bg-[#1E293B] h-full rounded-full transition-all"
                         style={{ width: `${rate}%` }}
                       />
                     </div>
-                    <span className="text-xs font-bold font-mono text-slate-700 min-w-12 text-right">
-                      {rate}% Sold
+                    <span className="text-[11px] font-mono font-medium text-slate-700 min-w-12 text-right">
+                      {rate}% Allotted
                     </span>
                   </div>
                 </div>
@@ -140,34 +144,35 @@ export const DirectorDashboard: React.FC = () => {
         </div>
 
         {/* Closer Productivity Leaderboard */}
-        <div className="bg-white rounded-xl border border-surface-border p-5 shadow-card space-y-4">
-          <div>
-            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-              <Award className="w-4 h-4 text-gold-500" />
-              <span>Closing Leaderboard</span>
-            </h2>
-            <p className="text-xs text-slate-500">Top closing consultants this quarter</p>
+        <div className="bg-white border border-[#E5E8EB] rounded-md p-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E8EB] mb-3">
+            <div>
+              <h2 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
+                Closing Leaderboard
+              </h2>
+              <p className="text-[11px] text-slate-500 mt-0.5">Lead conversion & sales volume</p>
+            </div>
+            <Link to="/employees" className="text-xs font-medium text-slate-700 hover:text-slate-900">
+              Directory
+            </Link>
           </div>
 
-          <div className="space-y-3">
-            {executivePerformanceList.slice(0, 4).map((exec, idx) => (
-              <div key={exec.executiveName} className="p-3 rounded-lg border border-slate-100 bg-slate-50 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2.5">
-                  <span className={`w-5 h-5 rounded-full flex items-center justify-center font-bold text-[10px] ${
-                    idx === 0 ? 'bg-amber-400 text-slate-950 font-black' : 'bg-slate-200 text-slate-700'
-                  }`}>
+          <div className="divide-y divide-[#E5E8EB]">
+            {executivePerformanceList.slice(0, 5).map((exec, idx) => (
+              <div key={exec.executiveName} className="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="w-5 h-5 rounded bg-slate-100 text-slate-600 font-mono text-[10px] font-medium flex items-center justify-center shrink-0">
                     {idx + 1}
                   </span>
-                  <div>
-                    <span className="font-bold text-slate-900">{exec.executiveName}</span>
-                    <span className="text-[10px] text-slate-500 block">{exec.bookingsAchieved} Allotments Closed</span>
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium text-slate-900 truncate">{exec.executiveName}</p>
+                    <p className="text-[10px] text-slate-500 font-mono">{exec.bookingsAchieved} Allotments &bull; {exec.conversionRate.toFixed(1)}% Conv.</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <span className="font-mono font-bold text-emerald-700 block">
+                <div className="text-right shrink-0">
+                  <span className="font-mono text-xs font-semibold text-slate-900 block">
                     {formatIndianCurrency(exec.totalSalesValueInr)}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-400">{exec.conversionRate.toFixed(1)}% Conversion</span>
                 </div>
               </div>
             ))}
@@ -177,4 +182,3 @@ export const DirectorDashboard: React.FC = () => {
     </div>
   );
 };
-

@@ -14,7 +14,6 @@ import {
   Send,
   Plus,
   ArrowRight,
-  Sparkles,
   ChevronRight,
   ShieldAlert,
   MapPin,
@@ -143,14 +142,14 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
   const waPhone = cleanDigits.length === 10 ? `91${cleanDigits}` : cleanDigits;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-navy-950/60 backdrop-blur-sm animate-fade-in flex justify-end">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-black/40 flex justify-end">
       {/* Backdrop click to close */}
       <div className="flex-1" onClick={onClose} />
 
       {/* Drawer Container */}
-      <div className="w-full max-w-xl bg-white h-full shadow-2xl flex flex-col border-l border-slate-200 z-10 animate-slide-left overflow-hidden">
+      <div className="w-full max-w-xl bg-white h-full shadow-lg flex flex-col border-l border-[#E5E8EB] z-10 overflow-hidden">
         {/* Top Header */}
-        <div className="p-5 bg-navy-950 text-white flex items-start justify-between border-b border-navy-800">
+        <div className="p-4 bg-[#1E293B] text-white flex items-start justify-between border-b border-[#334155]">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <LeadPriorityBadge priority={lead.priority} />
@@ -161,58 +160,58 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
                 </span>
               )}
             </div>
-            <h2 className="text-xl font-bold tracking-tight">
+            <h2 className="text-base font-semibold tracking-tight">
               {lead.firstName} {lead.lastName}
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-[11px] text-slate-400 mt-0.5">
               Captured on {formatDate(lead.createdAt)} &bull; {lead.projectName}
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <button
               onClick={() => onEditLead(lead)}
-              className="px-2.5 py-1 text-xs rounded-lg bg-navy-800 hover:bg-navy-700 text-gold-400 font-semibold transition"
+              className="px-2 py-1 text-xs rounded bg-white/10 hover:bg-white/20 text-white font-medium transition"
             >
               Edit
             </button>
             <button
               onClick={onClose}
-              className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-navy-800 transition"
+              className="p-1 rounded text-slate-400 hover:text-white transition"
             >
-              <X size={20} />
+              <X size={16} />
             </button>
           </div>
         </div>
 
         {/* Quick Contact & Action Bar */}
-        <div className="px-5 py-3 bg-navy-900 border-b border-navy-800 flex items-center justify-between text-xs text-white">
-          <div className="flex items-center gap-2">
+        <div className="px-4 py-2 bg-[#0F172A] border-b border-[#334155] flex items-center justify-between text-xs text-white">
+          <div className="flex items-center gap-1.5">
             <a
               href={`tel:${lead.phone}`}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-medium text-white transition shadow-sm"
+              className="flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 font-medium text-white transition text-xs"
               title="Initiate phone call"
             >
-              <Phone size={13} />
+              <Phone size={12} />
               <span>Call</span>
             </a>
             <a
               href={`https://wa.me/${waPhone}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-800 hover:bg-emerald-700 font-medium text-white transition shadow-sm"
+              className="flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-800 hover:bg-emerald-700 font-medium text-white transition text-xs"
               title="Open WhatsApp chat"
             >
-              <MessageSquare size={13} />
+              <MessageSquare size={12} />
               <span>WhatsApp</span>
             </a>
             {lead.email && (
               <a
                 href={`mailto:${lead.email}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-navy-800 hover:bg-navy-700 font-medium text-slate-200 transition"
+                className="flex items-center gap-1 px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 font-medium text-slate-200 transition text-xs"
                 title="Send email"
               >
-                <Mail size={13} />
+                <Mail size={12} />
                 <span>Email</span>
               </a>
             )}
@@ -220,9 +219,9 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
 
           <button
             onClick={() => setShowLogModal(true)}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gold-600 hover:bg-gold-500 text-navy-950 font-bold transition shadow-sm"
+            className="flex items-center gap-1 px-2.5 py-1 rounded bg-white text-[#1C2024] font-medium transition text-xs hover:bg-[#F1F3F5]"
           >
-            <Plus size={13} />
+            <Plus size={12} />
             <span>Log Interaction</span>
           </button>
         </div>
@@ -585,22 +584,22 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
 
         {/* Log Interaction Modal Overlay */}
         {showLogModal && (
-          <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-navy-950/70">
-            <div className="bg-white rounded-2xl p-5 w-full max-w-md shadow-2xl border border-slate-200 animate-fade-in text-xs">
-              <div className="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-                <h4 className="font-bold text-sm text-slate-900">Log Customer Contact</h4>
-                <button onClick={() => setShowLogModal(false)} className="text-slate-400 hover:text-slate-600">
+          <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/40">
+            <div className="bg-white rounded-md p-5 w-full max-w-md shadow-lg border border-[#E5E8EB] text-xs">
+              <div className="flex items-center justify-between mb-3 border-b border-[#E5E8EB] pb-2">
+                <h4 className="font-semibold text-sm text-[#1C2024]">Log Customer Contact</h4>
+                <button onClick={() => setShowLogModal(false)} className="text-[#8B8D98] hover:text-[#1C2024]">
                   <X size={16} />
                 </button>
               </div>
 
               <form onSubmit={handleLogContact} className="space-y-3">
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">Interaction Type</label>
+                  <label className="block text-[#1C2024] font-medium mb-1">Interaction Type</label>
                   <select
                     value={contactType}
                     onChange={(e) => setContactType(e.target.value as any)}
-                    className="w-full px-3 py-2 border rounded-lg bg-white"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded bg-white text-xs text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                   >
                     <option value="call">Outbound Phone Call</option>
                     <option value="whatsapp">WhatsApp Conversation</option>

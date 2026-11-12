@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Users,
@@ -14,7 +14,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  ShieldCheck,
+  LogOut,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../context/AuthContext';
@@ -27,142 +27,216 @@ interface NavItem {
   path: string;
   icon: React.ElementType;
   badge?: string;
+  badgeVariant?: 'neutral' | 'urgent' | 'highlight';
+}
+
+interface NavGroup {
+  label: string;
+  items: NavItem[];
 }
 
 export const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { role, user } = useAuth();
+  const { role, user, logout } = useAuth();
   const { leadStats, followUpStats } = useLeads();
   const { siteVisitStats, bookingStats } = useSalesOperations();
+  const navigate = useNavigate();
 
-  const allNavigationItems: NavItem[] = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Leads', path: '/leads', icon: Users, badge: `${leadStats.hotLeads} Hot` },
-    { name: 'Sales Pipeline', path: '/pipeline', icon: Kanban },
+  const navGroups: NavGroup[] = [
     {
-      name: 'Follow-ups',
-      path: '/follow-ups',
-      icon: CalendarCheck,
-      badge: followUpStats.overdueCount > 0 ? `${followUpStats.overdueCount} Overdue` : undefined,
+      label: 'Overview',
+      items: [
+        { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+      ],
     },
     {
-      name: 'Site Visits',
-      path: '/site-visits',
-      icon: MapPin,
-      badge: siteVisitStats.todayCount > 0 ? `${siteVisitStats.todayCount} Today` : undefined,
+      label: 'Sales',
+      items: [
+        {
+          name: 'Leads',
+          path: '/leads',
+          icon: Users,
+          badge: leadStats.hotLeads > 0 ? `${leadStats.hotLeads}` : undefined,
+          badgeVariant: 'neutral',
+        },
+        { name: 'Pipeline', path: '/pipeline', icon: Kanban },
+        {
+          name: 'Follow-ups',
+          path: '/follow-ups',
+          icon: CalendarCheck,
+          badge: followUpStats.overdueCount > 0 ? `${followUpStats.overdueCount}` : undefined,
+          badgeVariant: 'urgent',
+        },
+        {
+          name: 'Site Visits',
+          path: '/site-visits',
+          icon: MapPin,
+          badge: siteVisitStats.todayCount > 0 ? `${siteVisitStats.todayCount}` : undefined,
+          badgeVariant: 'highlight',
+        },
+        {
+          name: 'Bookings',
+          path: '/bookings',
+          icon: Receipt,
+          badge: bookingStats.confirmedCount > 0 ? `${bookingStats.confirmedCount}` : undefined,
+          badgeVariant: 'neutral',
+        },
+      ],
     },
-    { name: 'Projects', path: '/projects', icon: Building2 },
-    { name: 'Unit Inventory', path: '/inventory', icon: Grid3X3 },
     {
-      name: 'Bookings',
-      path: '/bookings',
-      icon: Receipt,
-      badge: bookingStats.confirmedCount > 0 ? `${bookingStats.confirmedCount} Sold` : undefined,
+      label: 'Projects',
+      items: [
+        { name: 'Projects', path: '/projects', icon: Building2 },
+        { name: 'Inventory', path: '/inventory', icon: Grid3X3 },
+      ],
     },
-    { name: 'Employees', path: '/employees', icon: UserCheck },
-    { name: 'Reports', path: '/reports', icon: BarChart3 },
-    { name: 'Settings', path: '/settings', icon: Settings },
+    {
+      label: 'Management',
+      items: [
+        { name: 'Employees', path: '/employees', icon: UserCheck },
+        { name: 'Reports', path: '/reports', icon: BarChart3 },
+        { name: 'Settings', path: '/settings', icon: Settings },
+      ],
+    },
   ];
 
-  // Filter navigation items by RBAC permissions for active role
-  const navigationItems = allNavigationItems.filter(item => canAccessRoute(role, item.path));
   const activeRoleConfig = ROLE_CONFIGS[normalizeRole(role)];
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login', { replace: true });
+  };
+
+  const getInitials = (name?: string) => {
+    if (!name) return 'AU';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+  };
 
   return (
     <aside
       className={cn(
-        'relative flex flex-col bg-navy-900 text-slate-300 transition-all duration-300 ease-in-out select-none border-r border-navy-800 z-30 shrink-0',
-        collapsed ? 'w-20' : 'w-64'
+        'relative flex flex-col bg-[#1E2227] text-slate-300 transition-all duration-200 ease-in-out select-none border-r border-[#2A2F37] z-30 shrink-0 h-screen',
+        collapsed ? 'w-14' : 'w-60'
       )}
     >
       {/* Brand Header */}
-      <div className="flex h-16 items-center justify-between px-4 border-b border-navy-800">
+      <div className="flex h-14 items-center justify-between px-3 border-b border-[#2A2F37]">
         {!collapsed ? (
-          <div className="flex items-center space-x-3">
-            <div className="h-9 w-9 rounded-lg bg-navy-800 border border-gold-500/40 flex items-center justify-center shadow-subtle">
-              <span className="font-serif text-lg font-bold text-gold-500 tracking-wider">A</span>
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="h-7 w-7 rounded bg-[#2C323B] border border-[#3A414D] flex items-center justify-center shrink-0">
+              <span className="font-semibold text-xs text-white tracking-tight">A</span>
             </div>
-            <div>
-              <h1 className="text-sm font-bold tracking-widest text-white uppercase">AUREVIA</h1>
-              <p className="text-[10px] text-slate-400 font-mono tracking-tight uppercase">REAL ESTATE CRM</p>
+            <div className="min-w-0">
+              <h1 className="text-xs font-bold tracking-widest text-white uppercase truncate">AUREVIA</h1>
+              <p className="text-[9px] text-slate-400 font-mono tracking-tight uppercase truncate">Developer CRM</p>
             </div>
           </div>
         ) : (
-          <div className="mx-auto h-9 w-9 rounded-lg bg-navy-800 border border-gold-500/40 flex items-center justify-center">
-            <span className="font-serif text-lg font-bold text-gold-500">A</span>
+          <div className="mx-auto h-7 w-7 rounded bg-[#2C323B] border border-[#3A414D] flex items-center justify-center">
+            <span className="font-semibold text-xs text-white">A</span>
           </div>
         )}
 
         <button
           onClick={() => setCollapsed(!collapsed)}
           className={cn(
-            'hidden lg:flex h-7 w-7 items-center justify-center rounded-md bg-navy-800 text-slate-400 hover:text-white hover:bg-navy-700 transition',
+            'hidden lg:flex h-6 w-6 items-center justify-center rounded text-slate-400 hover:text-white hover:bg-[#2C323B] transition',
             collapsed && 'mx-auto'
           )}
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+          {collapsed ? <ChevronRight size={13} /> : <ChevronLeft size={13} />}
         </button>
       </div>
 
-      {/* Navigation List */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-        {navigationItems.map((item) => {
-          const Icon = item.icon;
+      {/* Navigation Groups */}
+      <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-4">
+        {navGroups.map((group) => {
+          const visibleItems = group.items.filter((item) => canAccessRoute(role, item.path));
+          if (visibleItems.length === 0) return null;
+
           return (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                cn(
-                  'group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150',
-                  isActive
-                    ? 'bg-navy-700 text-white shadow-sm border-l-2 border-gold-500'
-                    : 'text-slate-400 hover:bg-navy-800 hover:text-slate-200'
-                )
-              }
-              title={collapsed ? item.name : undefined}
-            >
-              <Icon size={18} className="shrink-0 text-slate-400 group-hover:text-gold-500 transition-colors" />
+            <div key={group.label} className="space-y-0.5">
               {!collapsed && (
-                <div className="flex flex-1 items-center justify-between">
-                  <span>{item.name}</span>
-                  {item.badge && (
-                    <span
-                      className={cn(
-                        'text-[10px] px-1.5 py-0.5 rounded-full font-mono font-medium',
-                        item.badge.includes('Overdue')
-                          ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                          : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                      )}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
+                <div className="px-2 pt-1 pb-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  {group.label}
                 </div>
               )}
-            </NavLink>
+              {visibleItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      cn(
+                        'group flex items-center gap-2.5 px-2.5 py-1.5 rounded text-xs font-medium transition-colors',
+                        isActive
+                          ? 'bg-[#2C323B] text-white font-medium shadow-none'
+                          : 'text-slate-400 hover:bg-[#252A30] hover:text-slate-200'
+                      )
+                    }
+                    title={collapsed ? item.name : undefined}
+                  >
+                    <Icon size={15} className="shrink-0 text-slate-400 group-hover:text-slate-200 transition-colors" />
+                    {!collapsed && (
+                      <div className="flex flex-1 items-center justify-between min-w-0">
+                        <span className="truncate">{item.name}</span>
+                        {item.badge && (
+                          <span
+                            className={cn(
+                              'text-[10px] px-1.5 py-0.2 rounded font-mono font-medium shrink-0',
+                              item.badgeVariant === 'urgent' && 'bg-rose-950/70 text-rose-300 border border-rose-800/40',
+                              item.badgeVariant === 'highlight' && 'bg-amber-950/70 text-amber-300 border border-amber-800/40',
+                              item.badgeVariant === 'neutral' && 'bg-slate-800 text-slate-300 border border-slate-700'
+                            )}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </NavLink>
+                );
+              })}
+            </div>
           );
         })}
       </nav>
 
-      {/* Footer Role Indicator */}
-      <div className="p-3 border-t border-navy-800 bg-navy-900/60">
+      {/* User Account Controls */}
+      <div className="p-2 border-t border-[#2A2F37] bg-[#1E2227]">
         {!collapsed ? (
-          <div className="flex items-center gap-2.5 px-2 py-1.5 rounded-md bg-navy-800/80 border border-navy-700/50">
-            <ShieldCheck size={16} className="text-gold-500 shrink-0" />
-            <div className="overflow-hidden">
-              <p className="text-[11px] font-semibold text-slate-200 uppercase tracking-wider">Access Scope</p>
-              <p className="text-[10px] text-amber-400 font-semibold capitalize truncate">{activeRoleConfig?.title || role.replace('_', ' ')}</p>
+          <div className="flex items-center justify-between p-1.5 rounded hover:bg-[#252A30] transition">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-7 h-7 rounded bg-[#2C323B] border border-[#3A414D] flex items-center justify-center text-[11px] font-semibold text-slate-200 shrink-0">
+                {getInitials(user?.fullName)}
+              </div>
+              <div className="min-w-0 overflow-hidden">
+                <p className="text-xs font-medium text-slate-200 truncate">{user?.fullName || 'Rajesh Sharma'}</p>
+                <p className="text-[10px] text-slate-400 capitalize truncate">{activeRoleConfig?.title || role.replace('_', ' ')}</p>
+              </div>
             </div>
+            <button
+              onClick={handleLogout}
+              className="p-1 text-slate-400 hover:text-rose-400 hover:bg-[#2C323B] rounded transition shrink-0"
+              title="Sign out"
+            >
+              <LogOut size={14} />
+            </button>
           </div>
         ) : (
-          <div className="flex justify-center" title={`Role: ${activeRoleConfig?.title || role}`}>
-            <ShieldCheck size={18} className="text-gold-500" />
-          </div>
+          <button
+            onClick={handleLogout}
+            className="w-full flex justify-center py-2 text-slate-400 hover:text-rose-400 transition"
+            title="Sign out"
+          >
+            <LogOut size={15} />
+          </button>
         )}
       </div>
     </aside>
   );
 };
-

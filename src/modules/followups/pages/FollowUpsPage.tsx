@@ -215,50 +215,48 @@ export const FollowUpsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {/* 1. Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#E5E8EB]">
         <div>
-          <div className="flex items-center space-x-2 text-gold-600 text-xs font-semibold uppercase tracking-wider">
-            <CalendarCheck size={14} />
-            <span>Task Execution & Daily Outreach</span>
+          <div className="flex items-center gap-2 text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+            <span>Sales Operations</span>
+            <span>&bull;</span>
+            <span>Client Outreach Tasks</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight mt-0.5">
+          <h1 className="text-lg font-semibold text-slate-900 tracking-tight mt-0.5">
             Follow-up & Task Management
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Track daily customer touchpoints, resolve overdue callbacks, and automatically record completed conversations.
-          </p>
         </div>
 
         <button
           onClick={handleOpenCreateModal}
-          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs font-semibold shadow-card transition shrink-0 self-start md:self-auto"
+          className="h-8 px-3 inline-flex items-center gap-1.5 rounded bg-[#1E293B] hover:bg-slate-800 text-white text-xs font-medium transition shrink-0 self-start sm:self-auto"
         >
-          <Plus size={15} />
-          <span>Schedule Follow-up</span>
+          <Plus size={13} />
+          <span>Schedule Task</span>
         </button>
       </div>
 
       {/* 2. Overdue Warning Banner */}
       {followUpStats.overdueCount > 0 && (
-        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 flex items-start justify-between gap-3 text-xs shadow-xs">
-          <div className="flex items-start gap-2.5">
-            <AlertTriangle size={18} className="text-rose-600 shrink-0 mt-0.5" />
+        <div className="p-3 rounded-md bg-rose-50 border border-rose-200 text-rose-900 flex items-start justify-between gap-3 text-xs">
+          <div className="flex items-start gap-2">
+            <AlertTriangle size={15} className="text-rose-600 shrink-0 mt-0.5" />
             <div>
-              <p className="font-bold text-rose-950 text-sm">
-                Attention Required: {followUpStats.overdueCount} Overdue Client Follow-ups
+              <p className="font-semibold text-rose-950 text-xs">
+                {followUpStats.overdueCount} Overdue Client Follow-ups
               </p>
-              <p className="text-rose-800 mt-0.5 leading-relaxed">
-                Leads requiring immediate telephone calls or site visit follow-ups have passed their scheduled SLA time. Contact these clients now to prevent lead drop-off.
+              <p className="text-rose-700 text-[11px] mt-0.5">
+                Tasks requiring telephone calls or site visit follow-ups have exceeded their scheduled SLA.
               </p>
             </div>
           </div>
           <button
             onClick={() => setActiveTab('overdue')}
-            className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition shrink-0"
+            className="h-7 px-2.5 rounded bg-rose-600 hover:bg-rose-700 text-white font-medium text-xs transition shrink-0"
           >
-            View Overdue Tasks ({followUpStats.overdueCount})
+            View Overdue ({followUpStats.overdueCount})
           </button>
         </div>
       )}
@@ -270,14 +268,12 @@ export const FollowUpsPage: React.FC = () => {
           value={followUpStats.todayCount.toString()}
           subtitle="Scheduled for today"
           icon={Calendar}
-          variant="gold"
         />
         <MetricCard
           title="Overdue Tasks"
           value={followUpStats.overdueCount.toString()}
           subtitle="Immediate action required"
           icon={AlertTriangle}
-          variant="rose"
         />
         <MetricCard
           title="Upcoming Schedule"
@@ -290,134 +286,135 @@ export const FollowUpsPage: React.FC = () => {
           value={followUpStats.completedCount.toString()}
           subtitle="Interactions logged"
           icon={CheckCircle2}
-          variant="emerald"
         />
       </div>
 
-      {/* 4. Tab Navigation Bar */}
-      <div className="flex border-b border-slate-200 bg-white rounded-t-xl px-4 text-xs font-semibold text-slate-600">
-        <button
-          onClick={() => setActiveTab('all')}
-          className={`py-3 px-4 border-b-2 transition flex items-center gap-1.5 ${
-            activeTab === 'all'
-              ? 'border-navy-900 text-navy-950 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900'
-          }`}
-        >
-          <span>All Tasks</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-slate-100 text-slate-700 text-[10px]">
-            {followUps.length}
-          </span>
-        </button>
+      {/* 4. Tab Navigation & Content Container */}
+      <div className="bg-white rounded-md border border-[#E5E8EB] overflow-hidden">
+        <div className="flex border-b border-[#E5E8EB] bg-[#F8F9FA] px-3 text-xs font-medium text-slate-600">
+          <button
+            onClick={() => setActiveTab('all')}
+            className={`py-2 px-3 border-b-2 transition flex items-center gap-1.5 ${
+              activeTab === 'all'
+                ? 'border-slate-900 text-slate-900 font-semibold'
+                : 'border-transparent text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            <span>All Tasks</span>
+            <span className="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[10px] font-mono">
+              {followUps.length}
+            </span>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('today')}
-          className={`py-3 px-4 border-b-2 transition flex items-center gap-1.5 ${
-            activeTab === 'today'
-              ? 'border-navy-900 text-navy-950 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900'
-          }`}
-        >
-          <span>Today's Due</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-gold-100 text-gold-900 text-[10px]">
-            {followUpStats.todayCount}
-          </span>
-        </button>
+          <button
+            onClick={() => setActiveTab('today')}
+            className={`py-2 px-3 border-b-2 transition flex items-center gap-1.5 ${
+              activeTab === 'today'
+                ? 'border-slate-900 text-slate-900 font-semibold'
+                : 'border-transparent text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            <span>Today's Due</span>
+            <span className="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[10px] font-mono">
+              {followUpStats.todayCount}
+            </span>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('overdue')}
-          className={`py-3 px-4 border-b-2 transition flex items-center gap-1.5 ${
-            activeTab === 'overdue'
-              ? 'border-rose-600 text-rose-700 font-bold'
-              : 'border-transparent text-rose-600 hover:text-rose-800'
-          }`}
-        >
-          <span>Overdue</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-rose-100 text-rose-800 text-[10px]">
-            {followUpStats.overdueCount}
-          </span>
-        </button>
+          <button
+            onClick={() => setActiveTab('overdue')}
+            className={`py-2 px-3 border-b-2 transition flex items-center gap-1.5 ${
+              activeTab === 'overdue'
+                ? 'border-rose-600 text-rose-700 font-semibold'
+                : 'border-transparent text-rose-600 hover:text-rose-800'
+            }`}
+          >
+            <span>Overdue</span>
+            <span className="px-1.5 py-0.2 rounded bg-rose-100 text-rose-800 text-[10px] font-mono">
+              {followUpStats.overdueCount}
+            </span>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('upcoming')}
-          className={`py-3 px-4 border-b-2 transition flex items-center gap-1.5 ${
-            activeTab === 'upcoming'
-              ? 'border-navy-900 text-navy-950 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900'
-          }`}
-        >
-          <span>Upcoming</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-slate-100 text-slate-700 text-[10px]">
-            {followUpStats.upcomingCount}
-          </span>
-        </button>
+          <button
+            onClick={() => setActiveTab('upcoming')}
+            className={`py-2 px-3 border-b-2 transition flex items-center gap-1.5 ${
+              activeTab === 'upcoming'
+                ? 'border-slate-900 text-slate-900 font-semibold'
+                : 'border-transparent text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            <span>Upcoming</span>
+            <span className="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 text-[10px] font-mono">
+              {followUpStats.upcomingCount}
+            </span>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('completed')}
-          className={`py-3 px-4 border-b-2 transition flex items-center gap-1.5 ${
-            activeTab === 'completed'
-              ? 'border-emerald-600 text-emerald-800 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900'
-          }`}
-        >
-          <span>Completed</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800 text-[10px]">
-            {followUpStats.completedCount}
-          </span>
-        </button>
-      </div>
+          <button
+            onClick={() => setActiveTab('completed')}
+            className={`py-2 px-3 border-b-2 transition flex items-center gap-1.5 ${
+              activeTab === 'completed'
+                ? 'border-emerald-700 text-emerald-800 font-semibold'
+                : 'border-transparent text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            <span>Completed</span>
+            <span className="px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 text-[10px] font-mono">
+              {followUpStats.completedCount}
+            </span>
+          </button>
+        </div>
 
-      {/* 5. Search & Filters Bar */}
-      <div className="bg-white p-4 border border-t-0 border-surface-border shadow-card space-y-3">
-        <div className="flex flex-col sm:flex-row gap-2">
-          <div className="relative flex-1">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search follow-ups by customer name, phone, remarks..."
-              className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-1 focus:ring-navy-900"
-            />
-          </div>
+        {/* 5. Search & Filters Bar */}
+        <div className="p-3 border-b border-[#E5E8EB] space-y-2">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <div className="relative flex-1">
+              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search follow-ups by customer name, phone, remarks..."
+                className="w-full h-8 pl-8 pr-3 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-slate-400 transition"
+              />
+            </div>
 
-          <div className="grid grid-cols-3 gap-2 text-xs">
-            <select
-              value={selectedExecutive}
-              onChange={(e) => setSelectedExecutive(e.target.value)}
-              className="px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-800"
-            >
-              <option value="all">All Executives</option>
-              {salesExecutives.map((exec) => (
-                <option key={exec} value={exec}>
-                  {exec}
-                </option>
-              ))}
-            </select>
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              <select
+                value={selectedExecutive}
+                onChange={(e) => setSelectedExecutive(e.target.value)}
+                className="h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
+              >
+                <option value="all">All Executives</option>
+                {salesExecutives.map((exec) => (
+                  <option key={exec} value={exec}>
+                    {exec}
+                  </option>
+                ))}
+              </select>
 
-            <select
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value as any)}
-              className="px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-800"
-            >
-              <option value="all">All Types</option>
-              <option value="phone_call">Phone Call</option>
-              <option value="whatsapp_message">WhatsApp</option>
-              <option value="site_visit">Site Visit</option>
-              <option value="in_person_meeting">Meeting</option>
-              <option value="email">Email</option>
-            </select>
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value as any)}
+                className="h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
+              >
+                <option value="all">All Types</option>
+                <option value="phone_call">Phone Call</option>
+                <option value="whatsapp_message">WhatsApp</option>
+                <option value="site_visit">Site Visit</option>
+                <option value="in_person_meeting">Meeting</option>
+                <option value="email">Email</option>
+              </select>
 
-            <select
-              value={selectedPriority}
-              onChange={(e) => setSelectedPriority(e.target.value)}
-              className="px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-800"
-            >
-              <option value="all">All Priorities</option>
-              <option value="hot">🔥 Hot</option>
-              <option value="warm">⚡ Warm</option>
-              <option value="cold">❄️ Cold</option>
-            </select>
+              <select
+                value={selectedPriority}
+                onChange={(e) => setSelectedPriority(e.target.value)}
+                className="h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
+              >
+                <option value="all">All Priorities</option>
+                <option value="hot">Hot</option>
+                <option value="warm">Warm</option>
+                <option value="cold">Cold</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -581,10 +578,10 @@ export const FollowUpsPage: React.FC = () => {
 
       {/* Modal: Schedule Follow-up */}
       {isCreateModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-modal border border-surface-border overflow-hidden text-xs">
-            <div className="flex items-center justify-between px-5 py-3.5 bg-navy-900 text-white">
-              <h3 className="font-bold text-sm">Schedule Customer Follow-up</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+          <div className="bg-white w-full max-w-md rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden text-xs">
+            <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
+              <h3 className="font-semibold text-sm">Schedule Customer Follow-up</h3>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
                 className="text-slate-400 hover:text-white"
@@ -632,9 +629,9 @@ export const FollowUpsPage: React.FC = () => {
                     onChange={(e) => setPriority(e.target.value as any)}
                     className="w-full px-3 py-2 border rounded-lg bg-white"
                   >
-                    <option value="hot">🔥 Hot</option>
-                    <option value="warm">⚡ Warm</option>
-                    <option value="cold">❄️ Cold</option>
+                    <option value="hot">Hot</option>
+                    <option value="warm">Warm</option>
+                    <option value="cold">Cold</option>
                   </select>
                 </div>
               </div>
@@ -699,24 +696,24 @@ export const FollowUpsPage: React.FC = () => {
 
       {/* Modal: Complete Follow-up */}
       {completeTaskModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-modal border border-surface-border overflow-hidden text-xs">
-            <div className="flex items-center justify-between px-5 py-3.5 bg-emerald-900 text-white">
-              <h3 className="font-bold text-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+          <div className="bg-white w-full max-w-md rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden text-xs">
+            <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
+              <h3 className="font-semibold text-sm">
                 Log Completed Interaction — {completeTaskModal.leadName}
               </h3>
               <button
                 onClick={() => setCompleteTaskModal(null)}
-                className="text-emerald-200 hover:text-white"
+                className="text-slate-400 hover:text-white"
               >
                 <X size={16} />
               </button>
             </div>
 
             <form onSubmit={handleConfirmComplete} className="p-5 space-y-3.5">
-              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <p className="font-semibold text-slate-800">{completeTaskModal.remarks}</p>
-                <p className="text-[10px] text-slate-400 font-mono mt-1">
+              <div className="p-3 bg-[#F8F9FA] rounded border border-[#E5E8EB]">
+                <p className="font-medium text-[#1C2024]">{completeTaskModal.remarks}</p>
+                <p className="text-[10px] text-[#8B8D98] font-mono mt-1">
                   Scheduled: {formatDateTime(completeTaskModal.scheduledFor)}
                 </p>
               </div>
@@ -757,10 +754,10 @@ export const FollowUpsPage: React.FC = () => {
 
       {/* Modal: Reschedule Follow-up */}
       {rescheduleTaskModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-modal border border-surface-border overflow-hidden text-xs">
-            <div className="flex items-center justify-between px-5 py-3.5 bg-navy-900 text-white">
-              <h3 className="font-bold text-sm">Reschedule Task</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+          <div className="bg-white w-full max-w-md rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden text-xs">
+            <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
+              <h3 className="font-semibold text-sm">Reschedule Task</h3>
               <button
                 onClick={() => setRescheduleTaskModal(null)}
                 className="text-slate-400 hover:text-white"

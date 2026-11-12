@@ -107,36 +107,36 @@ export const BookingsPage: React.FC = () => {
     switch (status) {
       case 'confirmed':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            Confirmed (Sold)
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <CheckCircle2 className="w-3 h-3" />
+            Confirmed
           </span>
         );
       case 'token_received':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
-            <CreditCard className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200">
+            <CreditCard className="w-3 h-3" />
             Token Received
           </span>
         );
       case 'pending':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-            <Clock className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-blue-50 text-blue-700 border border-blue-200">
+            <Clock className="w-3 h-3" />
             Pending Verification
           </span>
         );
       case 'cancelled':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
-            <XCircle className="w-3.5 h-3.5" />
-            Cancelled (Unit Released)
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200">
+            <XCircle className="w-3 h-3" />
+            Cancelled
           </span>
         );
       case 'refunded':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-            <RotateCcw className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200">
+            <RotateCcw className="w-3 h-3" />
             Refunded
           </span>
         );
@@ -146,30 +146,30 @@ export const BookingsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-4 pb-8">
       {/* Top Header & Quick Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-1">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-lg font-semibold tracking-tight text-[#1C2024]">
             Bookings & Commercial Allotments
           </h1>
-          <p className="text-sm text-slate-500">
-            End-to-end transaction processing, agreement calculation, unit inventory lock, and allotment letters
+          <p className="text-xs text-[#60646C] mt-0.5">
+            Transaction processing, agreement calculation, unit inventory lock, and allotment letters.
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-xl shadow-sm transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-[#1E293B] hover:bg-[#0F172A] rounded transition-colors"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-3.5 h-3.5" />
             <span>New Booking</span>
           </button>
         </div>
       </div>
 
       {/* KPI Summary Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
         <MetricCard
           title="Total Bookings"
           value={bookingStats.total.toString()}
@@ -181,35 +181,31 @@ export const BookingsPage: React.FC = () => {
           value={bookingStats.confirmedCount.toString()}
           subtitle="Inventory marked as Sold"
           icon={CheckCircle2}
-          variant="emerald"
         />
         <MetricCard
           title="Token Received"
           value={bookingStats.tokenReceivedCount.toString()}
           subtitle="Inventory marked as Booked"
           icon={CreditCard}
-          variant="gold"
         />
         <MetricCard
           title="Total Token Collected"
           value={formatIndianCurrency(bookingStats.totalTokenInr)}
           subtitle="Direct booking advances"
           icon={TrendingUp}
-          variant="emerald"
         />
         <MetricCard
           title="Total Allotment Value"
           value={formatIndianCurrency(bookingStats.totalBookingValueInr)}
           subtitle="Total agreement pipeline"
           icon={Building}
-          variant="gold"
         />
       </div>
 
       {/* Tab Controls & Filters */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-4">
+      <div className="bg-white rounded-md border border-[#E5E8EB] p-3 space-y-3">
         {/* Status Tabs */}
-        <div className="flex items-center gap-2 border-b border-slate-100 pb-3 overflow-x-auto">
+        <div className="flex items-center space-x-1 border-b border-[#E5E8EB] pb-0 overflow-x-auto">
           {[
             { key: 'all', label: 'All Bookings', count: bookingStats.total },
             { key: 'confirmed', label: 'Confirmed', count: bookingStats.confirmedCount },
@@ -220,20 +216,14 @@ export const BookingsPage: React.FC = () => {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key as TabKey)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-2 border-b-2 text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 shrink-0 ${
                 activeTab === tab.key
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'border-[#1E293B] text-[#1C2024] font-semibold'
+                  : 'border-transparent text-[#60646C] hover:text-[#1C2024]'
               }`}
             >
               <span>{tab.label}</span>
-              <span
-                className={`px-1.5 py-0.5 rounded-full text-[10px] ${
-                  activeTab === tab.key
-                    ? 'bg-amber-400 text-slate-950 font-bold'
-                    : 'bg-slate-200 text-slate-700'
-                }`}
-              >
+              <span className="px-1.5 py-0.2 rounded font-mono text-[10px] bg-[#F1F3F5] text-[#60646C]">
                 {tab.count}
               </span>
             </button>
@@ -241,15 +231,15 @@ export const BookingsPage: React.FC = () => {
         </div>
 
         {/* Search & Select Filters */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
           <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#80848D]" />
             <input
               type="text"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
               placeholder="Search reference, customer, unit..."
-              className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#F8F9FA] border border-[#E5E8EB] rounded text-[#1C2024] placeholder-[#80848D] focus:outline-none focus:border-[#1E293B] focus:bg-white"
             />
           </div>
 
@@ -257,7 +247,7 @@ export const BookingsPage: React.FC = () => {
             <select
               value={selectedProject}
               onChange={e => setSelectedProject(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-700"
+              className="w-full px-2.5 py-1.5 text-xs bg-[#F8F9FA] border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
               <option value="all">All Projects</option>
               {projects.map(p => (
@@ -272,9 +262,9 @@ export const BookingsPage: React.FC = () => {
             <select
               value={selectedExecutive}
               onChange={e => setSelectedExecutive(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-700"
+              className="w-full px-2.5 py-1.5 text-xs bg-[#F8F9FA] border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
-              <option value="all">All Sales Executives</option>
+              <option value="all">All Closers</option>
               {salesExecutives.map(exec => (
                 <option key={exec} value={exec}>
                   {exec}
@@ -287,7 +277,7 @@ export const BookingsPage: React.FC = () => {
             <select
               value={selectedPaymentMode}
               onChange={e => setSelectedPaymentMode(e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-700"
+              className="w-full px-2.5 py-1.5 text-xs bg-[#F8F9FA] border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
               <option value="all">All Payment Modes</option>
               <option value="neft_rtgs">NEFT / RTGS</option>
@@ -301,11 +291,11 @@ export const BookingsPage: React.FC = () => {
 
       {/* Bookings Records List */}
       {filteredBookings.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-          <Receipt className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <h3 className="text-base font-semibold text-slate-900">No booking records found</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
-            No bookings match your current filter criteria. Create a new booking or clear filters.
+        <div className="bg-white rounded-md border border-[#E5E8EB] p-10 text-center">
+          <Receipt className="w-8 h-8 text-[#80848D] mx-auto mb-2 opacity-50" />
+          <h3 className="text-xs font-semibold text-[#1C2024]">No booking records found</h3>
+          <p className="text-[11px] text-[#60646C] max-w-sm mx-auto mt-0.5">
+            No bookings match your current filter criteria.
           </p>
           <button
             onClick={() => {
@@ -315,104 +305,104 @@ export const BookingsPage: React.FC = () => {
               setSelectedExecutive('all');
               setSelectedPaymentMode('all');
             }}
-            className="mt-4 px-3.5 py-2 text-xs font-medium text-amber-900 bg-amber-100 hover:bg-amber-200 rounded-lg transition-colors"
+            className="mt-3 px-3 py-1.5 text-xs font-medium text-[#1C2024] bg-[#F1F3F5] hover:bg-[#E5E8EB] rounded transition-colors"
           >
-            Clear all filters
+            Clear filters
           </button>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {filteredBookings.map(b => (
             <div
               key={b.id}
-              className="bg-white rounded-xl border border-slate-200 shadow-sm hover:border-amber-400/80 transition-all p-5"
+              className="bg-white rounded-md border border-[#E5E8EB] hover:border-[#1E293B] transition-all p-4"
             >
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
                 {/* Left: Reference, Customer, Project & Unit */}
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded border border-slate-200">
+                    <span className="font-mono text-xs font-semibold text-[#1C2024] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#E5E8EB]">
                       {b.bookingReference}
                     </span>
                     {getStatusBadge(b.status)}
-                    <span className="text-xs text-slate-400">
-                      Allotted on {formatDate(b.bookingDate)}
+                    <span className="text-[11px] text-[#80848D]">
+                      {formatDate(b.bookingDate)}
                     </span>
                   </div>
 
                   <div className="flex flex-wrap items-baseline gap-2">
-                    <h3 className="text-base font-bold text-slate-900">{b.leadName}</h3>
-                    <span className="text-xs text-slate-500 font-mono">({b.leadPhone})</span>
+                    <h3 className="text-sm font-semibold text-[#1C2024]">{b.leadName}</h3>
+                    <span className="text-xs text-[#60646C] font-mono">{b.leadPhone}</span>
                     {b.leadEmail && (
-                      <span className="text-xs text-slate-400 hidden sm:inline">• {b.leadEmail}</span>
+                      <span className="text-[11px] text-[#80848D] hidden sm:inline">&bull; {b.leadEmail}</span>
                     )}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600">
-                    <span className="inline-flex items-center gap-1 font-medium text-slate-800">
-                      <Building className="w-3.5 h-3.5 text-amber-600" />
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-[#60646C]">
+                    <span className="inline-flex items-center gap-1 font-medium text-[#1C2024]">
+                      <Building className="w-3.5 h-3.5 text-[#1E293B]" />
                       {b.projectName}
                     </span>
-                    <span>•</span>
+                    <span>&bull;</span>
                     <span>{b.towerName}</span>
-                    <span>•</span>
-                    <span className="font-bold text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                    <span>&bull;</span>
+                    <span className="font-medium text-[#1C2024] bg-[#F1F3F5] px-1.5 py-0.2 rounded border border-[#E5E8EB]">
                       Unit {b.unitNumber} ({b.typology})
                     </span>
-                    <span>•</span>
-                    <span>{b.carpetAreaSqft.toLocaleString('en-IN')} sq. ft.</span>
+                    <span>&bull;</span>
+                    <span className="text-[11px] text-[#80848D]">{b.carpetAreaSqft.toLocaleString('en-IN')} sq. ft.</span>
                   </div>
                 </div>
 
                 {/* Center: Financial Commercials */}
-                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex flex-wrap sm:flex-nowrap items-center gap-6 text-xs">
+                <div className="bg-[#F8F9FA] p-3 rounded border border-[#E5E8EB] flex flex-wrap sm:flex-nowrap items-center gap-5 text-xs">
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-semibold">Total Agreement</span>
-                    <span className="text-sm font-bold font-mono text-slate-900">
+                    <span className="text-[#80848D] block text-[10px] uppercase font-semibold">Total Agreement</span>
+                    <span className="text-xs font-semibold font-mono text-[#1C2024]">
                       {formatIndianCurrency(b.agreedTotalPriceInr)}
                     </span>
                   </div>
 
-                  <div className="border-l border-slate-200 pl-4">
-                    <span className="text-slate-400 block text-[10px] uppercase font-semibold">Token Paid</span>
-                    <span className="text-sm font-bold font-mono text-emerald-700">
+                  <div className="border-l border-[#E5E8EB] pl-3.5">
+                    <span className="text-[#80848D] block text-[10px] uppercase font-semibold">Token Paid</span>
+                    <span className="text-xs font-semibold font-mono text-emerald-700">
                       {formatIndianCurrency(b.tokenAmountInr)}
                     </span>
                   </div>
 
-                  <div className="border-l border-slate-200 pl-4">
-                    <span className="text-slate-400 block text-[10px] uppercase font-semibold">Payment Instrument</span>
-                    <span className="font-medium text-slate-800 uppercase block">
+                  <div className="border-l border-[#E5E8EB] pl-3.5">
+                    <span className="text-[#80848D] block text-[10px] uppercase font-semibold">Instrument</span>
+                    <span className="font-medium text-[#1C2024] uppercase block text-xs">
                       {b.paymentMode.replace('_', '/')}
                     </span>
-                    <span className="text-[11px] text-slate-500 font-mono">
+                    <span className="text-[10px] text-[#80848D] font-mono">
                       Ref: {b.paymentReference}
                     </span>
                   </div>
 
-                  <div className="border-l border-slate-200 pl-4 hidden md:block">
-                    <span className="text-slate-400 block text-[10px] uppercase font-semibold">Closing Manager</span>
-                    <span className="font-medium text-slate-800">{b.assignedExecutiveName}</span>
+                  <div className="border-l border-[#E5E8EB] pl-3.5 hidden md:block">
+                    <span className="text-[#80848D] block text-[10px] uppercase font-semibold">Closer</span>
+                    <span className="font-medium text-[#1C2024] text-xs">{b.assignedExecutiveName}</span>
                   </div>
                 </div>
 
                 {/* Right: Actions */}
-                <div className="flex items-center lg:flex-col lg:items-end justify-end gap-2 shrink-0">
+                <div className="flex items-center lg:flex-col lg:items-end justify-end gap-1.5 shrink-0">
                   <button
                     onClick={() => setSelectedPrintBooking(b)}
-                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-900 bg-amber-400 hover:bg-amber-300 rounded-lg shadow-sm transition-colors"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-white bg-[#1E293B] hover:bg-[#0F172A] rounded transition-colors"
                   >
                     <Printer className="w-3.5 h-3.5" />
                     <span>Print Allotment</span>
                   </button>
 
                   {/* Status Action Buttons */}
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
                     {b.status === 'token_received' && (
                       <button
                         onClick={() => updateBookingStatus(b.id, 'confirmed')}
                         title="Confirm Allotment & Mark Unit as Sold"
-                        className="px-2.5 py-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-lg border border-emerald-200 transition-colors"
+                        className="px-2 py-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded border border-emerald-200 transition-colors"
                       >
                         Confirm Allotment
                       </button>
@@ -422,7 +412,7 @@ export const BookingsPage: React.FC = () => {
                       <button
                         onClick={() => updateBookingStatus(b.id, 'token_received')}
                         title="Mark Token Received"
-                        className="px-2.5 py-1.5 text-[11px] font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg border border-amber-200 transition-colors"
+                        className="px-2 py-1 text-[11px] font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 rounded border border-amber-200 transition-colors"
                       >
                         Mark Token Received
                       </button>
@@ -436,9 +426,9 @@ export const BookingsPage: React.FC = () => {
                           setRefundAmount(b.tokenAmountInr);
                         }}
                         title="Cancel Booking & Release Unit to Inventory"
-                        className="px-2.5 py-1.5 text-[11px] font-medium text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                        className="px-2 py-1 text-[11px] font-medium text-red-600 hover:bg-red-50 rounded transition-colors"
                       >
-                        Cancel Booking
+                        Cancel
                       </button>
                     )}
                   </div>
@@ -447,14 +437,14 @@ export const BookingsPage: React.FC = () => {
 
               {/* Special conditions or cancellation reason note */}
               {(b.specialConditions || b.cancellationReason) && (
-                <div className="mt-3 pt-3 border-t border-slate-100 text-xs flex items-center justify-between">
+                <div className="mt-2.5 pt-2.5 border-t border-[#E5E8EB] text-xs flex items-center justify-between">
                   {b.specialConditions && (
-                    <p className="text-slate-500">
-                      <strong className="text-slate-700">Remarks:</strong> {b.specialConditions}
+                    <p className="text-[#60646C]">
+                      <strong className="text-[#1C2024] font-medium">Remarks:</strong> {b.specialConditions}
                     </p>
                   )}
                   {b.cancellationReason && (
-                    <p className="text-rose-600 bg-rose-50 px-2 py-0.5 rounded text-[11px] border border-rose-200">
+                    <p className="text-red-600 bg-red-50 px-2 py-0.5 rounded text-[11px] border border-red-200">
                       <strong>Cancellation Reason:</strong> {b.cancellationReason}
                       {b.refundAmountInr ? ` (Refunded: ${formatIndianCurrency(b.refundAmountInr)})` : ''}
                     </p>
@@ -485,38 +475,38 @@ export const BookingsPage: React.FC = () => {
 
       {/* Cancel Booking Confirmation Modal */}
       {cancelModalBooking && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 bg-slate-900 text-white">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/40 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-md bg-white rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
               <div className="flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-rose-400" />
-                <h3 className="text-base font-semibold">Cancel Allotment</h3>
+                <AlertCircle className="w-4 h-4 text-red-400" />
+                <h3 className="text-sm font-semibold">Cancel Allotment</h3>
               </div>
               <button
                 onClick={() => setCancelModalBooking(null)}
                 className="text-slate-400 hover:text-white"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleConfirmCancel} className="p-6 space-y-4">
-              <p className="text-xs text-slate-600">
+            <form onSubmit={handleConfirmCancel} className="p-5 space-y-3.5">
+              <p className="text-xs text-[#60646C]">
                 You are about to cancel booking{' '}
-                <strong className="text-slate-900 font-mono">
+                <strong className="text-[#1C2024] font-mono">
                   {cancelModalBooking.bookingReference}
                 </strong>{' '}
-                for <strong className="text-slate-900">{cancelModalBooking.leadName}</strong>.
+                for <strong className="text-[#1C2024]">{cancelModalBooking.leadName}</strong>.
               </p>
 
-              <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-800">
+              <div className="p-2.5 bg-red-50 border border-red-200 rounded text-xs text-red-800">
                 <strong>Inventory Guard:</strong> Cancelling this booking will immediately restore{' '}
                 <strong>Unit {cancelModalBooking.unitNumber}</strong> back to <strong>AVAILABLE</strong> in the floor stacking matrix.
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Cancellation Reason <span className="text-rose-500">*</span>
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
+                  Cancellation Reason <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   value={cancellationReason}
@@ -524,12 +514,12 @@ export const BookingsPage: React.FC = () => {
                   required
                   rows={3}
                   placeholder="e.g. Loan rejection, customer relocation, financial inability..."
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                  className="w-full px-2.5 py-1.5 text-xs border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">
+                <label className="block text-xs font-medium text-[#1C2024] mb-1">
                   Refund Amount Processed (₹)
                 </label>
                 <input
@@ -537,24 +527,24 @@ export const BookingsPage: React.FC = () => {
                   value={refundAmount}
                   onChange={e => setRefundAmount(Number(e.target.value))}
                   min={0}
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:outline-none font-mono"
+                  className="w-full px-2.5 py-1.5 text-xs border border-[#E5E8EB] rounded text-[#1C2024] focus:border-[#1E293B] focus:outline-none font-mono"
                 />
-                <p className="text-[11px] text-slate-500 mt-0.5">
+                <p className="text-[11px] text-[#80848D] mt-0.5">
                   Initial token paid was: {formatIndianCurrency(cancelModalBooking.tokenAmountInr)}
                 </p>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#E5E8EB]">
                 <button
                   type="button"
                   onClick={() => setCancelModalBooking(null)}
-                  className="px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                  className="px-3 py-1.5 text-xs font-medium text-[#60646C] hover:bg-[#F8F9FA] rounded transition-colors"
                 >
                   Dismiss
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg transition-colors"
+                  className="px-3.5 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-700 rounded transition-colors"
                 >
                   Confirm Cancellation & Release Unit
                 </button>

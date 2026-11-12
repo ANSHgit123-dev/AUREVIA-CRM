@@ -247,51 +247,51 @@ export const ReportsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 pb-12 print:p-0 print:space-y-4">
+    <div className="space-y-4 pb-8 print:p-0 print:space-y-4">
       {/* Header and Print/Export Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 print:hidden">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-1 print:hidden">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-lg font-semibold tracking-tight text-[#1C2024]">
             Reports & Business Intelligence
           </h1>
-          <p className="text-sm text-slate-500">
-            Real estate absorption analytics, executive sales velocity, acquisition channels, and revenue metrics
+          <p className="text-xs text-[#60646C] mt-0.5">
+            Absorption analytics, closer sales velocity, acquisition channels, and revenue metrics.
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={handleExportCSV}
-            className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl shadow-sm transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#1C2024] bg-white hover:bg-[#F8F9FA] border border-[#E5E8EB] rounded transition-colors"
           >
-            <Download className="w-4 h-4 text-slate-500" />
+            <Download className="w-3.5 h-3.5 text-[#60646C]" />
             <span>Export CSV</span>
           </button>
           <button
             onClick={() => window.print()}
-            className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-slate-900 bg-amber-400 hover:bg-amber-300 rounded-xl shadow-sm transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-[#1E293B] hover:bg-[#0F172A] rounded transition-colors"
           >
-            <Printer className="w-4 h-4" />
+            <Printer className="w-3.5 h-3.5" />
             <span>Print Report</span>
           </button>
         </div>
       </div>
 
       {/* Printable Header (Visible only on Print) */}
-      <div className="hidden print:block border-b-2 border-slate-900 pb-4 mb-6">
-        <h1 className="text-2xl font-serif font-bold text-slate-950">AUREVIA REALTY DEVELOPERS</h1>
-        <p className="text-xs uppercase font-semibold text-amber-700">Executive Real Estate Sales & Portfolio Performance Report</p>
-        <p className="text-xs text-slate-500 mt-1">Generated: {formatDate(new Date().toISOString())} | Scope: Consolidated National Portfolio</p>
+      <div className="hidden print:block border-b-2 border-slate-900 pb-3 mb-4">
+        <h1 className="text-xl font-serif font-bold text-slate-950">AUREVIA REALTY DEVELOPERS</h1>
+        <p className="text-xs uppercase font-semibold text-slate-700">Executive Real Estate Sales & Portfolio Performance Report</p>
+        <p className="text-[11px] text-slate-500 mt-0.5">Generated: {formatDate(new Date().toISOString())} | Scope: Consolidated Portfolio</p>
       </div>
 
       {/* Global Filter Toolbar */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 print:hidden space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white rounded-md border border-[#E5E8EB] p-3 print:hidden space-y-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2.5">
           {/* Perspective Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto">
+          <div className="flex items-center space-x-1 overflow-x-auto">
             {[
               { key: 'overview', label: 'Executive Overview', icon: BarChart3 },
               { key: 'projects', label: 'Project Absorption', icon: Building },
-              { key: 'executives', label: 'Executive Performance', icon: User },
+              { key: 'executives', label: 'Closer Performance', icon: User },
               { key: 'sources', label: 'Acquisition Channels', icon: Compass },
             ].map(tab => {
               const Icon = tab.icon;
@@ -299,10 +299,10 @@ export const ReportsPage: React.FC = () => {
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key as ReportTab)}
-                  className={`px-3.5 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-2 ${
+                  className={`px-3 py-1.5 rounded text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                     activeTab === tab.key
-                      ? 'bg-slate-900 text-white'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? 'bg-[#1E293B] text-white'
+                      : 'bg-[#F1F3F5] text-[#60646C] hover:bg-[#E5E8EB]'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -317,7 +317,7 @@ export const ReportsPage: React.FC = () => {
             <select
               value={selectedProject}
               onChange={e => setSelectedProject(e.target.value)}
-              className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-700"
+              className="px-2.5 py-1.5 bg-[#F8F9FA] border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
               <option value="all">All Projects</option>
               {projects.map(p => (
@@ -330,7 +330,7 @@ export const ReportsPage: React.FC = () => {
             <select
               value={selectedExecutive}
               onChange={e => setSelectedExecutive(e.target.value)}
-              className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-700"
+              className="px-2.5 py-1.5 bg-[#F8F9FA] border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
               <option value="all">All Closers</option>
               {salesExecutives.map(exec => (
@@ -354,91 +354,86 @@ export const ReportsPage: React.FC = () => {
         <MetricCard
           title="Qualified Leads"
           value={qualifiedLeadsCount.toString()}
-          subtitle={`${totalLeadsCount > 0 ? Math.round((qualifiedLeadsCount / totalLeadsCount) * 100) : 0}% qualification rate`}
+          subtitle={`${totalLeadsCount > 0 ? Math.round((qualifiedLeadsCount / totalLeadsCount) * 100) : 0}% rate`}
           icon={CheckCircle2}
-          variant="emerald"
         />
         <MetricCard
           title="Site Visits"
           value={siteVisitsConductedCount.toString()}
-          subtitle="Conducted inspections"
+          subtitle="Inspections completed"
           icon={MapPin}
-          variant="gold"
         />
         <MetricCard
           title="Bookings Closed"
           value={bookingsClosedCount.toString()}
           subtitle="Confirmed allotments"
           icon={CheckCircle2}
-          variant="emerald"
         />
         <MetricCard
           title="Conversion Rate"
           value={`${conversionRate}%`}
-          subtitle="Lead to booking closure"
+          subtitle="Lead to closure"
           icon={Percent}
-          variant="gold"
         />
         <MetricCard
           title="Total Sales Value"
           value={formatIndianCurrency(totalSalesValueInr)}
           subtitle="Gross booked revenue"
           icon={TrendingUp}
-          variant="emerald"
         />
       </div>
 
       {/* TAB 1: EXECUTIVE OVERVIEW */}
       {(activeTab === 'overview' || activeTab === 'projects') && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Project Absorption Table */}
-          <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <div className="lg:col-span-2 bg-white rounded-md border border-[#E5E8EB] p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-slate-900">Project Inventory Absorption</h3>
-                <p className="text-xs text-slate-500">Commercial velocity and unit absorption across developments</p>
+                <h3 className="text-xs font-semibold text-[#1C2024] uppercase tracking-wider">Project Inventory Absorption</h3>
+                <p className="text-[11px] text-[#60646C]">Commercial velocity and unit absorption across developments</p>
               </div>
-              <span className="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded">
-                {projects.length} Active Developments
+              <span className="text-[11px] font-medium text-[#1C2024] bg-[#F1F3F5] border border-[#E5E8EB] px-2 py-0.5 rounded">
+                {projects.length} Developments
               </span>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50">
-                    <th className="py-2.5 px-3">Project</th>
-                    <th className="py-2.5 px-3 text-center">Total Units</th>
-                    <th className="py-2.5 px-3 text-center">Available</th>
-                    <th className="py-2.5 px-3 text-center">Booked/Sold</th>
-                    <th className="py-2.5 px-3">Absorption</th>
-                    <th className="py-2.5 px-3 text-right">Revenue Realized</th>
+                  <tr className="border-b border-[#E5E8EB] text-[#80848D] font-semibold bg-[#F8F9FA]">
+                    <th className="py-2 px-2.5">Project</th>
+                    <th className="py-2 px-2.5 text-center">Total</th>
+                    <th className="py-2 px-2.5 text-center">Available</th>
+                    <th className="py-2 px-2.5 text-center">Booked/Sold</th>
+                    <th className="py-2 px-2.5">Absorption</th>
+                    <th className="py-2 px-2.5 text-right">Revenue</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-[#F1F3F5]">
                   {projectPerformanceData.map(proj => (
-                    <tr key={proj.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="py-3 px-3">
-                        <div className="font-semibold text-slate-900">{proj.name}</div>
-                        <div className="text-[11px] text-slate-400">{proj.city}</div>
+                    <tr key={proj.id} className="hover:bg-[#F8F9FA] transition-colors">
+                      <td className="py-2.5 px-2.5">
+                        <div className="font-semibold text-[#1C2024]">{proj.name}</div>
+                        <div className="text-[10px] text-[#80848D]">{proj.city}</div>
                       </td>
-                      <td className="py-3 px-3 text-center font-mono font-medium">{proj.totalUnits}</td>
-                      <td className="py-3 px-3 text-center font-mono text-emerald-700 font-semibold">{proj.availableUnits}</td>
-                      <td className="py-3 px-3 text-center font-mono text-amber-700 font-semibold">{proj.bookedUnits + proj.soldUnits}</td>
-                      <td className="py-3 px-3">
+                      <td className="py-2.5 px-2.5 text-center font-mono">{proj.totalUnits}</td>
+                      <td className="py-2.5 px-2.5 text-center font-mono text-emerald-700 font-medium">{proj.availableUnits}</td>
+                      <td className="py-2.5 px-2.5 text-center font-mono text-amber-700 font-medium">{proj.bookedUnits + proj.soldUnits}</td>
+                      <td className="py-2.5 px-2.5">
                         <div className="flex items-center gap-2">
-                          <div className="w-16 bg-slate-100 h-2 rounded-full overflow-hidden">
+                          <div className="w-16 bg-[#F1F3F5] h-1.5 rounded-full overflow-hidden">
                             <div
-                              className="bg-amber-500 h-full rounded-full transition-all"
+                              className="bg-[#1E293B] h-full rounded-full transition-all"
                               style={{ width: `${Math.min(100, proj.absorptionRate)}%` }}
                             />
                           </div>
-                          <span className="font-bold text-slate-800 font-mono text-xs">
+                          <span className="font-medium text-[#1C2024] font-mono text-xs">
                             {proj.absorptionRate}%
                           </span>
                         </div>
                       </td>
-                      <td className="py-3 px-3 text-right font-mono font-bold text-slate-900">
+                      <td className="py-2.5 px-2.5 text-right font-mono font-semibold text-[#1C2024]">
                         {formatIndianCurrency(proj.revenueGenerated)}
                       </td>
                     </tr>
@@ -449,27 +444,27 @@ export const ReportsPage: React.FC = () => {
           </div>
 
           {/* Absorption Chart */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4 flex flex-col justify-between">
+          <div className="bg-white rounded-md border border-[#E5E8EB] p-4 space-y-3 flex flex-col justify-between">
             <div>
-              <h3 className="text-base font-bold text-slate-900">Absorption % Comparison</h3>
-              <p className="text-xs text-slate-500">Unit sales progress towards sell-out</p>
+              <h3 className="text-xs font-semibold text-[#1C2024] uppercase tracking-wider">Absorption Comparison</h3>
+              <p className="text-[11px] text-[#60646C]">Unit sales progress towards sell-out</p>
             </div>
-            <div className="h-64 w-full">
+            <div className="h-56 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={projectPerformanceData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#64748b' }} interval={0} angle={-15} textAnchor="end" />
-                  <YAxis tick={{ fontSize: 10, fill: '#64748b' }} unit="%" domain={[0, 100]} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F3F5" />
+                  <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#80848D' }} interval={0} angle={-15} textAnchor="end" />
+                  <YAxis tick={{ fontSize: 10, fill: '#80848D' }} unit="%" domain={[0, 100]} />
                   <Tooltip
                     formatter={(val: any) => [`${val}%`, 'Absorption Rate']}
-                    contentStyle={{ borderRadius: 8, fontSize: 12 }}
+                    contentStyle={{ borderRadius: 4, borderColor: '#E5E8EB', fontSize: 11 }}
                   />
-                  <Bar dataKey="absorptionRate" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="absorptionRate" fill="#1E293B" radius={[2, 2, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <div className="text-[11px] text-slate-400 text-center">
-              Target absorption speed: 15% per quarter per development.
+            <div className="text-[10px] text-[#80848D] text-center">
+              Target absorption: 15% per quarter per development.
             </div>
           </div>
         </div>
@@ -477,49 +472,49 @@ export const ReportsPage: React.FC = () => {
 
       {/* TAB 2: SALES EXECUTIVE PERFORMANCE */}
       {(activeTab === 'overview' || activeTab === 'executives') && (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+        <div className="bg-white rounded-md border border-[#E5E8EB] p-4 space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <div>
-              <h3 className="text-base font-bold text-slate-900">Sales Executive Performance & Closure Velocity</h3>
-              <p className="text-xs text-slate-500">Individual pipeline management, inspection conversions, and closed deal volume</p>
+              <h3 className="text-xs font-semibold text-[#1C2024] uppercase tracking-wider">Closer Performance & Velocity</h3>
+              <p className="text-[11px] text-[#60646C]">Pipeline management, inspection conversions, and closed deal volume</p>
             </div>
-            <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
-              {executivePerformanceData.length} Active Sales Closers
+            <span className="text-[11px] font-medium text-[#1C2024] bg-[#F1F3F5] border border-[#E5E8EB] px-2 py-0.5 rounded">
+              {executivePerformanceData.length} Active Closers
             </span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50">
-                  <th className="py-2.5 px-3">Sales Closer</th>
-                  <th className="py-2.5 px-3 text-center">Assigned Leads</th>
-                  <th className="py-2.5 px-3 text-center">Qualified</th>
-                  <th className="py-2.5 px-3 text-center">Site Visits Conducted</th>
-                  <th className="py-2.5 px-3 text-center">Bookings Closed</th>
-                  <th className="py-2.5 px-3 text-center">Conversion Rate</th>
-                  <th className="py-2.5 px-3 text-right">Total Deal Value (INR)</th>
+                <tr className="border-b border-[#E5E8EB] text-[#80848D] font-semibold bg-[#F8F9FA]">
+                  <th className="py-2 px-2.5">Sales Closer</th>
+                  <th className="py-2 px-2.5 text-center">Assigned Leads</th>
+                  <th className="py-2 px-2.5 text-center">Qualified</th>
+                  <th className="py-2 px-2.5 text-center">Site Visits</th>
+                  <th className="py-2 px-2.5 text-center">Bookings Closed</th>
+                  <th className="py-2 px-2.5 text-center">Conversion</th>
+                  <th className="py-2 px-2.5 text-right">Deal Value (INR)</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-[#F1F3F5]">
                 {executivePerformanceData.map(exec => (
-                  <tr key={exec.name} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-3 font-semibold text-slate-900 flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-slate-100 border border-slate-300 text-slate-700 flex items-center justify-center font-bold text-[10px]">
+                  <tr key={exec.name} className="hover:bg-[#F8F9FA] transition-colors">
+                    <td className="py-2.5 px-2.5 font-medium text-[#1C2024] flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full bg-[#F1F3F5] border border-[#E5E8EB] text-[#60646C] flex items-center justify-center font-medium text-[9px]">
                         {exec.name.charAt(0)}
                       </div>
                       <span>{exec.name}</span>
                     </td>
-                    <td className="py-3 px-3 text-center font-mono">{exec.assignedLeads}</td>
-                    <td className="py-3 px-3 text-center font-mono text-emerald-700 font-medium">{exec.qualified}</td>
-                    <td className="py-3 px-3 text-center font-mono text-amber-700 font-medium">{exec.siteVisitsConducted}</td>
-                    <td className="py-3 px-3 text-center font-mono font-bold text-slate-900">{exec.bookingsClosed}</td>
-                    <td className="py-3 px-3 text-center">
-                      <span className="inline-block px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-50 text-amber-900 border border-amber-200">
+                    <td className="py-2.5 px-2.5 text-center font-mono">{exec.assignedLeads}</td>
+                    <td className="py-2.5 px-2.5 text-center font-mono text-emerald-700">{exec.qualified}</td>
+                    <td className="py-2.5 px-2.5 text-center font-mono text-amber-700">{exec.siteVisitsConducted}</td>
+                    <td className="py-2.5 px-2.5 text-center font-mono font-semibold text-[#1C2024]">{exec.bookingsClosed}</td>
+                    <td className="py-2.5 px-2.5 text-center">
+                      <span className="inline-block px-1.5 py-0.2 rounded text-[11px] font-mono font-medium bg-[#F1F3F5] text-[#1C2024] border border-[#E5E8EB]">
                         {exec.conversionRate}%
                       </span>
                     </td>
-                    <td className="py-3 px-3 text-right font-mono font-bold text-slate-900">
+                    <td className="py-2.5 px-2.5 text-right font-mono font-semibold text-[#1C2024]">
                       {formatIndianCurrency(exec.totalSalesValueInr)}
                     </td>
                   </tr>
@@ -532,43 +527,43 @@ export const ReportsPage: React.FC = () => {
 
       {/* TAB 3: ACQUISITION CHANNELS & LEAD SOURCES */}
       {(activeTab === 'overview' || activeTab === 'sources') && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Source Breakdown Table */}
-          <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <div className="lg:col-span-2 bg-white rounded-md border border-[#E5E8EB] p-4 space-y-3">
             <div>
-              <h3 className="text-base font-bold text-slate-900">Acquisition Channels & Source ROI</h3>
-              <p className="text-xs text-slate-500">Lead quality, conversion propensity, and closed value across channels</p>
+              <h3 className="text-xs font-semibold text-[#1C2024] uppercase tracking-wider">Acquisition Channels & Source ROI</h3>
+              <p className="text-[11px] text-[#60646C]">Lead quality, conversion propensity, and closed value across channels</p>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-200 text-slate-500 font-semibold bg-slate-50">
-                    <th className="py-2.5 px-3">Lead Source</th>
-                    <th className="py-2.5 px-3 text-center">Total Inquiries</th>
-                    <th className="py-2.5 px-3 text-center">Qualified</th>
-                    <th className="py-2.5 px-3 text-center">Bookings Closed</th>
-                    <th className="py-2.5 px-3 text-center">Closure %</th>
-                    <th className="py-2.5 px-3 text-right">Revenue Contributed</th>
+                  <tr className="border-b border-[#E5E8EB] text-[#80848D] font-semibold bg-[#F8F9FA]">
+                    <th className="py-2 px-2.5">Lead Source</th>
+                    <th className="py-2 px-2.5 text-center">Inquiries</th>
+                    <th className="py-2 px-2.5 text-center">Qualified</th>
+                    <th className="py-2 px-2.5 text-center">Bookings</th>
+                    <th className="py-2 px-2.5 text-center">Closure %</th>
+                    <th className="py-2 px-2.5 text-right">Revenue Contributed</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-[#F1F3F5]">
                   {sourceAnalyticsData.map(src => (
-                    <tr key={src.sourceKey} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="py-3 px-3 flex items-center gap-2">
+                    <tr key={src.sourceKey} className="hover:bg-[#F8F9FA] transition-colors">
+                      <td className="py-2.5 px-2.5 flex items-center gap-2">
                         <div
-                          className="w-2.5 h-2.5 rounded-full"
+                          className="w-2 h-2 rounded-full"
                           style={{ backgroundColor: src.color }}
                         />
-                        <span className="font-semibold text-slate-900">{src.name}</span>
+                        <span className="font-medium text-[#1C2024]">{src.name}</span>
                       </td>
-                      <td className="py-3 px-3 text-center font-mono">{src.leads}</td>
-                      <td className="py-3 px-3 text-center font-mono text-emerald-700">{src.qualified}</td>
-                      <td className="py-3 px-3 text-center font-mono font-bold text-slate-900">{src.bookings}</td>
-                      <td className="py-3 px-3 text-center">
-                        <span className="font-mono font-semibold text-slate-800">{src.conversionRate}%</span>
+                      <td className="py-2.5 px-2.5 text-center font-mono">{src.leads}</td>
+                      <td className="py-2.5 px-2.5 text-center font-mono text-emerald-700">{src.qualified}</td>
+                      <td className="py-2.5 px-2.5 text-center font-mono font-semibold text-[#1C2024]">{src.bookings}</td>
+                      <td className="py-2.5 px-2.5 text-center">
+                        <span className="font-mono font-medium text-[#1C2024]">{src.conversionRate}%</span>
                       </td>
-                      <td className="py-3 px-3 text-right font-mono font-bold text-slate-900">
+                      <td className="py-2.5 px-2.5 text-right font-mono font-semibold text-[#1C2024]">
                         {formatIndianCurrency(src.revenueInr)}
                       </td>
                     </tr>
@@ -579,12 +574,12 @@ export const ReportsPage: React.FC = () => {
           </div>
 
           {/* Source Distribution Donut Chart */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4 flex flex-col justify-between">
+          <div className="bg-white rounded-md border border-[#E5E8EB] p-4 space-y-3 flex flex-col justify-between">
             <div>
-              <h3 className="text-base font-bold text-slate-900">Source Share</h3>
-              <p className="text-xs text-slate-500">Volume proportion of total inquiries</p>
+              <h3 className="text-xs font-semibold text-[#1C2024] uppercase tracking-wider">Source Share</h3>
+              <p className="text-[11px] text-[#60646C]">Volume proportion of total inquiries</p>
             </div>
-            <div className="h-64 w-full">
+            <div className="h-56 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -593,8 +588,8 @@ export const ReportsPage: React.FC = () => {
                     nameKey="name"
                     cx="50%"
                     cy="50%"
-                    outerRadius={80}
-                    innerRadius={46}
+                    outerRadius={75}
+                    innerRadius={42}
                     paddingAngle={3}
                   >
                     {sourceAnalyticsData.map((entry, index) => (
@@ -603,15 +598,15 @@ export const ReportsPage: React.FC = () => {
                   </Pie>
                   <Tooltip
                     formatter={(val: any, name: any) => [`${val} Leads`, name]}
-                    contentStyle={{ borderRadius: 8, fontSize: 12 }}
+                    contentStyle={{ borderRadius: 4, borderColor: '#E5E8EB', fontSize: 11 }}
                   />
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 border-t border-slate-100 text-[10px]">
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 border-t border-[#E5E8EB] text-[10px]">
               {sourceAnalyticsData.slice(0, 4).map(src => (
-                <div key={src.sourceKey} className="flex items-center gap-1 text-slate-600">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: src.color }} />
+                <div key={src.sourceKey} className="flex items-center gap-1 text-[#60646C]">
+                  <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: src.color }} />
                   <span>{src.name}</span>
                 </div>
               ))}

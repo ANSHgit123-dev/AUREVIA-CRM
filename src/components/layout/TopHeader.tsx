@@ -7,7 +7,7 @@ import {
   ChevronDown,
   LogOut,
   User,
-  PlusCircle,
+  Plus,
   Check,
   Shield,
 } from 'lucide-react';
@@ -34,8 +34,8 @@ export const TopHeader: React.FC = () => {
   ];
 
   const activeProjectName = selectedProjectId === 'all'
-    ? 'All Projects'
-    : projects.find(p => p.id === selectedProjectId)?.name || 'All Projects';
+    ? 'All Developments'
+    : projects.find(p => p.id === selectedProjectId)?.name || 'All Developments';
 
   const activeRoleConfig = ROLE_CONFIGS[normalizeRole(role)];
 
@@ -51,48 +51,46 @@ export const TopHeader: React.FC = () => {
     navigate('/login', { replace: true });
   };
 
-  return (
-    <header className="h-16 bg-white border-b border-surface-border px-6 flex items-center justify-between sticky top-0 z-20 shadow-subtle shrink-0">
-      {/* Search & Project Selector */}
-      <div className="flex items-center space-x-4 flex-1 max-w-2xl">
-        <div className="relative flex-1">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search leads, phone numbers, units (e.g. A-1402)..."
-            className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-900 focus:bg-white transition"
-          />
-        </div>
+  const getInitials = (name?: string) => {
+    if (!name) return 'AU';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+  };
 
-        {/* Dynamic Project Selector Dropdown */}
+  return (
+    <header className="h-[50px] bg-white border-b border-[#E5E8EB] px-5 flex items-center justify-between sticky top-0 z-20 shrink-0">
+      {/* Project Selector & Search */}
+      <div className="flex items-center space-x-3 flex-1 max-w-xl">
+        {/* Project Selector */}
         <div className="relative">
           <button
             onClick={() => setShowProjectMenu(!showProjectMenu)}
-            className="flex items-center space-x-2 px-3 py-2 text-xs font-medium text-slate-700 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition"
+            className="flex items-center space-x-2 h-8 px-2.5 text-xs font-medium text-slate-700 bg-[#F5F6F7] border border-[#E5E8EB] rounded hover:bg-slate-100 transition"
           >
-            <Building size={14} className="text-slate-500 shrink-0" />
-            <span className="truncate max-w-[150px]">{activeProjectName}</span>
-            <ChevronDown size={14} className="text-slate-400 shrink-0" />
+            <Building size={13} className="text-slate-500 shrink-0" />
+            <span className="truncate max-w-[140px]">{activeProjectName}</span>
+            <ChevronDown size={12} className="text-slate-400 shrink-0" />
           </button>
 
           {showProjectMenu && (
-            <div className="absolute left-0 mt-2 w-64 bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 z-50 text-xs">
-              <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                Select Active Development
+            <div className="absolute left-0 mt-1.5 w-64 bg-white border border-[#E5E8EB] rounded-md shadow-lg py-1 z-50 text-xs">
+              <div className="px-3 py-1 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                Active Development
               </div>
               <button
                 onClick={() => {
                   setSelectedProjectId('all');
                   setShowProjectMenu(false);
                 }}
-                className="w-full flex items-center justify-between px-3 py-2 text-left hover:bg-slate-50 transition text-slate-800"
+                className="w-full flex items-center justify-between px-3 py-1.5 text-left hover:bg-[#F5F6F7] transition text-slate-700"
               >
-                <span className={selectedProjectId === 'all' ? 'font-bold text-navy-900' : ''}>
-                  All Projects (Pan-Org)
+                <span className={selectedProjectId === 'all' ? 'font-semibold text-slate-900' : ''}>
+                  All Developments (Pan-Org)
                 </span>
-                {selectedProjectId === 'all' && <Check size={14} className="text-gold-500" />}
+                {selectedProjectId === 'all' && <Check size={13} className="text-slate-900" />}
               </button>
-              <div className="my-1 border-t border-slate-100" />
+              <div className="my-1 border-t border-[#E5E8EB]" />
               {projects.map((p) => (
                 <button
                   key={p.id}
@@ -100,129 +98,110 @@ export const TopHeader: React.FC = () => {
                     setSelectedProjectId(p.id);
                     setShowProjectMenu(false);
                   }}
-                  className="w-full flex items-center justify-between px-3 py-2 text-left hover:bg-slate-50 transition text-slate-800"
+                  className="w-full flex items-center justify-between px-3 py-1.5 text-left hover:bg-[#F5F6F7] transition text-slate-700"
                 >
                   <div className="truncate pr-2">
-                    <p className={`truncate ${selectedProjectId === p.id ? 'font-bold text-navy-900' : ''}`}>{p.name}</p>
+                    <p className={`truncate ${selectedProjectId === p.id ? 'font-semibold text-slate-900' : ''}`}>{p.name}</p>
                     <p className="text-[10px] text-slate-400">{p.city} &bull; {p.totalUnits} Units</p>
                   </div>
-                  {selectedProjectId === p.id && <Check size={14} className="text-gold-500 shrink-0" />}
+                  {selectedProjectId === p.id && <Check size={13} className="text-slate-900 shrink-0" />}
                 </button>
               ))}
             </div>
           )}
         </div>
+
+        {/* Global Search Bar */}
+        <div className="relative flex-1">
+          <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search leads, units, bookings..."
+            className="w-full h-8 pl-8 pr-3 text-xs bg-[#F5F6F7] border border-[#E5E8EB] rounded text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-slate-400 focus:bg-white transition"
+          />
+        </div>
       </div>
 
-      {/* Right Controls */}
-      <div className="flex items-center space-x-3.5">
+      {/* Right Actions & Profile */}
+      <div className="flex items-center space-x-2.5">
         {/* Quick Add Button */}
         <button
           onClick={() => navigate('/leads?action=new')}
-          className="flex items-center space-x-1.5 px-3 py-1.5 bg-navy-900 text-white rounded-lg text-xs font-semibold hover:bg-navy-800 transition shadow-sm"
+          className="flex items-center space-x-1.5 h-8 px-3 bg-[#1E293B] text-white rounded text-xs font-medium hover:bg-slate-800 transition"
         >
-          <PlusCircle size={14} />
+          <Plus size={13} />
           <span>New Lead</span>
         </button>
 
-        {/* Active Role Selector Dropdown - Demo Mode */}
+        {/* Active Role Switcher Dropdown (Demo/Presentation Mode) */}
         {(!isSupabaseConfigured || isMockFallbackEnabled || user?.email.endsWith('.demo')) && (
-          <div className="hidden sm:flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1">
-            <span className="text-[10px] font-bold text-amber-700 uppercase tracking-wider">Demo:</span>
+          <div className="hidden sm:flex items-center gap-1.5 h-8 bg-[#F5F6F7] border border-[#E5E8EB] rounded px-2">
+            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Role:</span>
             <select
               data-testid="role-selector-dropdown"
               value={normalizeRole(role)}
               onChange={(e) => handleRoleSwitch(e.target.value as UserRole)}
-              className="text-xs font-semibold bg-transparent text-amber-900 outline-none cursor-pointer"
+              className="text-xs font-medium bg-transparent text-slate-800 outline-none cursor-pointer"
             >
               {roles.map((r) => (
                 <option key={r} value={r}>
-                  {ROLE_CONFIGS[r]?.badge}: {ROLE_CONFIGS[r]?.title}
+                  {ROLE_CONFIGS[r]?.title}
                 </option>
               ))}
             </select>
           </div>
         )}
 
-        {/* Notifications */}
+        {/* Notification Icon */}
         <button
-          className="relative p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
+          className="h-8 w-8 flex items-center justify-center text-slate-500 hover:text-slate-800 hover:bg-[#F5F6F7] rounded transition"
           title="Notifications"
         >
-          <Bell size={18} />
-          <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+          <Bell size={15} />
         </button>
 
-        {/* Direct Sign Out Button */}
-        <button
-          onClick={handleLogout}
-          data-testid="direct-logout-button"
-          className="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition"
-          title="Sign Out"
-        >
-          <LogOut size={18} />
-        </button>
-
-        {/* Vertical Divider */}
-        <div className="h-6 w-px bg-slate-200" />
-
-        {/* User Profile Dropdown */}
+        {/* User Profile Menu */}
         <div className="relative">
           <button
             onClick={() => setShowProfileMenu(!showProfileMenu)}
-            className="flex items-center space-x-2.5 p-1.5 rounded-lg hover:bg-slate-50 transition"
+            className="flex items-center space-x-2 p-1 rounded hover:bg-[#F5F6F7] transition"
           >
-            <img
-              src={user?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'}
-              alt={user?.fullName}
-              className="h-8 w-8 rounded-full object-cover border border-slate-300"
-            />
-            <div className="hidden md:block text-left">
-              <p className="text-xs font-semibold text-slate-800 leading-tight">{user?.fullName}</p>
-              <p className="text-[10px] text-slate-500 capitalize">{role.replace('_', ' ')}</p>
+            <div className="w-7 h-7 rounded bg-[#1E293B] text-white flex items-center justify-center text-xs font-medium">
+              {getInitials(user?.fullName)}
             </div>
-            <ChevronDown size={14} className="text-slate-400" />
+            <ChevronDown size={12} className="text-slate-400" />
           </button>
 
           {showProfileMenu && (
-            <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 z-50 text-xs">
-              <div className="px-3 py-2 border-b border-slate-100">
-                <p className="font-semibold text-slate-800">{user?.fullName}</p>
-                <p className="text-slate-500 text-[11px] truncate">{user?.email}</p>
+            <div className="absolute right-0 mt-1.5 w-56 bg-white border border-[#E5E8EB] rounded-md shadow-lg py-1 z-50 text-xs">
+              <div className="px-3 py-2 border-b border-[#E5E8EB]">
+                <p className="font-semibold text-slate-900 truncate">{user?.fullName || 'Rajesh Sharma'}</p>
+                <p className="text-[11px] text-slate-500 truncate">{user?.email || 'admin@aurevia.demo'}</p>
+                <div className="mt-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-slate-100 text-[10px] font-medium text-slate-600">
+                  <Shield size={10} />
+                  <span>{activeRoleConfig?.title}</span>
+                </div>
               </div>
 
-              {/* Demo Role Switcher Section */}
-              {(!isSupabaseConfigured || isMockFallbackEnabled || user?.email.endsWith('.demo')) && (
-                <div className="px-3 py-2 border-b border-slate-100 bg-slate-50">
-                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
-                    Demo Role Switcher
-                  </p>
-                  <div className="grid grid-cols-1 gap-1">
-                    {roles.map((r) => (
-                      <button
-                        key={r}
-                        onClick={() => handleRoleSwitch(r)}
-                        className={`text-left px-2 py-1 rounded text-[11px] capitalize transition flex items-center justify-between ${
-                          normalizeRole(role) === r
-                            ? 'bg-navy-900 text-white font-semibold'
-                            : 'text-slate-600 hover:bg-slate-200'
-                        }`}
-                      >
-                        <span>{ROLE_CONFIGS[r]?.title || r.replace('_', ' ')}</span>
-                        {normalizeRole(role) === r && <Check size={12} className="text-amber-400" />}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center space-x-2 px-3 py-2 text-rose-600 hover:bg-rose-50 transition"
-              >
-                <LogOut size={14} />
-                <span>Sign Out</span>
-              </button>
+              <div className="py-1">
+                <button
+                  onClick={() => {
+                    setShowProfileMenu(false);
+                    navigate('/settings');
+                  }}
+                  className="w-full flex items-center px-3 py-1.5 text-slate-700 hover:bg-[#F5F6F7] transition"
+                >
+                  <User size={13} className="mr-2 text-slate-400" />
+                  Account Settings
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center px-3 py-1.5 text-rose-600 hover:bg-rose-50 transition"
+                >
+                  <LogOut size={13} className="mr-2 text-rose-500" />
+                  Sign Out
+                </button>
+              </div>
             </div>
           )}
         </div>

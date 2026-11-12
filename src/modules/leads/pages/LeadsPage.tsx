@@ -15,7 +15,6 @@ import {
   Clock,
   Phone,
   Calendar,
-  Sparkles,
   ChevronLeft,
   ChevronRight,
   RotateCcw,
@@ -296,41 +295,39 @@ export const LeadsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* 1. Header & Quick Actions */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#E5E8EB]">
         <div>
-          <div className="flex items-center space-x-2 text-gold-600 text-xs font-semibold uppercase tracking-wider">
-            <Sparkles size={14} />
-            <span>Omnichannel Acquisition & Engagement</span>
+          <div className="flex items-center gap-2 text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+            <span>Sales Operations</span>
+            <span>&bull;</span>
+            <span>Inquiry Management</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight mt-0.5">
-            Lead Management Hub
+          <h1 className="text-lg font-semibold text-slate-900 tracking-tight mt-0.5">
+            Leads
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Real-time pipeline tracking, duplicate detection, omnichannel source attribution, and executive assignment.
-          </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs transition"
+            className="h-8 px-3 inline-flex items-center gap-1.5 rounded border border-[#E5E8EB] bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium transition"
           >
-            <Download size={14} />
+            <Download size={13} className="text-slate-500" />
             <span>Export CSV</span>
           </button>
           <button
             onClick={handleOpenAddModal}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs font-semibold shadow-card transition"
+            className="h-8 px-3 inline-flex items-center gap-1.5 rounded bg-[#1E293B] hover:bg-slate-800 text-white text-xs font-medium transition"
           >
-            <UserPlus size={15} />
-            <span>Add New Lead</span>
+            <UserPlus size={13} />
+            <span>New Lead</span>
           </button>
         </div>
       </div>
 
-      {/* 2. Lead Dashboard KPI Metrics */}
+      {/* 2. Lead Metric Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <MetricCard
           title="Total Leads"
@@ -343,42 +340,39 @@ export const LeadsPage: React.FC = () => {
           value={leadStats.newLeadsToday.toString()}
           subtitle="Past 24 hours"
           icon={Clock}
-          variant="gold"
         />
         <MetricCard
           title="Uncontacted"
           value={leadStats.uncontactedLeads.toString()}
-          subtitle="Pending initial outreach"
+          subtitle="Pending initial screening"
           icon={Phone}
         />
         <MetricCard
           title="Qualified"
           value={leadStats.qualifiedLeads.toString()}
-          subtitle="Verified interest & budget"
+          subtitle="Budget & timeline verified"
           icon={Users}
         />
         <MetricCard
           title="Hot Prospects"
           value={leadStats.hotLeads.toString()}
-          subtitle="High intent & closing soon"
+          subtitle="High intent"
           icon={Flame}
-          variant="emerald"
         />
         <MetricCard
           title="Conversion Rate"
           value={`${leadStats.conversionRate.toFixed(1)}%`}
           subtitle="Inquiry to Booking"
-          icon={Sparkles}
-          variant="gold"
+          icon={Users}
         />
       </div>
 
       {/* 3. Search & Multi-Filter Toolbar */}
-      <div className="bg-white rounded-xl border border-surface-border p-4 shadow-card space-y-3">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+      <div className="bg-white rounded-md border border-[#E5E8EB] p-3 space-y-2.5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
           {/* Search Input */}
           <div className="relative flex-1">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={searchTerm}
@@ -387,7 +381,7 @@ export const LeadsPage: React.FC = () => {
                 setCurrentPage(1);
               }}
               placeholder="Search leads by customer name, phone number, email, or project..."
-              className="w-full pl-9 pr-4 py-2 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-navy-900 focus:border-navy-900"
+              className="w-full h-8 pl-8 pr-3 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-slate-400 transition"
             />
           </div>
 
@@ -395,26 +389,25 @@ export const LeadsPage: React.FC = () => {
           {hasActiveFilters && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition shrink-0"
+              className="flex items-center gap-1 h-8 px-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition shrink-0"
             >
-              <RotateCcw size={13} />
+              <RotateCcw size={12} />
               <span>Reset Filters</span>
             </button>
           )}
         </div>
 
         {/* Filters Dropdown Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 text-xs pt-1">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 text-xs">
           {/* Project Filter */}
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Project</label>
             <select
               value={selectedProject}
               onChange={(e) => {
                 setSelectedProject(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
               <option value="all">All Projects ({projects.length})</option>
               {projects.map((p) => (
@@ -427,14 +420,13 @@ export const LeadsPage: React.FC = () => {
 
           {/* Stage Filter */}
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Pipeline Stage</label>
             <select
               value={selectedStage}
               onChange={(e) => {
                 setSelectedStage(e.target.value as any);
                 setCurrentPage(1);
               }}
-              className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
               {STAGES.map((s) => (
                 <option key={s.value} value={s.value}>
@@ -446,32 +438,30 @@ export const LeadsPage: React.FC = () => {
 
           {/* Priority Filter */}
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Priority</label>
             <select
               value={selectedPriority}
               onChange={(e) => {
                 setSelectedPriority(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
               <option value="all">All Priorities</option>
-              <option value="hot">🔥 Hot</option>
-              <option value="warm">⚡ Warm</option>
-              <option value="cold">❄️ Cold</option>
+              <option value="hot">Hot</option>
+              <option value="warm">Warm</option>
+              <option value="cold">Cold</option>
             </select>
           </div>
 
           {/* Source Filter */}
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Lead Source</label>
             <select
               value={selectedSource}
               onChange={(e) => {
                 setSelectedSource(e.target.value as any);
                 setCurrentPage(1);
               }}
-              className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
               {SOURCES.map((src) => (
                 <option key={src.value} value={src.value}>
@@ -483,14 +473,13 @@ export const LeadsPage: React.FC = () => {
 
           {/* Assigned Executive Filter */}
           <div>
-            <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Assigned Executive</label>
             <select
               value={selectedExecutive}
               onChange={(e) => {
                 setSelectedExecutive(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
               <option value="all">All Executives</option>
               {salesExecutives.map((exec) => (
@@ -504,44 +493,44 @@ export const LeadsPage: React.FC = () => {
       </div>
 
       {/* 4. Leads Management Data Table */}
-      <div className="bg-white rounded-xl border border-surface-border shadow-card overflow-hidden">
+      <div className="bg-white rounded-md border border-[#E5E8EB] shadow-none overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
-            <thead className="bg-slate-50 text-slate-600 uppercase text-[11px] font-semibold border-b border-slate-200">
+            <thead className="bg-[#F8F9FA] text-slate-500 uppercase text-[11px] font-medium border-b border-[#E5E8EB]">
               <tr>
                 <th
                   onClick={() => toggleSort('name')}
-                  className="py-3 px-4 cursor-pointer hover:text-navy-900 transition select-none"
+                  className="py-2.5 px-3 cursor-pointer hover:text-slate-900 transition select-none font-medium"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Customer Name</span>
-                    <ArrowUpDown size={12} className="text-slate-400" />
+                    <ArrowUpDown size={11} className="text-slate-400" />
                   </div>
                 </th>
-                <th className="py-3 px-3">Contact</th>
-                <th className="py-3 px-3">Interested Property</th>
-                <th className="py-3 px-3">Source</th>
-                <th className="py-3 px-3">Assigned To</th>
-                <th className="py-3 px-3">Status</th>
+                <th className="py-2.5 px-3 font-medium">Contact</th>
+                <th className="py-2.5 px-3 font-medium">Interested Property</th>
+                <th className="py-2.5 px-3 font-medium">Source</th>
+                <th className="py-2.5 px-3 font-medium">Assigned To</th>
+                <th className="py-2.5 px-3 font-medium">Status</th>
                 <th
                   onClick={() => toggleSort('priority')}
-                  className="py-3 px-3 cursor-pointer hover:text-navy-900 transition select-none"
+                  className="py-2.5 px-3 cursor-pointer hover:text-slate-900 transition select-none font-medium"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Priority</span>
-                    <ArrowUpDown size={12} className="text-slate-400" />
+                    <ArrowUpDown size={11} className="text-slate-400" />
                   </div>
                 </th>
                 <th
                   onClick={() => toggleSort('nextFollowUp')}
-                  className="py-3 px-3 cursor-pointer hover:text-navy-900 transition select-none"
+                  className="py-2.5 px-3 cursor-pointer hover:text-slate-900 transition select-none font-medium"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Next Follow-up</span>
-                    <ArrowUpDown size={12} className="text-slate-400" />
+                    <ArrowUpDown size={11} className="text-slate-400" />
                   </div>
                 </th>
-                <th className="py-3 px-4 text-right">Actions</th>
+                <th className="py-2.5 px-3 text-right font-medium">Actions</th>
               </tr>
             </thead>
 
@@ -571,69 +560,67 @@ export const LeadsPage: React.FC = () => {
                     className="hover:bg-slate-50/80 transition group"
                   >
                     {/* Customer */}
-                    <td className="py-3 px-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 rounded-full bg-navy-900 text-gold-400 flex items-center justify-center font-bold text-xs shrink-0">
+                    <td className="py-2.5 px-3">
+                      <div className="flex items-center space-x-2.5">
+                        <div className="w-6 h-6 rounded bg-slate-100 border border-[#E5E8EB] text-slate-700 flex items-center justify-center font-medium text-[10px] shrink-0">
                           {lead.firstName[0]}
                           {lead.lastName?.[0] || ''}
                         </div>
                         <div>
                           <button
                             onClick={() => handleOpenDrawer(lead)}
-                            className="font-bold text-slate-900 hover:text-navy-700 hover:underline text-left block"
+                            className="font-medium text-slate-900 hover:text-slate-700 hover:underline text-left block text-xs"
                           >
                             {lead.firstName} {lead.lastName}
                           </button>
                           <span className="text-[10px] text-slate-400">
                             {lead.city ? `${lead.city} • ` : ''}
-                            Created {formatDate(lead.createdAt)}
+                            {formatDate(lead.createdAt)}
                           </span>
                         </div>
                       </div>
                     </td>
 
                     {/* Contact */}
-                    <td className="py-3 px-3 font-mono">
+                    <td className="py-2.5 px-3 font-mono">
                       <a
                         href={`tel:${lead.phone}`}
-                        className="font-semibold text-slate-800 hover:text-emerald-700 flex items-center gap-1"
+                        className="text-slate-800 hover:text-slate-900 flex items-center gap-1 text-xs"
                         title="Click to dial"
                       >
-                        <Phone size={11} className="text-slate-400 group-hover:text-emerald-600" />
+                        <Phone size={11} className="text-slate-400" />
                         <span>{lead.phone}</span>
                       </a>
-                      <div className="text-[11px] text-slate-500 font-sans truncate max-w-[150px]">
+                      <div className="text-[10px] text-slate-500 font-sans truncate max-w-[150px]">
                         {lead.email || '—'}
                       </div>
                     </td>
 
                     {/* Interested Property */}
-                    <td className="py-3 px-3">
-                      <div className="font-semibold text-slate-800 truncate max-w-[170px]" title={lead.projectName}>
+                    <td className="py-2.5 px-3">
+                      <div className="font-medium text-slate-900 truncate max-w-[170px]" title={lead.projectName}>
                         {lead.projectName}
                       </div>
-                      <div className="text-[11px] text-slate-500">
-                        {lead.preferredTypology} &bull;{' '}
-                        <span className="font-mono text-navy-900 font-medium">
-                          {formatIndianCurrency(lead.budgetMinInr)} - {formatIndianCurrency(lead.budgetMaxInr)}
+                      <div className="text-[10px] text-slate-500">
+                        {lead.preferredTypology.replace('_', ' ')} &bull;{' '}
+                        <span className="font-mono text-slate-700 font-medium">
+                          {formatIndianCurrency(lead.budgetMaxInr)}
                         </span>
                       </div>
                     </td>
 
                     {/* Source */}
-                    <td className="py-3 px-3">
+                    <td className="py-2.5 px-3">
                       <LeadSourceBadge source={lead.source} />
                     </td>
 
                     {/* Assigned To */}
-                    <td className="py-3 px-3">
-                      <span className="font-medium text-slate-800">
-                        {lead.assignedExecutiveName}
-                      </span>
+                    <td className="py-2.5 px-3 text-slate-700">
+                      <span>{lead.assignedExecutiveName}</span>
                     </td>
 
                     {/* Status with Quick Transition Dropdown */}
-                    <td className="py-3 px-3 relative">
+                    <td className="py-2.5 px-3 relative">
                       <button
                         onClick={() =>
                           setQuickStageDropdownLeadId(
@@ -649,10 +636,10 @@ export const LeadsPage: React.FC = () => {
                       {/* Dropdown Menu */}
                       {quickStageDropdownLeadId === lead.id && (
                         <div
-                          className="absolute left-0 mt-1 z-30 w-44 bg-white rounded-xl shadow-xl border border-slate-200 py-1 text-xs animate-fade-in"
+                          className="absolute left-0 mt-1 z-30 w-44 bg-white rounded-md shadow-md border border-[#E5E8EB] py-1 text-xs"
                           onMouseLeave={() => setQuickStageDropdownLeadId(null)}
                         >
-                          <div className="px-3 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                          <div className="px-3 py-1 text-[10px] font-semibold text-slate-400 uppercase tracking-wider border-b border-[#E5E8EB]">
                             Update Stage
                           </div>
                           {STAGES.filter((s) => s.value !== 'all').map((st) => (
@@ -664,13 +651,13 @@ export const LeadsPage: React.FC = () => {
                               }}
                               className={`w-full px-3 py-1.5 text-left flex items-center justify-between hover:bg-slate-50 ${
                                 lead.currentStage === st.value
-                                  ? 'font-bold text-navy-950 bg-slate-100/70'
+                                  ? 'font-medium text-slate-900 bg-slate-50'
                                   : 'text-slate-700'
                               }`}
                             >
                               <span>{st.label}</span>
                               {lead.currentStage === st.value && (
-                                <span className="h-1.5 w-1.5 rounded-full bg-navy-900" />
+                                <span className="h-1.5 w-1.5 rounded-full bg-slate-900" />
                               )}
                             </button>
                           ))}
@@ -679,24 +666,21 @@ export const LeadsPage: React.FC = () => {
                     </td>
 
                     {/* Priority */}
-                    <td className="py-3 px-3">
+                    <td className="py-2.5 px-3">
                       <LeadPriorityBadge priority={lead.priority} />
                     </td>
 
                     {/* Follow-up */}
-                    <td className="py-3 px-3">
+                    <td className="py-2.5 px-3">
                       {lead.nextFollowUpAt ? (
-                        <div className="flex items-center gap-1.5 text-slate-700">
-                          <Calendar size={12} className="text-gold-600 shrink-0" />
-                          <div>
-                            <div className="font-semibold">{formatDate(lead.nextFollowUpAt)}</div>
-                            <div className="text-[10px] text-slate-400 font-mono">
-                              {formatRelativeTime(lead.nextFollowUpAt)}
-                            </div>
+                        <div className="text-slate-700">
+                          <div className="font-medium text-xs">{formatDate(lead.nextFollowUpAt)}</div>
+                          <div className="text-[10px] text-slate-400 font-mono">
+                            {formatRelativeTime(lead.nextFollowUpAt)}
                           </div>
                         </div>
                       ) : (
-                        <span className="text-[11px] text-slate-400 italic">None scheduled</span>
+                        <span className="text-[10px] text-slate-400">None scheduled</span>
                       )}
                     </td>
 

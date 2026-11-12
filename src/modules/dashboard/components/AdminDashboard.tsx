@@ -5,17 +5,11 @@ import {
   Database,
   Lock,
   UserPlus,
-  KeyRound,
   FileCheck,
-  CheckCircle2,
-  Clock,
-  Sparkles,
-  ArrowRight,
-  Server,
+  ChevronRight,
 } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { useLeads } from '../../../context/LeadContext';
-import { useProjectInventory } from '../../../context/ProjectInventoryContext';
 import { isSupabaseConfigured } from '../../../lib/supabase';
 import { MetricCard } from '../../../components/common/MetricCard';
 import { Link } from 'react-router-dom';
@@ -24,8 +18,7 @@ import { formatRelativeTime } from '../../../lib/formatters';
 
 export const AdminDashboard: React.FC = () => {
   const { user, employees } = useAuth();
-  const { leads, activities } = useLeads();
-  const { projects, units } = useProjectInventory();
+  const { activities } = useLeads();
 
   const activeEmployees = employees.filter(e => e.isActive);
   const inactiveEmployees = employees.filter(e => !e.isActive);
@@ -37,141 +30,138 @@ export const AdminDashboard: React.FC = () => {
   }, {} as Record<string, number>);
 
   return (
-    <div className="space-y-6">
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 p-6 rounded-2xl text-white shadow-xl border border-slate-800">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-amber-400 text-xs font-semibold uppercase tracking-wider">
-              <ShieldCheck size={15} />
-              <span>Security, RBAC & Provisioning Console</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl font-bold mt-1">Company Administration Dashboard</h1>
-            <p className="text-xs text-slate-300 mt-1 max-w-xl">
-              Centralized platform security, employee credentials, Row Level Security (RLS) enforcement, and immutable audit logging.
-            </p>
+    <div className="space-y-5">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#E5E8EB]">
+        <div>
+          <div className="flex items-center gap-2 text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+            <span>Administration</span>
+            <span>&bull;</span>
+            <span>RBAC & Security</span>
           </div>
-          <div className="flex items-center gap-3">
-            <Link
-              to="/employees"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold rounded-xl shadow transition"
-            >
-              <UserPlus size={14} />
-              <span>Provision Staff</span>
-            </Link>
-          </div>
+          <h1 className="text-lg font-semibold text-slate-900 tracking-tight mt-0.5">
+            Company Administration Dashboard
+          </h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/employees"
+            className="h-8 px-3 inline-flex items-center gap-1.5 text-xs font-medium text-white bg-[#1E293B] rounded hover:bg-slate-800 transition"
+          >
+            <UserPlus size={13} />
+            <span>Provision Staff</span>
+          </Link>
         </div>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Metrics */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <MetricCard
           title="Active Employees"
           value={activeEmployees.length.toString()}
           subtitle={`${inactiveEmployees.length} deactivated`}
           icon={Users}
-          variant="gold"
         />
         <MetricCard
-          title="Database Security (RLS)"
-          value={isSupabaseConfigured ? 'ENFORCED' : 'OFFLINE'}
-          subtitle={isSupabaseConfigured ? 'PostgreSQL Policies Active' : 'Client Route Guards (Demo)'}
+          title="Security (RLS)"
+          value={isSupabaseConfigured ? 'Active' : 'Offline Mode'}
+          subtitle={isSupabaseConfigured ? 'PostgreSQL row policies' : 'Client route guards (demo)'}
           icon={Lock}
-          variant={isSupabaseConfigured ? 'emerald' : 'default'}
         />
         <MetricCard
-          title="Tenant Database"
-          value={isSupabaseConfigured ? 'Supabase Live' : 'Demo Fallback'}
-          subtitle={isSupabaseConfigured ? 'PostgreSQL 15 Connected' : 'Encrypted Local Storage'}
+          title="Tenant Data Store"
+          value={isSupabaseConfigured ? 'Supabase' : 'Local Fallback'}
+          subtitle={isSupabaseConfigured ? 'PostgreSQL 15 Connected' : 'Encrypted browser storage'}
           icon={Database}
-          variant={isSupabaseConfigured ? 'emerald' : 'default'}
         />
         <MetricCard
-          title="System Audit Events"
+          title="Audit Trail Events"
           value={activities.length.toString()}
-          subtitle="Immutable security logs"
+          subtitle="System & lead activity logs"
           icon={FileCheck}
         />
       </div>
 
-      {/* RBAC Role Distribution & Status */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left: Role Breakdown */}
-        <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-          <div className="flex items-center justify-between">
+      {/* RBAC Breakdown & Recent Events */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Role Distribution Table */}
+        <div className="bg-white border border-[#E5E8EB] rounded-md p-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E8EB] mb-3">
             <div>
-              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-                Authorized Role Assignments
+              <h2 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
+                Role Assignments
               </h2>
-              <p className="text-xs text-slate-500">Distribution across 6 platform access tiers</p>
+              <p className="text-[11px] text-slate-500 mt-0.5">Staff roster by RBAC scope</p>
             </div>
-            <span className="text-xs font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
-              {employees.length} Total Users
-            </span>
+            <Link to="/employees" className="text-xs font-medium text-slate-700 hover:text-slate-900">
+              Manage
+            </Link>
           </div>
 
-          <div className="space-y-2.5">
-            {Object.entries(ROLE_CONFIGS)
-              .filter(([roleKey]) => roleKey !== 'super_admin')
-              .map(([roleKey, conf]) => {
-                const count = roleCounts[roleKey] || 0;
-                return (
-                  <div
-                    key={roleKey}
-                    className="p-3 rounded-lg border border-slate-100 bg-slate-50/70 hover:bg-slate-100/80 transition flex items-center justify-between text-xs"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-800">{conf.title}</span>
-                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold border ${conf.badgeClass}`}>
-                          {conf.badge}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-slate-500 mt-0.5 max-w-xs">{conf.description}</p>
-                    </div>
-                    <span className="text-sm font-bold font-mono text-slate-900">{count}</span>
+          <div className="divide-y divide-[#E5E8EB]">
+            {Object.entries(roleCounts).map(([r, count]) => {
+              const cfg = (ROLE_CONFIGS as Record<string, any>)[r];
+              return (
+                <div key={r} className="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between text-xs">
+                  <div>
+                    <span className="font-medium text-slate-900">{cfg?.title || r}</span>
+                    <span className="text-[11px] text-slate-500 block">{cfg?.badge || r}</span>
                   </div>
-                );
-              })}
+                  <span className="font-mono text-xs font-semibold text-slate-900 bg-slate-100 border border-[#E5E8EB] px-2 py-0.5 rounded">
+                    {count} {count === 1 ? 'user' : 'users'}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Right: Security & Activity Ledger */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-          <div className="flex items-center justify-between">
+        {/* Security Audit Activity Feed */}
+        <div className="lg:col-span-2 bg-white border border-[#E5E8EB] rounded-md p-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E8EB] mb-3">
             <div>
-              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-                System Security & Transaction Audit Log
+              <h2 className="text-xs font-semibold text-slate-900 uppercase tracking-wider">
+                Recent System & Security Audit Events
               </h2>
-              <p className="text-xs text-slate-500">Chronological access and data modification ledger</p>
+              <p className="text-[11px] text-slate-500 mt-0.5">Chronological activity record</p>
             </div>
-            <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
-              Live Auditing Active
+            <span className="text-[11px] font-mono text-slate-500">
+              {activities.length} logged
             </span>
           </div>
 
-          <div className="divide-y divide-slate-100 max-h-[380px] overflow-y-auto">
-            {activities.slice(0, 7).map(act => (
-              <div key={act.id} className="py-3 flex items-start gap-3 text-xs">
-                <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0" />
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-900">{act.title}</span>
-                    <span className="text-[11px] text-slate-400 font-mono">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-[#E5E8EB] text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+                  <th className="pb-2 font-medium">Event</th>
+                  <th className="pb-2 font-medium">Actor</th>
+                  <th className="pb-2 font-medium">Target / Detail</th>
+                  <th className="pb-2 font-medium text-right">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E5E8EB]">
+                {activities.slice(0, 6).map((act) => (
+                  <tr key={act.id} className="hover:bg-[#F8F9FA] transition-colors">
+                    <td className="py-2.5 font-medium text-slate-900">
+                      {act.title}
+                    </td>
+                    <td className="py-2.5 text-slate-600">
+                      {act.actorName}
+                    </td>
+                    <td className="py-2.5 text-slate-500 text-[11px] truncate max-w-[200px]">
+                      {act.description || act.leadName}
+                    </td>
+                    <td className="py-2.5 text-right font-mono text-[11px] text-slate-500">
                       {formatRelativeTime(act.createdAt)}
-                    </span>
-                  </div>
-                  <p className="text-slate-600 text-[11px] mt-0.5">{act.description}</p>
-                  <p className="text-[10px] text-slate-400 font-mono mt-1">
-                    Actor: <strong className="text-slate-700">{act.actorName}</strong> • Prospect: {act.leadName}
-                  </p>
-                </div>
-              </div>
-            ))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
   );
 };
-

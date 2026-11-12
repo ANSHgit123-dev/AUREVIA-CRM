@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, AlertTriangle, Eye, ShieldAlert, Sparkles } from 'lucide-react';
+import { X, AlertTriangle, Eye, ShieldAlert, UserPlus } from 'lucide-react';
 import { Lead, LeadSource, PipelineStage } from '../../../types';
 import { useLeads } from '../../../context/LeadContext';
 import { useProjectInventory } from '../../../context/ProjectInventoryContext';
@@ -198,28 +198,26 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white w-full max-w-2xl rounded-2xl shadow-modal border border-surface-border overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 text-xs">
+      <div className="bg-white w-full max-w-2xl rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-navy-900 text-white">
+        <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
           <div className="flex items-center space-x-2">
-            <span className="p-1.5 rounded-lg bg-navy-800 text-gold-500">
-              <Sparkles size={16} />
-            </span>
+            <UserPlus size={16} />
             <div>
-              <h3 className="text-base font-bold">
+              <h3 className="text-sm font-semibold">
                 {leadToEdit ? `Edit Lead — ${leadToEdit.firstName} ${leadToEdit.lastName}` : 'Ingest New Lead'}
               </h3>
-              <p className="text-xs text-slate-300">
+              <p className="text-[11px] text-slate-300">
                 {leadToEdit ? 'Update prospect profile and preferences' : 'Direct capture, campaign attribution, and assignment'}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-navy-800 transition"
+            className="text-slate-400 hover:text-white p-1 rounded transition"
           >
-            <X size={18} />
+            <X size={16} />
           </button>
         </div>
 
@@ -423,9 +421,9 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
                   onChange={(e) => setPriority(e.target.value as any)}
                   className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-navy-900 focus:border-navy-900 bg-white"
                 >
-                  <option value="hot">🔥 Hot (Immediate Action)</option>
-                  <option value="warm">⚡ Warm (Engaged)</option>
-                  <option value="cold">❄️ Cold (Nurture)</option>
+                  <option value="hot">Hot (Immediate Action)</option>
+                  <option value="warm">Warm (Engaged)</option>
+                  <option value="cold">Cold (Nurture)</option>
                 </select>
               </div>
 
@@ -488,18 +486,18 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
           )}
 
           {/* Footer Actions */}
-          <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
+          <div className="pt-3 border-t border-[#E5E8EB] flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 font-medium transition"
+              className="px-3 py-1.5 rounded text-xs text-[#60646C] hover:bg-[#F8F9FA] font-medium transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={duplicateLead && !allowDuplicateOverride && !leadToEdit}
-              className="px-5 py-2 rounded-lg bg-navy-900 hover:bg-navy-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold shadow-sm transition"
+              className="px-4 py-1.5 rounded bg-[#1E293B] hover:bg-[#0F172A] disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-xs transition"
             >
               {leadToEdit ? 'Save Changes' : 'Create & Assign Lead'}
             </button>

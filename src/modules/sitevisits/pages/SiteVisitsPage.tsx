@@ -14,7 +14,6 @@ import {
   Star,
   Phone,
   MessageSquare,
-  Sparkles,
   ChevronRight,
   X,
   RotateCcw,
@@ -174,39 +173,35 @@ export const SiteVisitsPage: React.FC = () => {
   const getStatusBadge = (status: SiteVisitStatus) => {
     switch (status) {
       case 'scheduled':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Scheduled</span>;
+        return <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200">Scheduled</span>;
       case 'completed':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Completed</span>;
+        return <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">Completed</span>;
       case 'cancelled':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">Cancelled</span>;
+        return <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200">Cancelled</span>;
       case 'no_show':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">No Show</span>;
+        return <span className="px-1.5 py-0.5 rounded text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200">No Show</span>;
     }
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {/* 1. Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1">
         <div>
-          <div className="flex items-center space-x-2 text-gold-600 text-xs font-semibold uppercase tracking-wider">
-            <MapPin size={14} />
-            <span>Show-Flat & Experience Center Management</span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight mt-0.5">
+          <h1 className="text-lg font-semibold text-[#1C2024] tracking-tight">
             Site Visit Management
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Coordinate physical inspections, log customer ratings and objections, and advance prospect pipeline stages.
+          <p className="text-xs text-[#60646C] mt-0.5">
+            Coordinate inspections, log ratings and feedback, and advance pipeline stages.
           </p>
         </div>
 
         <button
           onClick={handleOpenScheduleModal}
-          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs font-semibold shadow-card transition shrink-0 self-start md:self-auto"
+          className="flex items-center gap-1 px-3 py-1.5 rounded bg-[#1E293B] hover:bg-[#0F172A] text-white text-xs font-medium transition shrink-0 self-start sm:self-auto"
         >
-          <Plus size={15} />
-          <span>Schedule Site Visit</span>
+          <Plus size={13} />
+          <span>Schedule Visit</span>
         </button>
       </div>
 
@@ -223,7 +218,6 @@ export const SiteVisitsPage: React.FC = () => {
           value={siteVisitStats.todayCount.toString()}
           subtitle="Scheduled today"
           icon={Calendar}
-          variant="gold"
         />
         <MetricCard
           title="Upcoming"
@@ -236,7 +230,6 @@ export const SiteVisitsPage: React.FC = () => {
           value={siteVisitStats.completedCount.toString()}
           subtitle="Inspections completed"
           icon={CheckCircle2}
-          variant="emerald"
         />
         <MetricCard
           title="Cancelled"
@@ -249,18 +242,17 @@ export const SiteVisitsPage: React.FC = () => {
           value={siteVisitStats.noShowCount.toString()}
           subtitle="Missed appointments"
           icon={AlertCircle}
-          variant="rose"
         />
       </div>
 
       {/* 3. Tab Navigation */}
-      <div className="flex border-b border-slate-200 bg-white rounded-t-xl px-4 text-xs font-semibold text-slate-600">
+      <div className="flex border-b border-[#E5E8EB] bg-white rounded-t-md px-3 text-xs font-medium text-[#60646C] overflow-x-auto">
         <button
           onClick={() => setActiveTab('all')}
-          className={`py-3 px-4 border-b-2 transition ${
+          className={`py-2.5 px-3 border-b-2 transition shrink-0 ${
             activeTab === 'all'
-              ? 'border-navy-900 text-navy-950 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900'
+              ? 'border-[#1E293B] text-[#1C2024] font-semibold'
+              : 'border-transparent text-[#60646C] hover:text-[#1C2024]'
           }`}
         >
           All Appointments ({siteVisits.length})
@@ -268,32 +260,32 @@ export const SiteVisitsPage: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('upcoming')}
-          className={`py-3 px-4 border-b-2 transition ${
+          className={`py-2.5 px-3 border-b-2 transition shrink-0 ${
             activeTab === 'upcoming'
-              ? 'border-navy-900 text-navy-950 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900'
+              ? 'border-[#1E293B] text-[#1C2024] font-semibold'
+              : 'border-transparent text-[#60646C] hover:text-[#1C2024]'
           }`}
         >
-          Scheduled / Upcoming ({siteVisitStats.todayCount + siteVisitStats.upcomingCount})
+          Scheduled ({siteVisitStats.todayCount + siteVisitStats.upcomingCount})
         </button>
 
         <button
           onClick={() => setActiveTab('completed')}
-          className={`py-3 px-4 border-b-2 transition ${
+          className={`py-2.5 px-3 border-b-2 transition shrink-0 ${
             activeTab === 'completed'
-              ? 'border-emerald-600 text-emerald-800 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900'
+              ? 'border-[#1E293B] text-[#1C2024] font-semibold'
+              : 'border-transparent text-[#60646C] hover:text-[#1C2024]'
           }`}
         >
-          Conducted & Feedback ({siteVisitStats.completedCount})
+          Completed ({siteVisitStats.completedCount})
         </button>
 
         <button
           onClick={() => setActiveTab('cancelled')}
-          className={`py-3 px-4 border-b-2 transition ${
+          className={`py-2.5 px-3 border-b-2 transition shrink-0 ${
             activeTab === 'cancelled'
-              ? 'border-rose-600 text-rose-700 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900'
+              ? 'border-[#1E293B] text-[#1C2024] font-semibold'
+              : 'border-transparent text-[#60646C] hover:text-[#1C2024]'
           }`}
         >
           Cancelled / No-Show ({siteVisitStats.cancelledCount + siteVisitStats.noShowCount})
@@ -301,16 +293,16 @@ export const SiteVisitsPage: React.FC = () => {
       </div>
 
       {/* 4. Search and Filters Toolbar */}
-      <div className="bg-white p-4 border border-t-0 border-surface-border shadow-card space-y-3">
+      <div className="bg-white p-3 border border-t-0 border-[#E5E8EB] rounded-b-md space-y-2.5">
         <div className="flex flex-col sm:flex-row gap-2">
           <div className="relative flex-1">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#80848D]" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by customer name, phone, or project..."
-              className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-1 focus:ring-navy-900"
+              className="w-full pl-8 pr-3 py-1.5 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-[#1C2024] placeholder-[#80848D] focus:outline-none focus:border-[#1E293B] focus:bg-white"
             />
           </div>
 
@@ -318,7 +310,7 @@ export const SiteVisitsPage: React.FC = () => {
             <select
               value={selectedProject}
               onChange={(e) => setSelectedProject(e.target.value)}
-              className="px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs"
+              className="px-2 py-1.5 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
               <option value="all">All Projects</option>
               {projects.map((p) => (
@@ -331,7 +323,7 @@ export const SiteVisitsPage: React.FC = () => {
             <select
               value={selectedExecutive}
               onChange={(e) => setSelectedExecutive(e.target.value)}
-              className="px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs"
+              className="px-2 py-1.5 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
               <option value="all">All Executives</option>
               {salesExecutives.map((exec) => (
@@ -344,24 +336,24 @@ export const SiteVisitsPage: React.FC = () => {
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value as any)}
-              className="px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs"
+              className="px-2 py-1.5 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
-              <option value="all">All Tour Types</option>
+              <option value="all">All Types</option>
               <option value="show_flat_visit">Show Flat Visit</option>
-              <option value="site_visit">Physical Site Tour</option>
+              <option value="site_visit">Physical Tour</option>
               <option value="virtual_tour">Virtual Tour</option>
             </select>
           </div>
         </div>
 
         {/* 5. Site Visit Records List */}
-        <div className="divide-y divide-slate-100 pt-2">
+        <div className="divide-y divide-[#F1F3F5] pt-1">
           {filteredVisits.length === 0 ? (
-            <div className="py-12 text-center text-slate-400 text-xs">
-              <MapPin size={32} className="mx-auto mb-2 opacity-40" />
-              <p className="font-semibold text-slate-600">No site visits match this view.</p>
-              <p className="text-[11px] text-slate-400 mt-0.5">
-                Click "Schedule Site Visit" to book an inspection appointment.
+            <div className="py-12 text-center text-[#80848D] text-xs">
+              <MapPin size={28} className="mx-auto mb-1.5 opacity-40" />
+              <p className="font-medium text-[#1C2024]">No site visits match this view.</p>
+              <p className="text-[11px] text-[#80848D] mt-0.5">
+                Click "Schedule Visit" to book an inspection appointment.
               </p>
             </div>
           ) : (
@@ -372,72 +364,72 @@ export const SiteVisitsPage: React.FC = () => {
               return (
                 <div
                   key={visit.id}
-                  className="py-4 px-3 rounded-xl hover:bg-slate-50 transition flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs"
+                  className="py-3 px-2.5 rounded hover:bg-[#F8F9FA] transition flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs"
                 >
                   {/* Left Column: Customer and Project */}
-                  <div className="flex items-start gap-3 flex-1">
-                    <div className="p-2.5 rounded-xl bg-navy-900 text-gold-400 shrink-0 mt-0.5">
-                      <MapPin size={16} />
+                  <div className="flex items-start gap-2.5 flex-1">
+                    <div className="h-8 w-8 rounded bg-[#F1F3F5] text-[#1E293B] flex items-center justify-center shrink-0 mt-0.5">
+                      <MapPin size={14} />
                     </div>
 
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-slate-900 text-sm">{visit.leadName}</span>
+                        <span className="font-semibold text-[#1C2024] text-xs">{visit.leadName}</span>
                         {getStatusBadge(visit.status)}
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-medium">
+                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#60646C]">
                           {getTypeLabel(visit.visitType)}
                         </span>
                       </div>
 
-                      <div className="text-[11px] text-navy-950 font-semibold mt-0.5">
+                      <div className="text-[11px] text-[#1C2024] font-medium mt-0.5">
                         {visit.projectName}
                       </div>
 
-                      <div className="text-slate-600 text-[11px] mt-0.5">
+                      <div className="text-[#60646C] text-[11px] mt-0.5">
                         <span>Location: </span>
-                        <span className="text-slate-800 font-medium">{visit.meetingLocation || 'Sales Gallery'}</span>
+                        <span className="text-[#1C2024]">{visit.meetingLocation || 'Sales Gallery'}</span>
                       </div>
 
                       {visit.remarks && (
-                        <p className="text-slate-500 text-[11px] mt-0.5 italic">
+                        <p className="text-[#80848D] text-[11px] mt-0.5 italic">
                           Notes: {visit.remarks}
                         </p>
                       )}
 
                       {visit.outcome && (
-                        <div className="mt-1 p-2 rounded-lg bg-emerald-50/80 border border-emerald-200 text-emerald-800 text-[11px]">
-                          <div className="flex items-center gap-1 font-semibold text-emerald-950">
+                        <div className="mt-1 p-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-[11px]">
+                          <div className="flex items-center gap-1 font-medium text-[#1C2024]">
                             {visit.rating && (
-                              <div className="flex items-center text-amber-500 mr-2">
+                              <div className="flex items-center text-amber-500 mr-1.5">
                                 {Array.from({ length: 5 }, (_, i) => (
                                   <Star
                                     key={i}
-                                    size={11}
+                                    size={10}
                                     className={i < (visit.rating || 0) ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}
                                   />
                                 ))}
                               </div>
                             )}
-                            <span>Inspection Outcome:</span>
+                            <span>Outcome:</span>
                           </div>
-                          <p className="mt-0.5 text-slate-700">{visit.outcome}</p>
+                          <p className="mt-0.5 text-[#60646C]">{visit.outcome}</p>
                         </div>
                       )}
 
-                      <div className="flex items-center gap-4 mt-1.5 text-[10px] text-slate-400 font-mono">
-                        <span>Phone: <strong className="text-slate-700">{visit.leadPhone}</strong></span>
-                        <span>Assigned Closer: <strong className="text-slate-700">{visit.assignedExecutiveName}</strong></span>
+                      <div className="flex items-center gap-4 mt-1 text-[10px] text-[#80848D] font-mono">
+                        <span>Phone: <strong className="text-[#1C2024] font-normal">{visit.leadPhone}</strong></span>
+                        <span>Closer: <strong className="text-[#1C2024] font-normal">{visit.assignedExecutiveName}</strong></span>
                       </div>
                     </div>
                   </div>
 
                   {/* Middle: Appointment Date & Time */}
                   <div className="text-left md:text-right shrink-0">
-                    <div className="flex items-center md:justify-end gap-1.5 text-slate-900 font-semibold text-xs">
-                      <Calendar size={13} className="text-gold-600" />
+                    <div className="flex items-center md:justify-end gap-1.5 text-[#1C2024] font-medium text-xs">
+                      <Calendar size={12} className="text-[#80848D]" />
                       <span>{formatDateTime(visit.visitDate)}</span>
                     </div>
-                    <div className="text-[10px] font-mono text-slate-400 mt-0.5">
+                    <div className="text-[10px] font-mono text-[#80848D] mt-0.5">
                       {visit.status === 'completed'
                         ? `Conducted ${formatRelativeTime(visit.completedAt || visit.visitDate)}`
                         : formatRelativeTime(visit.visitDate)}
@@ -445,23 +437,23 @@ export const SiteVisitsPage: React.FC = () => {
                   </div>
 
                   {/* Right: Actions */}
-                  <div className="flex items-center gap-1.5 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
+                  <div className="flex items-center gap-1.5 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-[#F1F3F5]">
                     <a
                       href={`tel:${visit.leadPhone}`}
-                      className="p-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-xs"
+                      className="p-1 rounded border border-[#E5E8EB] text-[#1C2024] hover:bg-[#F1F3F5] transition"
                       title="Direct Call"
                     >
-                      <Phone size={13} />
+                      <Phone size={12} />
                     </a>
 
                     <a
                       href={`https://wa.me/${waPhone}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1.5 rounded-lg bg-emerald-800 hover:bg-emerald-700 text-white transition shadow-xs"
+                      className="p-1 rounded border border-[#E5E8EB] text-[#1C2024] hover:bg-[#F1F3F5] transition"
                       title="WhatsApp"
                     >
-                      <MessageSquare size={13} />
+                      <MessageSquare size={12} />
                     </a>
 
                     {visit.status === 'scheduled' && (
@@ -472,9 +464,9 @@ export const SiteVisitsPage: React.FC = () => {
                             setRating(5);
                             setOutcome('');
                           }}
-                          className="px-2.5 py-1.5 rounded-lg bg-navy-900 hover:bg-navy-800 text-white font-semibold transition"
+                          className="px-2.5 py-1 rounded bg-[#1E293B] hover:bg-[#0F172A] text-white font-medium transition"
                         >
-                          Log Feedback
+                          Feedback
                         </button>
 
                         <button
@@ -483,17 +475,17 @@ export const SiteVisitsPage: React.FC = () => {
                             setNewVisitDate(visit.visitDate.slice(0, 16));
                             setRescheduleNotes('');
                           }}
-                          className="px-2 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 transition"
+                          className="px-2 py-1 rounded border border-[#E5E8EB] hover:bg-[#F1F3F5] text-[#1C2024] font-medium transition"
                         >
                           Reschedule
                         </button>
 
                         <button
                           onClick={() => cancelSiteVisit(visit.id, 'Cancelled by client')}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 transition"
+                          className="p-1 rounded text-[#80848D] hover:text-red-600 transition"
                           title="Cancel"
                         >
-                          <X size={14} />
+                          <X size={13} />
                         </button>
                       </>
                     )}
@@ -507,10 +499,10 @@ export const SiteVisitsPage: React.FC = () => {
 
       {/* Modal: Schedule Site Visit */}
       {isScheduleModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm animate-fade-in text-xs">
-          <div className="bg-white w-full max-w-lg rounded-2xl shadow-modal border border-surface-border overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 bg-navy-900 text-white">
-              <h3 className="font-bold text-sm">Schedule Property Site Inspection</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 text-xs">
+          <div className="bg-white w-full max-w-lg rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
+              <h3 className="font-semibold text-sm">Schedule Property Site Inspection</h3>
               <button
                 onClick={() => setIsScheduleModalOpen(false)}
                 className="text-slate-400 hover:text-white"
@@ -519,13 +511,13 @@ export const SiteVisitsPage: React.FC = () => {
               </button>
             </div>
 
-            <form onSubmit={handleScheduleSubmit} className="p-5 space-y-3.5">
+            <form onSubmit={handleScheduleSubmit} className="p-5 space-y-3">
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Select Customer / Lead *</label>
+                <label className="block text-[#1C2024] font-medium mb-1">Select Customer / Lead *</label>
                 <select
                   value={selectedLeadId}
                   onChange={(e) => setSelectedLeadId(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg bg-white"
+                  className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded bg-white text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                 >
                   {leads.map((l) => (
                     <option key={l.id} value={l.id}>
@@ -535,13 +527,13 @@ export const SiteVisitsPage: React.FC = () => {
                 </select>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">Interested Project *</label>
+                  <label className="block text-[#1C2024] font-medium mb-1">Interested Project *</label>
                   <select
                     value={selectedProjectId}
                     onChange={(e) => setSelectedProjectId(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg bg-white"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded bg-white text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                   >
                     {projects.map((p) => (
                       <option key={p.id} value={p.id}>
@@ -552,11 +544,11 @@ export const SiteVisitsPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">Visit Type</label>
+                  <label className="block text-[#1C2024] font-medium mb-1">Visit Type</label>
                   <select
                     value={visitType}
                     onChange={(e) => setVisitType(e.target.value as any)}
-                    className="w-full px-3 py-2 border rounded-lg bg-white"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded bg-white text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                   >
                     <option value="show_flat_visit">Show Flat Tour</option>
                     <option value="site_visit">Physical Site Tour</option>
@@ -565,24 +557,24 @@ export const SiteVisitsPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">Date & Time *</label>
+                  <label className="block text-[#1C2024] font-medium mb-1">Date & Time *</label>
                   <input
                     type="datetime-local"
                     required
                     value={visitDate}
                     onChange={(e) => setVisitDate(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">Assigned Executive</label>
+                  <label className="block text-[#1C2024] font-medium mb-1">Assigned Closer</label>
                   <select
                     value={assignedExecutive}
                     onChange={(e) => setAssignedExecutive(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg bg-white"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded bg-white text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                   >
                     {salesExecutives.map((exec) => (
                       <option key={exec} value={exec}>
@@ -594,38 +586,38 @@ export const SiteVisitsPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Meeting Location / Pickup Point</label>
+                <label className="block text-[#1C2024] font-medium mb-1">Meeting Location</label>
                 <input
                   type="text"
                   value={meetingLocation}
                   onChange={(e) => setMeetingLocation(e.target.value)}
                   placeholder="e.g. Sales Gallery Experience Center, Worli"
-                  className="w-full px-3 py-2 border rounded-lg"
+                  className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Notes / Chauffeur Instructions</label>
+                <label className="block text-[#1C2024] font-medium mb-1">Notes</label>
                 <textarea
                   rows={2}
                   value={remarks}
                   onChange={(e) => setRemarks(e.target.value)}
-                  placeholder="Customer bringing family; wants to review structural layout of Floor 8 or above..."
-                  className="w-full px-3 py-2 border rounded-lg"
+                  placeholder="Customer preferences, specific tower or floor interests..."
+                  className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                 />
               </div>
 
-              <div className="pt-2 flex justify-end gap-2 border-t border-slate-100">
+              <div className="pt-2 flex justify-end gap-2 border-t border-[#E5E8EB]">
                 <button
                   type="button"
                   onClick={() => setIsScheduleModalOpen(false)}
-                  className="px-3.5 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-3 py-1.5 border border-[#E5E8EB] text-[#60646C] rounded hover:bg-[#F8F9FA]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-navy-900 text-white font-semibold rounded-lg hover:bg-navy-800"
+                  className="px-3.5 py-1.5 bg-[#1E293B] text-white font-medium rounded hover:bg-[#0F172A]"
                 >
                   Confirm Site Visit
                 </button>
@@ -637,35 +629,35 @@ export const SiteVisitsPage: React.FC = () => {
 
       {/* Modal: Complete Visit & Log Feedback */}
       {completeModalVisit && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm animate-fade-in text-xs">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-modal border border-surface-border overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 bg-emerald-900 text-white">
-              <h3 className="font-bold text-sm">
-                Conducted Visit Feedback — {completeModalVisit.leadName}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 text-xs">
+          <div className="bg-white w-full max-w-md rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
+              <h3 className="font-semibold text-sm">
+                Visit Feedback — {completeModalVisit.leadName}
               </h3>
               <button
                 onClick={() => setCompleteModalVisit(null)}
-                className="text-emerald-200 hover:text-white"
+                className="text-slate-400 hover:text-white"
               >
                 <X size={16} />
               </button>
             </div>
 
-            <form onSubmit={handleCompleteSubmit} className="p-5 space-y-3.5">
+            <form onSubmit={handleCompleteSubmit} className="p-5 space-y-3">
               <div>
-                <label className="block text-slate-700 font-semibold mb-1.5">
-                  Customer Inspection Rating (1 - 5 Stars) *
+                <label className="block text-[#1C2024] font-medium mb-1.5">
+                  Customer Inspection Rating
                 </label>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
                       type="button"
                       onClick={() => setRating(star)}
-                      className="p-1.5 rounded-lg hover:bg-amber-50 transition"
+                      className="p-1 rounded hover:bg-[#F8F9FA] transition"
                     >
                       <Star
-                        size={24}
+                        size={18}
                         className={
                           star <= rating
                             ? 'fill-amber-400 text-amber-400'
@@ -674,37 +666,37 @@ export const SiteVisitsPage: React.FC = () => {
                       />
                     </button>
                   ))}
-                  <span className="font-bold text-slate-700 ml-2">{rating} / 5 Stars</span>
+                  <span className="font-medium text-[#1C2024] ml-2">{rating} / 5</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">
-                  Visit Discussion Outcome & Customer Reaction *
+                <label className="block text-[#1C2024] font-medium mb-1">
+                  Discussion Outcome & Customer Reaction *
                 </label>
                 <textarea
                   rows={3}
                   required
                   value={outcome}
                   onChange={(e) => setOutcome(e.target.value)}
-                  placeholder="Detailed feedback: preferred tower, views, floor rise objections, loan eligibility..."
-                  className="w-full px-3 py-2 border rounded-lg"
+                  placeholder="Feedback: preferred tower, views, floor rise objections, loan eligibility..."
+                  className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                 />
               </div>
 
-              <div className="pt-2 flex justify-end gap-2 border-t border-slate-100">
+              <div className="pt-2 flex justify-end gap-2 border-t border-[#E5E8EB]">
                 <button
                   type="button"
                   onClick={() => setCompleteModalVisit(null)}
-                  className="px-3.5 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-3 py-1.5 border border-[#E5E8EB] text-[#60646C] rounded hover:bg-[#F8F9FA]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-emerald-700 text-white font-semibold rounded-lg hover:bg-emerald-600"
+                  className="px-3.5 py-1.5 bg-[#1E293B] text-white font-medium rounded hover:bg-[#0F172A]"
                 >
-                  Save Outcome & Advance Stage
+                  Save Outcome
                 </button>
               </div>
             </form>
@@ -714,10 +706,10 @@ export const SiteVisitsPage: React.FC = () => {
 
       {/* Modal: Reschedule Visit */}
       {rescheduleModalVisit && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm animate-fade-in text-xs">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-modal border border-surface-border overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 bg-navy-900 text-white">
-              <h3 className="font-bold text-sm">Reschedule Site Visit</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 text-xs">
+          <div className="bg-white w-full max-w-md rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
+              <h3 className="font-semibold text-sm">Reschedule Site Visit</h3>
               <button
                 onClick={() => setRescheduleModalVisit(null)}
                 className="text-slate-400 hover:text-white"
@@ -726,40 +718,40 @@ export const SiteVisitsPage: React.FC = () => {
               </button>
             </div>
 
-            <form onSubmit={handleRescheduleSubmit} className="p-5 space-y-3.5">
+            <form onSubmit={handleRescheduleSubmit} className="p-5 space-y-3">
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">New Date & Time *</label>
+                <label className="block text-[#1C2024] font-medium mb-1">New Date & Time *</label>
                 <input
                   type="datetime-local"
                   required
                   value={newVisitDate}
                   onChange={(e) => setNewVisitDate(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg"
+                  className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Rescheduling Reason</label>
+                <label className="block text-[#1C2024] font-medium mb-1">Reason</label>
                 <input
                   type="text"
                   value={rescheduleNotes}
                   onChange={(e) => setRescheduleNotes(e.target.value)}
-                  placeholder="e.g. Client requested postponement due to outstation travel"
-                  className="w-full px-3 py-2 border rounded-lg"
+                  placeholder="e.g. Client requested postponement"
+                  className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                 />
               </div>
 
-              <div className="pt-2 flex justify-end gap-2 border-t border-slate-100">
+              <div className="pt-2 flex justify-end gap-2 border-t border-[#E5E8EB]">
                 <button
                   type="button"
                   onClick={() => setRescheduleModalVisit(null)}
-                  className="px-3.5 py-1.5 text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-3 py-1.5 border border-[#E5E8EB] text-[#60646C] rounded hover:bg-[#F8F9FA]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-navy-900 text-white font-semibold rounded-lg hover:bg-navy-800"
+                  className="px-3.5 py-1.5 bg-[#1E293B] text-white font-medium rounded hover:bg-[#0F172A]"
                 >
                   Confirm Reschedule
                 </button>

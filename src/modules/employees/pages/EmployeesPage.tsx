@@ -7,7 +7,6 @@ import {
   Calendar,
   Users,
   Target,
-  Sparkles,
   Receipt,
   PhoneCall,
   CheckCircle,
@@ -137,27 +136,23 @@ export const EmployeesPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-4 pb-8">
       {/* Header Banner */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-gradient-to-r from-navy-950 via-navy-900 to-navy-800 p-6 rounded-2xl text-white shadow-card">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1">
         <div>
-          <div className="flex items-center space-x-2 text-gold-500 text-xs font-semibold uppercase tracking-wider">
-            <Sparkles size={14} />
-            <span>Staff Directory, RBAC & Productivity Console</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-bold mt-1">Staff & Employee Management</h1>
-          <p className="text-xs text-slate-300 mt-1 max-w-xl">
-            Controlled staff provisioning, organizational hierarchy, project-level access scoping, and sales conversion velocity.
+          <h1 className="text-lg font-semibold tracking-tight text-[#1C2024]">Staff & Employee Management</h1>
+          <p className="text-xs text-[#60646C] mt-0.5">
+            Staff directory, organizational hierarchy, project access scoping, and sales productivity.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {canProvision && (
             <button
               onClick={handleOpenProvisionModal}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs rounded-xl shadow transition"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1E293B] hover:bg-[#0F172A] text-white font-medium text-xs rounded transition"
             >
-              <UserPlus size={15} />
+              <UserPlus size={13} />
               <span>Provision Employee</span>
             </button>
           )}
@@ -165,49 +160,49 @@ export const EmployeesPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+      <div className="flex items-center space-x-1 border-b border-[#E5E8EB]">
         <button
           onClick={() => setActiveTab('directory')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
+          className={`px-3 py-2 border-b-2 text-xs font-medium transition flex items-center gap-1.5 ${
             activeTab === 'directory'
-              ? 'bg-navy-900 text-white shadow'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              ? 'border-[#1E293B] text-[#1C2024] font-semibold'
+              : 'border-transparent text-[#60646C] hover:text-[#1C2024]'
           }`}
         >
-          <Users size={14} />
-          <span>Employee Directory & Access Control ({employees.length})</span>
+          <Users size={13} />
+          <span>Staff Directory ({employees.length})</span>
         </button>
 
         <button
           onClick={() => setActiveTab('performance')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
+          className={`px-3 py-2 border-b-2 text-xs font-medium transition flex items-center gap-1.5 ${
             activeTab === 'performance'
-              ? 'bg-navy-900 text-white shadow'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              ? 'border-[#1E293B] text-[#1C2024] font-semibold'
+              : 'border-transparent text-[#60646C] hover:text-[#1C2024]'
           }`}
         >
-          <Award size={14} />
-          <span>Sales Productivity & Conversion Analytics</span>
+          <Award size={13} />
+          <span>Sales Productivity & Analytics</span>
         </button>
       </div>
 
       {/* TAB 1: EMPLOYEE DIRECTORY & ACCESS CONTROL */}
       {activeTab === 'directory' && (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {/* Filters */}
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="bg-white p-2.5 rounded-md border border-[#E5E8EB] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
             <input
               type="text"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              placeholder="Search by staff name, email, or role..."
-              className="px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 flex-1 max-w-sm"
+              placeholder="Search staff by name, email, or role..."
+              className="px-2.5 py-1.5 text-xs bg-[#F8F9FA] border border-[#E5E8EB] rounded text-[#1C2024] placeholder-[#80848D] focus:outline-none focus:border-[#1E293B] focus:bg-white flex-1 max-w-sm"
             />
 
             <select
               value={selectedRoleFilter}
               onChange={e => setSelectedRoleFilter(e.target.value)}
-              className="px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-slate-700"
+              className="px-2.5 py-1.5 text-xs bg-[#F8F9FA] border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
             >
               <option value="all">All Roles ({employees.length})</option>
               <option value="company_admin">Company Admin</option>
@@ -220,86 +215,86 @@ export const EmployeesPage: React.FC = () => {
           </div>
 
           {/* Directory Table */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded-md border border-[#E5E8EB] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold">
-                    <th className="py-3 px-4">Employee</th>
-                    <th className="py-3 px-4">Role & Access Scope</th>
-                    <th className="py-3 px-4">Manager / Hierarchy</th>
-                    <th className="py-3 px-4">Assigned Projects</th>
-                    <th className="py-3 px-4 text-center">Account Status</th>
-                    <th className="py-3 px-4 text-right">Provisioned Date</th>
+                  <tr className="bg-[#F8F9FA] border-b border-[#E5E8EB] text-[#80848D] font-semibold">
+                    <th className="py-2.5 px-3">Employee</th>
+                    <th className="py-2.5 px-3">Role & Scope</th>
+                    <th className="py-2.5 px-3">Manager</th>
+                    <th className="py-2.5 px-3">Assigned Projects</th>
+                    <th className="py-2.5 px-3 text-center">Status</th>
+                    <th className="py-2.5 px-3 text-right">Provisioned</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-[#F1F3F5]">
                   {filteredEmployees.map(emp => {
                     const conf = ROLE_CONFIGS[normalizeRole(emp.role)];
                     return (
-                      <tr key={emp.id} className="hover:bg-slate-50/80 transition">
-                        <td className="py-3.5 px-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-300 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0">
+                      <tr key={emp.id} className="hover:bg-[#F8F9FA] transition">
+                        <td className="py-2.5 px-3">
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-6 h-6 rounded-full bg-[#F1F3F5] border border-[#E5E8EB] text-[#60646C] flex items-center justify-center font-medium text-[10px] shrink-0">
                               {emp.fullName.charAt(0)}
                             </div>
                             <div>
-                              <span className="font-bold text-slate-900 block">{emp.fullName}</span>
-                              <span className="text-[11px] text-slate-500 font-mono">{emp.email}</span>
+                              <span className="font-medium text-[#1C2024] block">{emp.fullName}</span>
+                              <span className="text-[10px] text-[#80848D] font-mono">{emp.email}</span>
                             </div>
                           </div>
                         </td>
 
-                        <td className="py-3.5 px-4">
-                          <span className={`inline-block px-2.5 py-1 rounded text-[10px] font-bold border ${conf?.badgeClass || 'bg-slate-100'}`}>
+                        <td className="py-2.5 px-3">
+                          <span className={`inline-block px-1.5 py-0.2 rounded text-[10px] font-medium border ${conf?.badgeClass || 'bg-slate-100'}`}>
                             {conf?.badge || emp.role}
                           </span>
-                          <span className="text-[10px] text-slate-400 block mt-0.5">{conf?.title}</span>
+                          <span className="text-[10px] text-[#80848D] block mt-0.5">{conf?.title}</span>
                         </td>
 
-                        <td className="py-3.5 px-4 text-slate-600">
-                          {emp.managerName || (emp.role === 'company_admin' || emp.role === 'director' ? '— (Top Hierarchy)' : 'Vikram Mehta')}
+                        <td className="py-2.5 px-3 text-[#60646C]">
+                          {emp.managerName || (emp.role === 'company_admin' || emp.role === 'director' ? '— (Top)' : 'Vikram Mehta')}
                         </td>
 
-                        <td className="py-3.5 px-4">
+                        <td className="py-2.5 px-3">
                           <div className="flex flex-wrap gap-1 max-w-xs">
                             {emp.assignedProjectIds && emp.assignedProjectIds.length > 0 ? (
                               emp.assignedProjectIds.map(pId => {
                                 const p = projects.find(proj => proj.id === pId);
                                 return (
-                                  <span key={pId} className="px-1.5 py-0.5 bg-slate-100 text-slate-700 rounded text-[10px] font-medium border border-slate-200">
+                                  <span key={pId} className="px-1.5 py-0.2 bg-[#F1F3F5] text-[#60646C] rounded text-[10px] border border-[#E5E8EB]">
                                     {p?.name.replace(' [DEMO]', '') || pId}
                                   </span>
                                 );
                               })
                             ) : (
-                              <span className="text-slate-400 text-[11px]">All Projects</span>
+                              <span className="text-[#80848D] text-[11px]">All Projects</span>
                             )}
                           </div>
                         </td>
 
-                        <td className="py-3.5 px-4 text-center">
+                        <td className="py-2.5 px-3 text-center">
                           {canProvision ? (
                             <button
                               onClick={() => toggleEmployeeStatus(emp.id)}
-                              className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition ${
+                              className={`px-2 py-0.5 rounded text-[10px] font-medium transition ${
                                 emp.isActive
                                   ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200'
-                                  : 'bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200'
+                                  : 'bg-red-50 text-red-700 hover:bg-red-100 border border-red-200'
                               }`}
                             >
                               {emp.isActive ? 'Active' : 'Deactivated'}
                             </button>
                           ) : (
-                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                              emp.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
+                              emp.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'
                             }`}>
                               {emp.isActive ? 'Active' : 'Deactivated'}
                             </span>
                           )}
                         </td>
 
-                        <td className="py-3.5 px-4 text-right text-slate-500 font-mono text-[11px]">
+                        <td className="py-2.5 px-3 text-right text-[#80848D] font-mono text-[11px]">
                           {formatDate(emp.createdAt)}
                         </td>
                       </tr>
@@ -314,67 +309,63 @@ export const EmployeesPage: React.FC = () => {
 
       {/* TAB 2: SALES TEAM PRODUCTIVITY & CONVERSION ANALYTICS */}
       {activeTab === 'performance' && (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Top Level Metric Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
             <MetricCard
               title="Assigned Accounts"
               value={totalAssigned.toString()}
-              subtitle="Active customer inquiries"
+              subtitle="Active inquiries"
               icon={Users}
             />
             <MetricCard
               title="Site Inspections"
               value={totalVisits.toString()}
-              subtitle="Show flat & site tours"
+              subtitle="Tours completed"
               icon={Calendar}
-              variant="gold"
             />
             <MetricCard
               title="Allotments Closed"
               value={totalBookings.toString()}
               subtitle="Secured agreements"
               icon={Receipt}
-              variant="emerald"
             />
             <MetricCard
               title="Gross Sales Value"
               value={formatIndianCurrency(totalSalesVal)}
               subtitle="Closed booking pipeline"
               icon={TrendingUp}
-              variant="emerald"
             />
             <MetricCard
               title="Overdue Tasks"
               value={totalOverdue.toString()}
               subtitle="Action required"
               icon={AlertTriangle}
-              variant={totalOverdue > 0 ? 'rose' : 'emerald'}
             />
           </div>
 
           {/* Performance Comparison Bar Chart */}
-          <div className="bg-white rounded-xl border border-surface-border p-5 shadow-card space-y-4">
+          <div className="bg-white rounded-md border border-[#E5E8EB] p-4 space-y-3">
             <div>
-              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-                Executive Conversion Funnel & Volume
+              <h2 className="text-xs font-semibold text-[#1C2024] uppercase tracking-wider">
+                Funnel Conversion & Volume
               </h2>
-              <p className="text-xs text-slate-500">Comparative inspection generation and deal closing performance</p>
+              <p className="text-[11px] text-[#60646C]">Inspection generation and deal closing performance</p>
             </div>
 
-            <div className="h-72 w-full">
+            <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                  <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} />
-                  <YAxis stroke="#94a3b8" fontSize={11} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#F1F3F5" />
+                  <XAxis dataKey="name" stroke="#80848D" fontSize={11} />
+                  <YAxis stroke="#80848D" fontSize={11} />
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#0B132B', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '12px' }}
+                    contentStyle={{ backgroundColor: '#fff', border: '1px solid #E5E8EB', borderRadius: '4px', color: '#1C2024', fontSize: '11px' }}
                   />
-                  <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
-                  <Bar dataKey="Assigned" fill="#64748b" radius={[4, 4, 0, 0]} name="Assigned Leads" />
-                  <Bar dataKey="Visits" fill="#f59e0b" radius={[4, 4, 0, 0]} name="Site Visits" />
-                  <Bar dataKey="Booked" fill="#10b981" radius={[4, 4, 0, 0]} name="Bookings Closed" />
+                  <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }} />
+                  <Bar dataKey="Assigned" fill="#80848D" radius={[2, 2, 0, 0]} name="Assigned Leads" />
+                  <Bar dataKey="Visits" fill="#D97706" radius={[2, 2, 0, 0]} name="Site Visits" />
+                  <Bar dataKey="Booked" fill="#1E293B" radius={[2, 2, 0, 0]} name="Bookings Closed" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -384,32 +375,32 @@ export const EmployeesPage: React.FC = () => {
 
       {/* Modal: Provision Employee Account */}
       {isProvisionModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 bg-slate-900 text-white">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/40 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-lg bg-white rounded-md shadow-lg border border-[#E5E8EB] overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 bg-[#1E293B] text-white">
               <div className="flex items-center gap-2">
-                <UserPlus className="w-5 h-5 text-amber-400" />
-                <h3 className="text-base font-bold">Provision New Employee Account</h3>
+                <UserPlus className="w-4 h-4 text-white" />
+                <h3 className="text-sm font-semibold">Provision Employee Account</h3>
               </div>
               <button
                 onClick={() => setIsProvisionModalOpen(false)}
                 className="text-slate-400 hover:text-white"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleProvisionSubmit} className="p-6 space-y-4 text-xs">
+            <form onSubmit={handleProvisionSubmit} className="p-5 space-y-3.5 text-xs">
               {provisionError && (
-                <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 flex items-center gap-2">
+                <div className="p-2.5 bg-red-50 border border-red-200 rounded text-red-700 flex items-center gap-2">
                   <AlertCircle size={14} className="shrink-0" />
                   <span>{provisionError}</span>
                 </div>
               )}
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">
-                  Full Name <span className="text-rose-500">*</span>
+                <label className="block text-[#1C2024] font-medium mb-1">
+                  Full Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -417,14 +408,14 @@ export const EmployeesPage: React.FC = () => {
                   onChange={e => setNewFullName(e.target.value)}
                   placeholder="e.g. Anand Mahindra"
                   required
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">
-                    Corporate Email <span className="text-rose-500">*</span>
+                  <label className="block text-[#1C2024] font-medium mb-1">
+                    Corporate Email <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
@@ -432,13 +423,13 @@ export const EmployeesPage: React.FC = () => {
                     onChange={e => setNewEmail(e.target.value)}
                     placeholder="name@aurevia.demo"
                     required
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B] font-mono"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">
-                    Contact Phone <span className="text-rose-500">*</span>
+                  <label className="block text-[#1C2024] font-medium mb-1">
+                    Contact Phone <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -446,20 +437,20 @@ export const EmployeesPage: React.FC = () => {
                     onChange={e => setNewPhone(e.target.value)}
                     placeholder="+91 98000 00000"
                     required
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B] font-mono"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">
-                    RBAC Role <span className="text-rose-500">*</span>
+                  <label className="block text-[#1C2024] font-medium mb-1">
+                    RBAC Role <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={newRole}
                     onChange={e => setNewRole(e.target.value as UserRole)}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B] font-medium"
                   >
                     <option value="sales_executive">Sales Executive</option>
                     <option value="presales_agent">Presales Agent</option>
@@ -471,13 +462,13 @@ export const EmployeesPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-slate-700 font-semibold mb-1">
+                  <label className="block text-[#1C2024] font-medium mb-1">
                     Reporting Manager
                   </label>
                   <select
                     value={newManagerId}
                     onChange={e => setNewManagerId(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-2.5 py-1.5 border border-[#E5E8EB] rounded text-[#1C2024] focus:outline-none focus:border-[#1E293B]"
                   >
                     <option value="">-- No Direct Manager --</option>
                     {employees
@@ -493,36 +484,36 @@ export const EmployeesPage: React.FC = () => {
 
               {/* Assigned Projects */}
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">
-                  Project Scoping Access
+                <label className="block text-[#1C2024] font-medium mb-1">
+                  Project Access Scoping
                 </label>
-                <div className="p-3 bg-slate-50 border rounded-lg space-y-1.5">
+                <div className="p-2.5 bg-[#F8F9FA] border border-[#E5E8EB] rounded space-y-1.5">
                   {projects.map(proj => (
                     <label key={proj.id} className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={newAssignedProjects.includes(proj.id)}
                         onChange={() => toggleProjectAssignment(proj.id)}
-                        className="rounded border-slate-300 text-amber-500 focus:ring-amber-400"
+                        className="rounded border-[#E5E8EB] text-[#1E293B] focus:ring-[#1E293B]"
                       />
-                      <span className="text-slate-800">{proj.name} ({proj.city})</span>
+                      <span className="text-[#1C2024]">{proj.name} ({proj.city})</span>
                     </label>
                   ))}
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#E5E8EB]">
                 <button
                   type="button"
                   onClick={() => setIsProvisionModalOpen(false)}
-                  className="px-3.5 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium"
+                  className="px-3 py-1.5 text-[#60646C] hover:bg-[#F8F9FA] rounded font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl shadow transition"
+                  className="px-4 py-1.5 bg-[#1E293B] hover:bg-[#0F172A] text-white font-medium rounded transition"
                 >
                   {isSubmitting ? 'Provisioning...' : 'Provision Account'}
                 </button>

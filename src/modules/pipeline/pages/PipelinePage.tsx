@@ -10,7 +10,6 @@ import {
   User,
   Building,
   RotateCcw,
-  Sparkles,
   ArrowRight,
   TrendingUp,
   AlertCircle,
@@ -226,85 +225,85 @@ export const PipelinePage: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* 1. Header Banner */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-gradient-to-r from-navy-950 via-navy-900 to-navy-800 p-5 rounded-2xl text-white shadow-card">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#E5E8EB]">
         <div>
-          <div className="flex items-center space-x-2 text-gold-500 text-xs font-semibold uppercase tracking-wider">
-            <Sparkles size={14} />
-            <span>Interactive Sales Conversion Matrix</span>
+          <div className="flex items-center gap-2 text-[11px] font-medium text-slate-500 uppercase tracking-wider">
+            <span>Sales Operations</span>
+            <span>&bull;</span>
+            <span>Kanban Board</span>
           </div>
-          <h1 className="text-xl font-bold mt-1">Visual Sales Pipeline</h1>
-          <p className="text-xs text-slate-300 mt-1 max-w-xl">
-            Real-time Kanban view across 9 stages. Drag cards to advance prospect status, monitor stage velocity, and spot closing bottlenecks.
-          </p>
+          <h1 className="text-lg font-semibold text-slate-900 tracking-tight mt-0.5">
+            Sales Pipeline
+          </h1>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 text-xs">
-          <div className="bg-navy-800/80 border border-navy-700 px-3.5 py-2 rounded-xl text-right">
-            <p className="text-[10px] text-slate-400 uppercase font-mono">Active Pipeline Value</p>
-            <p className="text-lg font-bold text-gold-400 font-mono">
+        <div className="flex flex-wrap items-center gap-2 text-xs">
+          <div className="h-8 px-2.5 rounded border border-[#E5E8EB] bg-white flex items-center gap-1.5 text-slate-700">
+            <span className="text-[10px] text-slate-400 uppercase font-mono">Pipeline:</span>
+            <span className="font-semibold font-mono text-slate-900">
               {formatIndianCurrency(totalPipelineValueInr)}
-            </p>
+            </span>
           </div>
 
-          <div className="bg-navy-800/80 border border-navy-700 px-3 py-2 rounded-xl text-center">
-            <p className="text-[10px] text-slate-400 uppercase font-mono">In-Flight Deals</p>
-            <p className="text-lg font-bold text-white font-mono">
+          <div className="h-8 px-2.5 rounded border border-[#E5E8EB] bg-white flex items-center gap-1.5 text-slate-700">
+            <span className="text-[10px] text-slate-400 uppercase font-mono">Deals:</span>
+            <span className="font-semibold font-mono text-slate-900">
               {leads.filter((l) => l.currentStage !== 'lost').length}
-            </p>
+            </span>
           </div>
 
           {followUpStats.overdueCount > 0 && (
-            <div className="bg-rose-950/80 border border-rose-800/60 px-3 py-2 rounded-xl text-center">
-              <p className="text-[10px] text-rose-300 uppercase font-mono">Overdue Actions</p>
-              <p className="text-lg font-bold text-rose-400 font-mono">
+            <div className="h-8 px-2.5 rounded border border-rose-200 bg-rose-50 flex items-center gap-1.5 text-rose-700 font-medium">
+              <span className="text-[10px] uppercase font-mono">Overdue:</span>
+              <span className="font-semibold font-mono">
                 {followUpStats.overdueCount}
-              </p>
+              </span>
             </div>
           )}
 
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold transition shadow-sm"
+            className="h-8 px-3 inline-flex items-center gap-1.5 rounded bg-[#1E293B] hover:bg-slate-800 text-white font-medium text-xs transition"
           >
-            <Plus size={15} />
-            <span>Add Lead</span>
+            <Plus size={13} />
+            <span>New Lead</span>
           </button>
         </div>
       </div>
 
       {/* 2. Filter & Search Toolbar */}
-      <div className="bg-white rounded-xl border border-surface-border p-3 shadow-card space-y-2">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="bg-white rounded-md border border-[#E5E8EB] p-2.5 space-y-2">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5">
           {/* Search */}
           <div className="relative flex-1 w-full">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search prospects by customer name, mobile, or project..."
-              className="w-full pl-9 pr-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-1 focus:ring-navy-900"
+              className="w-full h-8 pl-8 pr-3 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-slate-400 transition"
             />
           </div>
 
           {hasActiveFilters && (
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-lg transition shrink-0"
+              className="flex items-center gap-1 h-8 px-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition shrink-0"
             >
               <RotateCcw size={12} />
-              <span>Reset Filters</span>
+              <span>Reset</span>
             </button>
           )}
         </div>
 
         {/* Filter Dropdowns */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs pt-1 border-t border-slate-100">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs pt-1 border-t border-[#E5E8EB]">
           <div>
             <select
               value={selectedProject}
               onChange={(e) => setSelectedProject(e.target.value)}
-              className="w-full px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
               <option value="all">All Projects ({projects.length})</option>
               {projects.map((p) => (
@@ -319,7 +318,7 @@ export const PipelinePage: React.FC = () => {
             <select
               value={selectedExecutive}
               onChange={(e) => setSelectedExecutive(e.target.value)}
-              className="w-full px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
               <option value="all">All Executives</option>
               {salesExecutives.map((exec) => (
@@ -334,12 +333,12 @@ export const PipelinePage: React.FC = () => {
             <select
               value={selectedPriority}
               onChange={(e) => setSelectedPriority(e.target.value)}
-              className="w-full px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
               <option value="all">All Priorities</option>
-              <option value="hot">🔥 Hot Prospects</option>
-              <option value="warm">⚡ Warm</option>
-              <option value="cold">❄️ Cold</option>
+              <option value="hot">Hot</option>
+              <option value="warm">Warm</option>
+              <option value="cold">Cold</option>
             </select>
           </div>
 
@@ -347,9 +346,9 @@ export const PipelinePage: React.FC = () => {
             <select
               value={selectedSource}
               onChange={(e) => setSelectedSource(e.target.value)}
-              className="w-full px-2 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-xs text-slate-800"
+              className="w-full h-8 px-2 rounded border border-[#E5E8EB] bg-[#F8F9FA] text-xs text-slate-700"
             >
-              <option value="all">All Acquisition Sources</option>
+              <option value="all">All Sources</option>
               <option value="website">Website Direct</option>
               <option value="google_ads">Google Ads</option>
               <option value="meta_ads">Meta Ads</option>
@@ -364,8 +363,8 @@ export const PipelinePage: React.FC = () => {
       </div>
 
       {/* 3. 9-Column Kanban Board */}
-      <div className="overflow-x-auto pb-4">
-        <div className="inline-flex gap-3 min-w-full items-start">
+      <div className="overflow-x-auto pb-3">
+        <div className="inline-flex gap-2.5 min-w-full items-start">
           {columnsData.map(({ stage, config, leads: colLeads, totalValueInr: colVal }) => {
             const isHovered = dragOverStage === stage;
 
@@ -375,43 +374,37 @@ export const PipelinePage: React.FC = () => {
                 onDragOver={(e) => handleDragOver(e, stage)}
                 onDragLeave={handleDragLeave}
                 onDrop={(e) => handleDrop(e, stage)}
-                className={`w-72 shrink-0 rounded-xl border transition-all flex flex-col bg-slate-100/70 shadow-xs ${
-                  config.border
-                } ${
+                className={`w-72 shrink-0 rounded-md border transition-colors flex flex-col bg-[#F8F9FA] ${
                   isHovered
-                    ? 'ring-2 ring-navy-900 bg-navy-50/50 border-dashed border-navy-900'
-                    : ''
+                    ? 'border-slate-800 bg-slate-100'
+                    : 'border-[#E5E8EB]'
                 }`}
-                style={{ minHeight: '620px' }}
+                style={{ minHeight: '600px' }}
               >
                 {/* Column Header */}
-                <div className={`p-3 rounded-t-xl border-b ${config.headerBg} border-slate-200/80`}>
+                <div className="p-2.5 rounded-t-md border-b border-[#E5E8EB] bg-white">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-xs text-slate-900">{config.label}</span>
-                      <span
-                        className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded-full ${config.badgeBg} ${config.badgeText}`}
-                      >
+                      <span className="font-semibold text-xs text-slate-900">{config.label}</span>
+                      <span className="text-[10px] font-mono font-medium px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-[#E5E8EB]">
                         {colLeads.length}
                       </span>
                     </div>
 
-                    <span className="text-[11px] font-mono font-bold text-navy-950">
+                    <span className="text-[11px] font-mono font-medium text-slate-700">
                       {formatIndianCurrency(colVal)}
                     </span>
                   </div>
                 </div>
 
                 {/* Cards Container */}
-                <div className="p-2 space-y-2 flex-1 overflow-y-auto max-h-[660px]">
+                <div className="p-2 space-y-2 flex-1 overflow-y-auto max-h-[640px]">
                   {colLeads.length === 0 ? (
-                    <div className="py-12 text-center text-slate-400 text-xs select-none">
-                      <p className="text-[11px] italic">No prospects in this stage</p>
-                      <p className="text-[10px] text-slate-400 mt-1">Drag lead here to advance</p>
+                    <div className="py-10 text-center text-slate-400 text-xs select-none">
+                      <p className="text-[11px] italic">No active prospects</p>
                     </div>
                   ) : (
                     colLeads.map((lead) => {
-                      const isHot = lead.priority === 'hot';
                       const isOverdue =
                         lead.nextFollowUpAt &&
                         new Date(lead.nextFollowUpAt).getTime() < Date.now();
@@ -425,17 +418,13 @@ export const PipelinePage: React.FC = () => {
                             setDraggedLeadId(null);
                             setDragOverStage(null);
                           }}
-                          className={`bg-white rounded-xl p-3 border shadow-xs hover:shadow-card transition-all cursor-grab active:cursor-grabbing group relative ${
-                            isHot
-                              ? 'border-rose-200 ring-1 ring-rose-100'
-                              : 'border-slate-200'
-                          }`}
+                          className="bg-white rounded border border-[#E5E8EB] p-2.5 shadow-none hover:border-slate-400 transition-colors cursor-grab active:cursor-grabbing group relative"
                         >
                           {/* Card Header */}
                           <div className="flex items-start justify-between gap-1 mb-1">
                             <button
                               onClick={() => handleOpenLeadDrawer(lead)}
-                              className="font-bold text-xs text-slate-900 hover:text-navy-700 text-left hover:underline truncate"
+                              className="font-medium text-xs text-slate-900 hover:text-slate-700 text-left hover:underline truncate"
                             >
                               {lead.firstName} {lead.lastName}
                             </button>
@@ -444,21 +433,21 @@ export const PipelinePage: React.FC = () => {
 
                           {/* Property & Configuration */}
                           <div className="text-[11px] text-slate-600 mb-1">
-                            <div className="font-medium text-navy-900 truncate">
+                            <div className="font-medium text-slate-900 truncate">
                               {lead.projectName}
                             </div>
                             <div className="flex items-center justify-between text-[10px] text-slate-500 mt-0.5 font-mono">
-                              <span>{lead.preferredTypology}</span>
-                              <span className="font-semibold text-slate-800">
+                              <span>{lead.preferredTypology.replace('_', ' ')}</span>
+                              <span className="font-medium text-slate-900">
                                 {formatIndianCurrency(lead.budgetMaxInr || lead.budgetMinInr)}
                               </span>
                             </div>
                           </div>
 
                           {/* Assigned Executive & Follow-up */}
-                          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500">
+                          <div className="pt-2 border-t border-[#E5E8EB] flex items-center justify-between text-[10px] text-slate-500">
                             <div className="flex items-center gap-1 truncate max-w-[120px]">
-                              <User size={11} className="text-slate-400" />
+                              <User size={10} className="text-slate-400" />
                               <span className="truncate">{lead.assignedExecutiveName}</span>
                             </div>
 
@@ -466,7 +455,7 @@ export const PipelinePage: React.FC = () => {
                               <div
                                 className={`flex items-center gap-1 font-mono ${
                                   isOverdue
-                                    ? 'text-rose-600 font-bold bg-rose-50 px-1 py-0.5 rounded'
+                                    ? 'text-rose-700 font-medium'
                                     : 'text-slate-500'
                                 }`}
                                 title={`Next Follow-up: ${formatDate(lead.nextFollowUpAt)}`}
@@ -475,17 +464,17 @@ export const PipelinePage: React.FC = () => {
                                 <span>{formatRelativeTime(lead.nextFollowUpAt)}</span>
                               </div>
                             ) : (
-                              <span className="text-slate-400 italic">No follow-up</span>
+                              <span className="text-slate-400">No task</span>
                             )}
                           </div>
 
-                          {/* Quick Stage Mover Selector (Accessible for keyboard/click) */}
-                          <div className="mt-2 pt-1 border-t border-slate-100/60 flex items-center justify-between text-[10px]">
+                          {/* Quick Stage Mover Selector */}
+                          <div className="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
                             <button
                               onClick={() => handleOpenLeadDrawer(lead)}
-                              className="text-navy-900 hover:underline font-semibold"
+                              className="text-slate-700 hover:text-slate-900 font-medium"
                             >
-                              View &rarr;
+                              Details &rarr;
                             </button>
 
                             <select
@@ -493,11 +482,11 @@ export const PipelinePage: React.FC = () => {
                               onChange={(e) =>
                                 updateLeadStage(lead.id, e.target.value as PipelineStage)
                               }
-                              className="text-[10px] py-0.5 px-1 rounded bg-slate-50 border border-slate-200 text-slate-700"
+                              className="text-[10px] py-0.5 px-1 rounded bg-[#F8F9FA] border border-[#E5E8EB] text-slate-700"
                             >
                               {PIPELINE_STAGES_ORDER.map((st) => (
                                 <option key={st} value={st}>
-                                  Move: {getStageLabel(st)}
+                                  {getStageLabel(st)}
                                 </option>
                               ))}
                             </select>
